@@ -1,20 +1,25 @@
 ﻿#include "sommet.h"
 #include <cmath>
 
-sommet::sommet() : sommet {0.0,0.0}
+sommet::sommet() :d_x{0.0},d_y{0.0}
 {}
 
-sommet::sommet(double x, double y) : d_x{x}, d_y{y}
+sommet::sommet(double x, double y,int numero) : d_x{x}, d_y{y},d_numero{numero}
 {}
 
-double sommet::x() const
+double sommet::getX() const
 {
   return d_x;
 }
 
-double sommet::y() const
+double sommet::getY() const
 {
   return d_y;
+}
+
+int sommet::getNumero() const
+{
+    return d_numero;
 }
 
 double sommet::distance(const sommet& p) const
@@ -75,11 +80,11 @@ sommet sommet::operator+(const sommet& p) const
 
 bool sommet::operator==(const sommet& p) const
 {
-  return (d_x == p.d_x) && (d_y == p.d_y);
+  return (d_x == p.d_x) && (d_y == p.d_y) && (d_numero==p.d_numero);
 }
 
 bool sommet::operator!=(const sommet& p) const
 {
-  return (d_x != p.d_x) || (d_y != p.d_y);
+  return !((d_x == p.d_x) && (d_y == p.d_y) && (d_numero==p.d_numero));
 }
 

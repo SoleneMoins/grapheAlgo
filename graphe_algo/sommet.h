@@ -8,20 +8,21 @@ class sommet
     ///Default constructor: point (0,0)
       sommet();
 
-
       /**
       Constructor with cartesian coordinates
       @param x x-coordinate
       @param y y-coordinate
     */
-      sommet(double x, double y);
+      sommet(double x, double y,int d_numero);
 
 
-    ///@return the x-coordinate of the point
-      double x()  const;
+      double getX()  const;
 
-    ///@return the y-coordinate of the point
-      double y()  const;
+      double getY()  const;
+
+      int getNumero()  const;
+
+
 
 
     /**
@@ -109,8 +110,8 @@ class sommet
 
     private:
 
-    ///Cartesian coordinates
-      double d_x,d_y;
+      double d_x,d_y;//Cartesian coordinates
+      int d_numero;
 
 
 };
