@@ -16,11 +16,19 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    arc.cpp \
+    fs_aps.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    matrice_adjacence.cpp \
+    sommet.cpp
 
 HEADERS += \
-    mainwindow.h
+    arc.h \
+    fs_aps.h \
+    mainwindow.h \
+    matrice_adjacence.h \
+    sommet.h
 
 FORMS += \
     mainwindow.ui

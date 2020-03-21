@@ -1,6 +1,8 @@
 #include "mainwindow.h"
-
 #include <QApplication>
+#include <iostream>
+#include "matrice_adjacence.h"
+#include "fs_aps.h"
 
 int main(int argc, char *argv[])
 {
