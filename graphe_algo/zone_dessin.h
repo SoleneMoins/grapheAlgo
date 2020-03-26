@@ -6,7 +6,7 @@
 #include <QPainter>
 #include <QPaintEvent>
 #include <QPoint>
-#include <Qtransform>
+#include "arc.h"
 #include <iostream>
 #include "sommet.h"
 
@@ -14,16 +14,34 @@ class zone_dessin:public QWidget
 {
     Q_OBJECT
 public:
+
+    //Constructor
     zone_dessin(QWidget *parent=nullptr);
+
+    /**
+      Change choice to draw
+      @param choix int for choice
+    */
     void changeChoix(int choix);
+
+    /**
+      Change number of sommet
+      @param num int for number
+    */
     void changeNum(int num);
+
+    //Clean all vector
     void nettoie();
+
+
 private:
     int xPress;
     int yPress;
     int d_choix;
     int d_num;
     std::vector<sommet> d_sommet;
+    std::vector<arc> d_arc;
+    std::vector<QRectF> somm;
     std::vector<QLineF> liens;
     std::vector<QPoint> points;
     void paintEvent(QPaintEvent *p);
