@@ -10,46 +10,127 @@ void MainWindow::vue_creer(){
 
     //Zone de dessin
     d_dessin = new zone_dessin();
-    d_dessin->setFixedSize(1000,1000);
+    d_dessin->setFixedSize(1000,900);
 
 
     //texte explication
-    auto labelExpli = new QLabel{"EXPLICATIONS <br> Créer un sommet : Saisissez d'abord le numéro du sommet puis cliquez sur SOMMET et enfin cliquez où vous souhaitez placer votre sommet.<br> Créer un lien : Cliquez sur LIEN, puis un clique sur le départ et un clique sur l'arrivée"};
+    auto labelExpli = new QLabel{"EXPLICATIONS <br> Créer un sommet : Saisissez d'abord le numéro du sommet puis cliquez sur SOMMET et enfin cliquez où vous souhaitez placer votre sommet.<br> Créer un lien : Cliquez sur LIEN, puis un clique sur le départ et un clique sur l'arrivée <br> Veuillez valider votre graphe pour faire vos calculs."};
 
 
-    //Boutons
+    //Menu
     auto menuWidget = new QWidget{};
     menuWidget->setStyleSheet("background:#2A2A2A");
-    auto layoutbouton = new QVBoxLayout{};
-    auto cercle = new QPushButton{"SOMMET"};
-    auto ligne = new QPushButton{"LIEN"};
-    auto efface = new QPushButton{"EFFACER"};
-    auto labelnum = new QLabel{"Numéro du sommet : "};
-    num = new QLineEdit{};
+
+        //Layout principal menu
+        auto layoutbouton = new QVBoxLayout{};
+
+        // Menu Dessiner
+        auto labeltitre1 = new QLabel{"DESSINEZ  VOTRE  GRAPHE"};
+        labeltitre1->setMargin(10);
+        labeltitre1->setStyleSheet("font-size:15px;background:#161616");
+
+            //Sommet
+            auto layoutsommet = new QHBoxLayout{};
+            auto layoutnum = new QVBoxLayout{};
+            auto cercle = new QPushButton{"SOMMET"};
+            cercle->setStyleSheet("background:#202020;height:40px;");
+
+            auto labelnum = new QLabel{"Numéro du sommet : "};
+            num = new QLineEdit{};
+            QRegExp rx ("[0-9]");
+            num->setValidator (new QRegExpValidator (rx, this));
+
+
+            //Liens
+            auto ligne = new QPushButton{"LIEN"};
+            ligne->setStyleSheet("background:#202020;height:30px;");
+
+            //Validation
+            auto valider = new QPushButton{"VALIDER LE GRAPHE"};
+            valider->setStyleSheet("background:#202020;height:30px;");
+
+            //Effacer
+            auto efface = new QPushButton{"EFFACER"};
+            efface->setStyleSheet("background:#202020;height:30px;");
+
+            //Sauvegarder
+            auto sauvegarder = new QPushButton{"SAUVEGARDER"};
+            sauvegarder->setStyleSheet("background:#202020;height:30px;");
 
 
 
 
-    //layoutbouton->addStretch(1);
-    layoutbouton->addWidget(labelnum);
-    layoutbouton->addWidget(num);
-    layoutbouton->addWidget(cercle);
-    layoutbouton->addWidget(ligne);
-    layoutbouton->addWidget(efface);
-    layoutbouton->addStretch(1);
 
-    QRegExp rx ("[0-9]");
-    num->setValidator (new QRegExpValidator (rx, this));
+        // Menu Générer
+        auto labeltitre2 = new QLabel{"GENEREZ  UN  GRAPHE"};
+        auto charger = new QPushButton{"OUVRIR UN GRAPHE"};
+        charger->setStyleSheet("background:#202020;height:30px;");
+        labeltitre2->setMargin(10);
+        labeltitre2->setStyleSheet("font-size:15px;background:#161616");
+
+        //Menu Calculs
+        auto labeltitre3 = new QLabel{"FAITES  VOS  CALCULS"};
+        labeltitre3->setMargin(10);
+        labeltitre3->setStyleSheet("font-size:15px;background:#161616");
+
+        auto layoutdistance = new QHBoxLayout{};
+        auto sommet1Layout = new QVBoxLayout{};
+        auto sommet2Layout = new QVBoxLayout{};
+        auto sommet1Label = new QLabel{"Sommet 1 :"};
+        auto sommet2Label = new QLabel{"Sommet 2 :"};
+        auto somm1 = new QLineEdit{};
+        auto somm2 = new QLineEdit{};
+        auto distance = new QPushButton{"DISTANCE"};
+        distance->setStyleSheet("background:#202020;height:30px;");
+
+        sommet1Layout->addWidget(sommet1Label);
+        sommet1Layout->addWidget(somm1);
+
+        sommet2Layout->addWidget(sommet2Label);
+        sommet2Layout->addWidget(somm2);
+
+        layoutdistance->addLayout(sommet1Layout);
+        layoutdistance->addLayout(sommet2Layout);
+
+
+
+        //Structure Menu
+        layoutbouton->addWidget(labeltitre1);
+        layoutnum->addWidget(labelnum);
+        layoutnum->addWidget(num);
+        layoutsommet->addLayout(layoutnum);
+        layoutsommet->addWidget(cercle);
+        layoutbouton->addLayout(layoutsommet);
+        layoutbouton->addWidget(ligne);
+        layoutbouton->addWidget(sauvegarder);
+        layoutbouton->addWidget(valider);
+        layoutbouton->addWidget(efface);
+
+        layoutbouton->addStretch(1);
+        layoutbouton->addWidget(labeltitre2);
+        layoutbouton->addWidget(charger);
+
+        layoutbouton->addStretch(1);
+        layoutbouton->addWidget(labeltitre3);
+        layoutbouton->addLayout(layoutdistance);
+        layoutbouton->addWidget(distance);
+
+        layoutbouton->addStretch(5);
+
+
 
     menuWidget->setLayout(layoutbouton);
 
-
+    //Connections boutons
     connect(cercle,&QPushButton::clicked,this,&MainWindow::boutonSommet);
     connect(ligne,&QPushButton::clicked,this,&MainWindow::boutonLiens);
     connect(efface,&QPushButton::clicked,this,&MainWindow::effacer);
+    connect(valider,&QPushButton::clicked,this,&MainWindow::valider);
+    connect(charger,&QPushButton::clicked,this,&MainWindow::ouvrir);
+    connect(sauvegarder,&QPushButton::clicked,this,&MainWindow::sauvegarder);
 
 
-    //Layout
+    //Layout central
     auto horizontale = new QHBoxLayout{};
     horizontale->addWidget(menuWidget);
     horizontale->addWidget(d_dessin,Qt::AlignCenter);
@@ -73,15 +154,29 @@ void MainWindow::vue_creer(){
 void MainWindow::boutonSommet(){
 
     QString numS = num->text();
+    bool existe = false;
 
     if(numS==""){
         QMessageBox msg;
         msg.setText("Veuillez saisir un numéro");
         msg.exec();
     }else{
-        int numSo = numS.toInt();
-        d_dessin->changeNum(numSo);
-        d_dessin->changeChoix(0);
+        for(int i=0; i<d_dessin->getSommetVector().size();i++){
+            if(d_dessin->getSommetVector()[i].getNumero()==numS.toInt()){
+                existe=true;
+            }
+        }
+        if(existe==false){
+            int numSo = numS.toInt();
+            d_dessin->changeNum(numSo);
+            d_dessin->changeChoix(0);
+        }else{
+            QMessageBox msg;
+            msg.setText("Ce sommet existe déjà");
+            msg.exec();
+            d_dessin->changeChoix(3);
+        }
+
     }
 
 }
@@ -92,7 +187,37 @@ void MainWindow::boutonLiens(){
 }
 
 void MainWindow::effacer(){
+    d_dessin->changeValidation(false);
+    d_dessin->changeChoix(3);
     d_dessin->nettoie();
     d_dessin->update();
 }
 
+void MainWindow::valider(){
+
+    QMessageBox msg;
+    if(d_dessin->getSommetVector().size()<2||d_dessin->getArcVector().size()==0){
+        msg.setText("Votre graphe n'est pas valide.");
+        msg.exec();
+    }else{
+
+        if(d_dessin->validationGraphe()){
+            msg.setText("Votre graphe est déjà validé.");
+            msg.exec();
+        }else{
+            d_dessin->changeValidation(true);
+            msg.setText("Graphe validé !");
+            msg.exec();
+        }
+    }
+
+    d_dessin->changeChoix(3);
+}
+
+void MainWindow::ouvrir(){
+
+}
+
+void MainWindow::sauvegarder(){
+
+}

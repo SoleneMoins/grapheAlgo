@@ -1,6 +1,6 @@
 #include "zone_dessin.h"
 
-zone_dessin::zone_dessin(QWidget *parent):QWidget{parent},d_choix{3},d_num{0}
+zone_dessin::zone_dessin(QWidget *parent):QWidget{parent},d_choix{3},d_num{0},graphe_valide{false}
 {
 
 }
@@ -14,6 +14,15 @@ void zone_dessin::changeNum(int num){
     d_num = num;
 }
 
+std::vector<arc> zone_dessin::getArcVector(){
+    return d_arc;
+}
+
+std::vector<sommet> zone_dessin::getSommetVector(){
+    return d_sommet;
+}
+
+
 void zone_dessin::nettoie(){
 
     d_sommet.clear();
@@ -22,6 +31,14 @@ void zone_dessin::nettoie(){
     liens.clear();
     points.clear();
 
+}
+
+bool zone_dessin::validationGraphe(){
+    return graphe_valide;
+}
+
+void zone_dessin::changeValidation(bool v){
+    graphe_valide=v;
 }
 
 void zone_dessin::mousePressEvent( QMouseEvent * event){
@@ -39,9 +56,10 @@ void zone_dessin::mousePressEvent( QMouseEvent * event){
 
 void zone_dessin::paintEvent(QPaintEvent*p){
 
+
     QPainter painter(this);
-    QBrush brush1("#4F54D9", Qt::SolidPattern);
-    QPen pen1("#4F54D9");
+    QBrush brush1("#46528C", Qt::SolidPattern);
+    QPen pen1("#46528C");
     QPen pen2("#FEFEFE");
     QFont font = painter.font();
     font.setPixelSize(18);
@@ -50,7 +68,7 @@ void zone_dessin::paintEvent(QPaintEvent*p){
     painter.setBrush(brush1);
 
 
-
+if(graphe_valide==false){
       if(d_choix==0){
 
             sommet som(xPress-40,yPress-40,d_num);
@@ -98,12 +116,18 @@ void zone_dessin::paintEvent(QPaintEvent*p){
 
               }
           }else{
-              //Test
-              std::cout<<"Veuillez choisir"<<std::endl;
-              points.clear();
+
+
+
+                  //Test
+                  std::cout<<"Veuillez choisir"<<std::endl;
+                  points.clear();
+
+
           }
 
         }
+}
 
           for(int i=0; i<static_cast<int>(d_sommet.size());i++){
 
@@ -135,6 +159,8 @@ void zone_dessin::paintEvent(QPaintEvent*p){
 
 
         }
+
+
 
   }
 

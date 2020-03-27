@@ -7,6 +7,7 @@
 #include <QLineEdit>
 #include <QMessageBox>
 #include <QLabel>
+#include <QFileDialog>
 #include <QRegExpValidator>
 #include "zone_dessin.h"
 
@@ -22,7 +23,10 @@ public:
 private slots:
     void boutonSommet();
     void boutonLiens();
+    void valider();
     void effacer();
+    void ouvrir();
+    void sauvegarder();
 
 private:
     QMainWindow*d_win;

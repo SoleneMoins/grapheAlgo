@@ -5,6 +5,7 @@
 #include <QMouseEvent>
 #include <QPainter>
 #include <QPaintEvent>
+#include <QMessageBox>
 #include <QPoint>
 #include "arc.h"
 #include <iostream>
@@ -19,6 +20,19 @@ public:
     zone_dessin(QWidget *parent=nullptr);
 
     /**
+      Return vector of arc
+      @return vector of arc
+    */
+    std::vector<arc> getArcVector();
+
+    /**
+      Return vector of sommet
+      @return vector of sommet
+    */
+    std::vector<sommet> getSommetVector();
+
+
+    /**
       Change choice to draw
       @param choix int for choice
     */
@@ -30,6 +44,10 @@ public:
     */
     void changeNum(int num);
 
+    void changeValidation(bool v);
+
+    bool validationGraphe();
+
     //Clean all vector
     void nettoie();
 
@@ -39,6 +57,7 @@ private:
     int yPress;
     int d_choix;
     int d_num;
+    bool graphe_valide;
     std::vector<sommet> d_sommet;
     std::vector<arc> d_arc;
     std::vector<QRectF> somm;
