@@ -55,6 +55,7 @@ void zone_dessin::save(std::ostream&ost){
 
 void zone_dessin::open(std::istream&ist){
 
+    nettoie();
     int nb_somm;
     char c;
     ist>>nb_somm>>c;
