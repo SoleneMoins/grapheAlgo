@@ -48,6 +48,10 @@ public:
 
     bool validationGraphe();
 
+    void save(std::ostream&ost);
+
+    void open(std::istream&ist);
+
     //Clean all vector
     void nettoie();
 

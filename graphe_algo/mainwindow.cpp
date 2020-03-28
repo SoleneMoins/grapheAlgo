@@ -216,8 +216,28 @@ void MainWindow::valider(){
 
 void MainWindow::ouvrir(){
 
+    d_dessin->changeChoix(4);
+    QString chemin = QFileDialog::getOpenFileName(0, "Ouvrir un fichier", QString(), "text (*.txt)");
+    std::ifstream ifs;
+    ifs.open(chemin.toStdString());
+    d_dessin->open(ifs);
+    ifs.close();
+
 }
 
 void MainWindow::sauvegarder(){
+
+    if(d_dessin->getSommetVector().size()==0){
+        QMessageBox msg;
+        msg.setText("Vous n'avez rien à sauvegarder");
+        msg.exec();
+    }else{
+
+        QString chemin = QFileDialog::getSaveFileName(0, "Enregistrer un fichier", QString(), "text (*.txt)");
+        std::ofstream of;
+        of.open(chemin.toStdString());
+        d_dessin->save(of);
+        of.close();
+    }
 
 }

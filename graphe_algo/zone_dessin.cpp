@@ -37,6 +37,61 @@ bool zone_dessin::validationGraphe(){
     return graphe_valide;
 }
 
+void zone_dessin::save(std::ostream&ost){
+
+    ost<<d_sommet.size()<<"|";
+    for(int i=0;i<d_sommet.size();i++){
+        ost<<d_sommet[i];
+    }
+
+    ost<<liens.size()<<"|";
+    for(int i=0;i<liens.size();i++){
+        ost<<"("<<liens[i].p1().x()<<","<<liens[i].p1().y()<<")"<<","<<"("<<liens[i].p2().x()<<","<<liens[i].p2().y()<<")";
+        ost<<d_arc[i];
+        ost<<"|";
+    }
+
+}
+
+void zone_dessin::open(std::istream&ist){
+
+    int nb_somm;
+    char c;
+    ist>>nb_somm>>c;
+    d_sommet.resize(nb_somm);
+
+    for(int i=0;i<d_sommet.size();i++){
+
+        ist>>d_sommet[i];
+
+        QRectF r(d_sommet[i].getX(),d_sommet[i].getY(),100,100);
+        somm.push_back(r);
+
+    }
+
+    int nb_arc;
+    ist>>nb_arc>>c;
+    d_arc.resize(nb_arc);
+
+    for(int i=0;i<nb_arc;i++){
+
+        char c;
+        int x1, y1, x2, y2;
+        ist>>c>>x1>>c>>y1>>c>>c>>c>>x2>>c>>y2>>c;
+        QLineF l(x1,y1,x2,y2);
+        liens.push_back(l);
+        ist>>d_arc[i];
+        ist>>c;
+
+    }
+
+    update();
+
+
+
+}
+
+
 void zone_dessin::changeValidation(bool v){
     graphe_valide=v;
 }
@@ -68,7 +123,7 @@ void zone_dessin::paintEvent(QPaintEvent*p){
     painter.setBrush(brush1);
 
 
-if(graphe_valide==false){
+if(graphe_valide==false || d_choix!=4){
       if(d_choix==0){
 
             sommet som(xPress-40,yPress-40,d_num);
@@ -105,13 +160,29 @@ if(graphe_valide==false){
 
                   }
 
-                   arc a(somm1,somm2,0);
-                   d_arc.push_back(a);
+                  if(somm1.estVide()==false&&somm2.estVide()==false){
 
-                   QLineF l(points[0],points[1]);
-                   liens.push_back(l);
-                   points.clear();
-                   points.resize(0);
+                      bool exist = false;
+
+                      for(int i=0;i<d_arc.size();i++){
+                          if(d_arc[i].getSommetDepart()==somm1 && d_arc[i].getSommetArrive()==somm2){
+                              exist = true;
+                          }
+                      }
+
+                      if(exist==false){
+
+                          arc a(somm1,somm2,0);
+                          d_arc.push_back(a);
+
+                          QLineF l(points[0],points[1]);
+                          liens.push_back(l);
+                      }
+
+                  }
+
+                  points.clear();
+                  points.resize(0);
 
 
               }
@@ -128,6 +199,7 @@ if(graphe_valide==false){
 
         }
 }
+
 
           for(int i=0; i<static_cast<int>(d_sommet.size());i++){
 
