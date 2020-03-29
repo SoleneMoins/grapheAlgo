@@ -31,6 +31,15 @@ public:
     */
     std::vector<sommet> getSommetVector();
 
+    std::vector<int> getfs();
+
+    std::vector<int> getaps();
+
+    void calculFS();
+
+    std::vector<int> getNumTarjan();
+
+
 
     /**
       Change choice to draw

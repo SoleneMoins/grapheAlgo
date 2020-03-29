@@ -13,6 +13,12 @@ fs_aps::fs_aps(int nbS): d_nbSommet(nbS)
     d_fs[0]=0;
 }
 
+fs_aps::fs_aps(zone_dessin zone){
+
+    fs_aps(zone.getfs(),zone.getaps(),zone.getSommetVector().size(),zone.getArcVector().size());
+
+}
+
 fs_aps::fs_aps(std::vector<int> fs, std::vector<int> aps,int nbSommet,int nbArc):d_fs{fs},d_aps{aps},d_nbSommet{nbSommet},d_nbArcs{nbArc}
 {}
 

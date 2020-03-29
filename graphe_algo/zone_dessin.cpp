@@ -22,6 +22,76 @@ std::vector<sommet> zone_dessin::getSommetVector(){
     return d_sommet;
 }
 
+std::vector<int> zone_dessin::getfs(){
+
+    std::vector<int> fs;
+
+    int nb = 1;
+    int nbsuc = 0;
+
+    while(nb<d_sommet.size()+1){
+
+        nbsuc = 0;
+
+        for(int i=0;i<d_arc.size();i++){
+            if(d_arc[i].getSommetDepart().getNumero()==nb){
+                fs.push_back(d_arc[i].getSommetArrive().getNumero());
+                nbsuc++;
+
+                if(fs.size()>1){
+                    if(fs[fs.size()-2]>fs[fs.size()-1]){
+                        std::swap(fs[fs.size()-2],fs[fs.size()-1]);
+                    }
+                }
+            }
+
+        }
+
+
+
+        if(nbsuc==0){
+            fs.push_back(0);
+        }
+
+        if(nb<d_sommet.size()){
+            fs.push_back(0);
+        }
+
+
+
+        nb++;
+    }
+
+    return fs;
+
+}
+
+
+
+
+std::vector<int> zone_dessin::getaps(){
+
+    std::vector<int> aps;
+    std::vector<int> fs = getfs();
+
+    aps.push_back(1);
+
+    for(int i=1;i<fs.size();i++){
+
+        if(i!=fs.size()-1;fs[i]==0){
+            aps.push_back(i+2);
+        }
+    }
+
+    for(int i=0;i<aps.size();i++){
+        std::cout<<aps[i]<<"|";
+    }
+
+    return aps;
+}
+
+
+
 
 void zone_dessin::nettoie(){
 
@@ -36,6 +106,7 @@ void zone_dessin::nettoie(){
 bool zone_dessin::validationGraphe(){
     return graphe_valide;
 }
+
 
 void zone_dessin::save(std::ostream&ost){
 
@@ -52,6 +123,7 @@ void zone_dessin::save(std::ostream&ost){
     }
 
 }
+
 
 void zone_dessin::open(std::istream&ist){
 
@@ -88,7 +160,84 @@ void zone_dessin::open(std::istream&ist){
 
     update();
 
+}
 
+
+std::vector<int> zone_dessin::getNumTarjan(){
+
+    int nbSommet= d_sommet.size();
+    std::vector<int> num(nbSommet+1,0);
+
+    int depart = 1;
+    int ok;
+    int fois = 0;
+    std::vector<bool> exist(nbSommet+1,false);
+    bool ex = false;
+    int nbvalide = 0;
+
+
+
+    while(!ex){
+
+        ok = nbSommet;
+        fois++;
+
+        if(exist[depart]){
+            for(int i=1;i<exist.size();i++){
+                if(exist[i]==false){
+                    depart = i;
+                    break;
+                }
+            }
+        }
+
+         exist[depart] = true;
+
+
+
+        for(int i=0;i<d_arc.size();i++){
+
+            if(d_arc[i].getSommetDepart().getNumero()==depart){
+                if(!exist[d_arc[i].getSommetArrive().getNumero()] && d_arc[i].getSommetArrive().getNumero()<ok ){
+                    ok = d_arc[i].getSommetArrive().getNumero();
+                }
+            }
+
+        }
+
+
+
+
+        for(int i=1;i<exist.size();i++){
+            if(exist[i]==true){
+                nbvalide++;
+            }
+        }
+
+        if(nbvalide==nbSommet){
+            ex=true;
+        }else{
+            nbvalide=0;
+        }
+
+
+
+        num[depart] = fois;
+        depart = ok;
+
+
+
+
+
+    }
+
+   return num;
+
+}
+
+
+
+void zone_dessin::calculFS(){
 
 }
 
@@ -200,6 +349,15 @@ if(graphe_valide==false || d_choix!=4){
 
         }
 }
+
+if(graphe_valide){
+
+    getaps();
+
+}
+
+
+
 
 
           for(int i=0; i<static_cast<int>(d_sommet.size());i++){

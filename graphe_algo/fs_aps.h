@@ -2,11 +2,14 @@
 #define FSAPS_H
 #include <vector>
 #include<iostream>
+#include "zone_dessin.h"
 #include "matrice_adjacence.h"
+
 class fs_aps
 {
     public:
         fs_aps(int nbS);
+        fs_aps(zone_dessin zone);
         fs_aps(std::vector<int> fs, std::vector<int> aps,int nbSommet,int nbArc);
         fs_aps(matrice_Adjacence matriceAdj);
 
