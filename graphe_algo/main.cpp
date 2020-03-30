@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+/*#include "mainwindow.h"
 #include <QApplication>
 #include <iostream>
 #include "matrice_adjacence.h"
@@ -10,4 +10,4 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
     return a.exec();
-}
+}*/
