@@ -1,7 +1,8 @@
 #include "fs_aps.h"
 #include <iostream>
 #include <vector>
-
+fs_aps::fs_aps(): d_nbSommet{0}, d_nbArcs{0}
+{}
 fs_aps::fs_aps(int nbS): d_nbSommet(nbS)
 {
     d_aps.clear();
@@ -66,6 +67,15 @@ int fs_aps::getNbArc() const
     return d_nbArcs;
 }
 
+std::vector<int> fs_aps::fs() const {
+    return d_fs;
+}
+
+std::vector<int> fs_aps::aps() const {
+    return d_aps;
+}
+
+
 /*void fs_aps::ajouterSommet()
 {
     int s=1, t;
@@ -93,3 +103,28 @@ int fs_aps::getNbArc() const
     }
 
 }*/
+
+void fs_aps::distance(int *fa, std::vector<int> aps, int *&d) {
+    int n=aps[0];
+    d=new int[n+1];
+    fa=new int[n+1];
+    int t=0,q=1,p=1,k=0; d[0]=n;
+    for(int i = 1; i<=n; i++){
+        d[i]=-1; d[0]=0;
+        fa[q]=n;
+        k++;
+        for(int i=t+1; i<=q; i++) {
+            int l = aps[d_fs[i]];
+            while(fa[l]!=0) {
+                if(d[fa[l]] == -1) {
+                    d[fa[l]]=k;
+                    p++;
+                    d_fs[p]=fa[l];
+                }
+            l++;
+        }
+        }
+        t=q;
+        q=p;
+    }
+}
