@@ -37,7 +37,7 @@ public:
     void changeNum(int num);
 
     void changeValidation(bool v);
-
+    bool estValide();
     bool validationGraphe();
 
     void save(std::ostream&ost);

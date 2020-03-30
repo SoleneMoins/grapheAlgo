@@ -211,7 +211,7 @@ void MainWindow::effacer(){
 void MainWindow::valider(){
 
     QMessageBox msg;
-    if(!d_dessin->getGraphe().estValide()){
+    if(!d_dessin->validationGraphe()&&!d_dessin->estValide()){
         msg.setText("Votre graphe n'est pas valide.");
         msg.exec();
     }else{
@@ -220,6 +220,10 @@ void MainWindow::valider(){
             msg.setText("Votre graphe est déjà validé.");
             msg.exec();
         }else{
+            std::vector<sommet> s = d_dessin->getSommetVector();
+            std::vector<arc> a = d_dessin->getArcVector();
+            graphe g(s,a);
+            d_dessin->setGraphe(g);
             d_dessin->changeValidation(true);
             msg.setText("Graphe validé !");
             msg.exec();
@@ -269,10 +273,7 @@ void MainWindow::fs_apsClick(){
 
 void MainWindow::boutonNumerique(){
     if(d_dessin->validationGraphe()){
-        std::vector<sommet> s = d_dessin->getSommetVector();
-        std::vector<arc> a = d_dessin->getArcVector();
-        graphe g(s,a);
-        auto boite = new affichage_numerique(g);
+        auto boite = new affichage_numerique(d_dessin->getGraphe());
         boite->exec();
     }else{
         QMessageBox msg;

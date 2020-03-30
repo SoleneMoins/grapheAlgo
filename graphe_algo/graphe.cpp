@@ -84,7 +84,12 @@ graphe::graphe(fs_aps fsaps){
 
     std::vector<int> fs = fsaps.getFs();
     int nbsommet = fsaps.getAps()[0];
-    graphe(fs,nbsommet);
+    graphe g(fs,nbsommet);
+    d_sommet = g.d_sommet;
+    d_arc = g.d_arc;
+    d_line = g.d_line;
+    d_rectangle = g.d_rectangle;
+    d_fsaps = g.d_fsaps;
 
 }
 

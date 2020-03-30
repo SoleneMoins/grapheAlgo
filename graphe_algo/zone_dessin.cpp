@@ -52,6 +52,10 @@ void zone_dessin::nettoie(){
 
 }
 
+bool zone_dessin::estValide(){
+    return d_graphe.estValide();
+}
+
 bool zone_dessin::validationGraphe(){
     return graphe_valide;
 }

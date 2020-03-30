@@ -12,7 +12,6 @@ class fs_aps
 
         fs_aps();
         fs_aps(int nbS);
-       // fs_aps(graphe g);
         fs_aps(std::vector<sommet>&d_sommet,std::vector<arc>&d_arc);
         fs_aps(std::vector<int>&fs, std::vector<int>&aps,int nbSommet,int nbArc);
         fs_aps(matrice_Adjacence matriceAdj);

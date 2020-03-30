@@ -16,13 +16,6 @@ fs_aps::fs_aps(int nbS): d_nbSommet(nbS)
     d_fs[0]=0;
 }
 
-/*fs_aps::fs_aps(graphe g){
-
-     std::vector<sommet> s = g.getSommet();
-     std::vector<arc> a = g.getArc();
-     fs_aps(s,a);
-
-}*/
 
 fs_aps::fs_aps(std::vector<sommet>&d_sommet,std::vector<arc>&d_arc){
 
@@ -74,7 +67,7 @@ fs_aps::fs_aps(std::vector<sommet>&d_sommet,std::vector<arc>&d_arc){
     for(int i=1;i<fs.size();i++){
 
         if(i!=fs.size()-1&&fs[i]==0){
-            aps.push_back(i+2);
+            aps.push_back(i+1);
         }
     }
 
