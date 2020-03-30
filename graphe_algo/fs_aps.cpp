@@ -68,6 +68,7 @@ fs_aps::fs_aps(std::vector<sommet>&d_sommet,std::vector<arc>&d_arc){
 
         if(i!=fs.size()-1&&fs[i]==0){
             aps.push_back(i+1);
+            i++;
         }
     }
 

@@ -35,9 +35,9 @@ graphe zone_dessin::getGraphe(){
 
 void zone_dessin::setGraphe(graphe g){
 
-    nettoie();
     d_graphe = g;
-    update();
+
+
 }
 
 
@@ -184,7 +184,8 @@ void zone_dessin::paintEvent(QPaintEvent*p){
     painter.setBrush(brush1);
 
 
-if(graphe_valide==false || d_choix!=4){
+if(d_choix!=4){
+
       if(d_choix==0){
 
             sommet som(xPress-40,yPress-40,d_num);

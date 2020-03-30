@@ -26,7 +26,7 @@ void MainWindow::vue_creer(){
 
         //Menu save-open
         auto layoutb = new QHBoxLayout{};
-        auto sauvegarder = new QPushButton{"SAUVER"};
+        auto sauvegarder = new QPushButton{"SAUVG"};
         sauvegarder->setStyleSheet("background:#503461;height:30px;");
         auto charger = new QPushButton{"OUVRIR"};
         charger->setStyleSheet("background:#503461;height:30px;");
@@ -171,34 +171,45 @@ void MainWindow::boutonSommet(){
 
     QString numS = num->text();
     bool existe = false;
-
-    if(numS==""){
+    if(d_dessin->validationGraphe()){
         QMessageBox msg;
-        msg.setText("Veuillez saisir un numéro");
+        msg.setText("Votre graphe a été validé, il ne peut plus être modifié.");
         msg.exec();
     }else{
-        for(int i=0; i<d_dessin->getSommetVector().size();i++){
-            if(d_dessin->getSommetVector()[i].getNumero()==numS.toInt()){
-                existe=true;
-            }
-        }
-        if(existe==false){
-            int numSo = numS.toInt();
-            d_dessin->changeNum(numSo);
-            d_dessin->changeChoix(0);
-        }else{
+        if(numS==""){
             QMessageBox msg;
-            msg.setText("Ce sommet existe déjà");
+            msg.setText("Veuillez saisir un numéro");
             msg.exec();
-        }
+        }else{
+            for(int i=0; i<d_dessin->getSommetVector().size();i++){
+                if(d_dessin->getSommetVector()[i].getNumero()==numS.toInt()){
+                    existe=true;
+                }
+            }
+            if(existe==false){
+                int numSo = numS.toInt();
+                d_dessin->changeNum(numSo);
+                d_dessin->changeChoix(0);
+            }else{
+                QMessageBox msg;
+                msg.setText("Ce sommet existe déjà");
+                msg.exec();
+            }
 
+        }
     }
 
 }
 
 
 void MainWindow::boutonLiens(){
-    d_dessin->changeChoix(1);
+    if(d_dessin->validationGraphe()){
+        QMessageBox msg;
+        msg.setText("Votre graphe a été validé, il ne peut plus être modifié.");
+        msg.exec();
+    }else{
+         d_dessin->changeChoix(1);
+    }
 }
 
 void MainWindow::effacer(){
@@ -268,6 +279,7 @@ void MainWindow::fs_apsClick(){
     std::vector<int> d_fs = boite->getfs();
     graphe g(d_fs,boite->nbSommet());
     d_dessin->setGraphe(g);
+    d_dessin->changeValidation(false);
 
 }
 

@@ -95,7 +95,7 @@ void saisie_fs::onValideSommet(){
         d_nbsommet=nb;
         d_s.resize(nb);
 
-        QRegExp rx ("([0-9][,])*");
+
 
 
         auto l = new QLabel("Veuillez saisir les successeurs en les séparant d'un ','");
@@ -104,6 +104,7 @@ void saisie_fs::onValideSommet(){
         for(int i=0;i<nb;i++){
             auto l = new QLabel("Sommet "+QString::number(i+1));
             d_s[i] = new QLineEdit{};
+            QRegExp rx ("(?!"+QString::number(i+1)+")([1-"+QString::number(nb)+"][,])*");
             d_s[i]->setValidator (new QRegExpValidator (rx, this));
             layoutsaisie.addWidget(l);
             layoutsaisie.addWidget(d_s[i]);

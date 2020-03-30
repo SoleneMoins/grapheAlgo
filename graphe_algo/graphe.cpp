@@ -194,7 +194,22 @@ void graphe::construitVectorLine(std::vector<arc>&arcs){
 }
 
 bool graphe::estValide(){
-    return (d_sommet.size()>=2 && d_arc.size()>=1);
+
+    std::vector<bool> aLiens(d_sommet.size()+1,false);
+    bool exist = true;
+
+    for(int i=0;i<d_arc.size();i++){
+        aLiens[d_arc[i].getSommetDepart().getNumero()]=true;
+        aLiens[d_arc[i].getSommetArrive().getNumero()]=true;
+    }
+
+    for(int i=1;i<aLiens.size();i++){
+        if(aLiens[i]==false){
+            exist=false;
+        }
+    }
+
+    return (d_sommet.size()>=2 && d_arc.size()>=1 && exist);
 }
 
 
