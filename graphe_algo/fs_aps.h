@@ -2,9 +2,9 @@
 #define FSAPS_H
 #include <vector>
 #include<iostream>
-#include "zone_dessin.h"
 #include "matrice_adjacence.h"
-#include "graphe.h"
+#include "sommet.h"
+#include "arc.h"
 
 class fs_aps
 {
@@ -17,6 +17,8 @@ class fs_aps
         fs_aps(std::vector<int>&fs, std::vector<int>&aps,int nbSommet,int nbArc);
         fs_aps(matrice_Adjacence matriceAdj);
 
+        std::vector<int> getFs();
+        std::vector<int> getAps();
         int GetLongAps()const;
         int GetLongFs()const;
         int nbSommets()const;

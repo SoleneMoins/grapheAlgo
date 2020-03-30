@@ -15,78 +15,29 @@ void zone_dessin::changeNum(int num){
 }
 
 std::vector<arc> zone_dessin::getArcVector(){
-    return d_arc;
+    return d_graphe.getArc();
 }
 
 std::vector<sommet> zone_dessin::getSommetVector(){
-    return d_sommet;
+    return d_graphe.getSommet();
 }
 
 
-std::vector<int> zone_dessin::getfs(){
+fs_aps zone_dessin::getFsAps(){
 
-    std::vector<int> fs;
-    fs.push_back(0);
-    int nb = 1;
-    int nbsuc = 0;
-
-    while(nb<d_sommet.size()+1){
-
-        nbsuc = 0;
-
-        for(int i=0;i<d_arc.size();i++){
-            if(d_arc[i].getSommetDepart().getNumero()==nb){
-                fs.push_back(d_arc[i].getSommetArrive().getNumero());
-                nbsuc++;
-
-                if(fs.size()>1){
-                    if(fs[fs.size()-2]>fs[fs.size()-1]){
-                        std::swap(fs[fs.size()-2],fs[fs.size()-1]);
-                    }
-                }
-            }
-
-        }
-
-
-
-        if(nbsuc==0){
-            fs.push_back(0);
-        }
-
-        if(nb<d_sommet.size()){
-            fs.push_back(0);
-        }
-
-
-
-        nb++;
-    }
-
-
-    return fs;
+    return d_graphe.getfsAps();
 
 }
 
+graphe zone_dessin::getGraphe(){
+    return d_graphe;
+}
 
+void zone_dessin::setGraphe(graphe g){
 
-
-std::vector<int> zone_dessin::getaps(){
-
-    std::vector<int> aps;
-    std::vector<int> fs = getfs();
-
-
-    aps.push_back(d_sommet.size());
-    aps.push_back(1);
-
-    for(int i=1;i<fs.size();i++){
-
-        if(i!=fs.size()-1&&fs[i]==0){
-            aps.push_back(i+2);
-        }
-    }
-    return aps;
+    nettoie();
+    d_graphe = g;
+    update();
 }
 
 
@@ -94,11 +45,10 @@ std::vector<int> zone_dessin::getaps(){
 
 void zone_dessin::nettoie(){
 
-    d_sommet.clear();
-    d_arc.clear();
-    somm.clear();
-    liens.clear();
+    d_graphe.clean();
     points.clear();
+    points.resize(0);
+    graphe_valide = false;
 
 }
 
@@ -109,60 +59,20 @@ bool zone_dessin::validationGraphe(){
 
 void zone_dessin::save(std::ostream&ost){
 
-    ost<<d_sommet.size()<<"|";
-    for(int i=0;i<d_sommet.size();i++){
-        ost<<d_sommet[i];
-    }
-
-    ost<<liens.size()<<"|";
-    for(int i=0;i<liens.size();i++){
-        ost<<"("<<liens[i].p1().x()<<","<<liens[i].p1().y()<<")"<<","<<"("<<liens[i].p2().x()<<","<<liens[i].p2().y()<<")";
-        ost<<d_arc[i];
-        ost<<"|";
-    }
-
+    d_graphe.save(ost);
 }
 
 
 void zone_dessin::open(std::istream&ist){
 
     nettoie();
-    int nb_somm;
-    char c;
-    ist>>nb_somm>>c;
-    d_sommet.resize(nb_somm);
-
-    for(int i=0;i<d_sommet.size();i++){
-
-        ist>>d_sommet[i];
-
-        QRectF r(d_sommet[i].getX(),d_sommet[i].getY(),100,100);
-        somm.push_back(r);
-
-    }
-
-    int nb_arc;
-    ist>>nb_arc>>c;
-    d_arc.resize(nb_arc);
-
-    for(int i=0;i<nb_arc;i++){
-
-        char c;
-        int x1, y1, x2, y2;
-        ist>>c>>x1>>c>>y1>>c>>c>>c>>x2>>c>>y2>>c;
-        QLineF l(x1,y1,x2,y2);
-        liens.push_back(l);
-        ist>>d_arc[i];
-        ist>>c;
-
-    }
-    graphe_valide = true;
+    d_graphe.open(ist);
     update();
 
 }
 
 
-std::vector<int> zone_dessin::getNumTarjan(){
+/*std::vector<int> zone_dessin::getNumTarjan(){
 
     int nbSommet= d_sommet.size();
     std::vector<int> num(nbSommet+1,0);
@@ -232,21 +142,9 @@ std::vector<int> zone_dessin::getNumTarjan(){
 
    return num;
 
-}
+}*/
 
 
-
-void zone_dessin::genereGrapheFSAPS(std::vector<int>&fs,int nbsommet){
-
-    nettoie();
-    graphe g(fs,nbsommet);
-    d_sommet = g.getSommet();
-    d_arc = g.getArc();
-    liens = g.getLine();
-    somm = g.getRectangle();
-    update();
-
-}
 
 
 void zone_dessin::changeValidation(bool v){
@@ -272,8 +170,8 @@ void zone_dessin::paintEvent(QPaintEvent*p){
 
 
     QPainter painter(this);
-    QBrush brush1("#46528C", Qt::SolidPattern);
-    QPen pen1("#46528C");
+    QBrush brush1("#945BB5", Qt::SolidPattern);
+    QPen pen1("#945BB5");
     QPen pen2("#FEFEFE");
     QFont font = painter.font();
     font.setPixelSize(18);
@@ -287,8 +185,8 @@ if(graphe_valide==false || d_choix!=4){
 
             sommet som(xPress-40,yPress-40,d_num);
             QRectF r(som.getX(),som.getY(),100,100);
-            somm.push_back(r);
-            d_sommet.push_back(som);
+            d_graphe.ajouterRectangle(r);
+            d_graphe.ajouterSommet(som);
             points.pop_back();
             d_choix = 3;
 
@@ -301,18 +199,14 @@ if(graphe_valide==false || d_choix!=4){
                   sommet somm1;
                   sommet somm2;
 
-                  for(int i=0;i<static_cast<int>(somm.size());i++){
+                  for(int i=0;i<d_graphe.getSommet().size();i++){
 
-                      if(somm[i].contains(points[0])){
-                          somm1 = d_sommet[i];
-                          //Test
-                          std::cout<<"Sommet de départ : "<<d_sommet[i].getNumero()<<std::endl;
+                      if(d_graphe.getR(i).contains(points[0])){
+                          somm1 = d_graphe.getSommet()[i];
                       }
 
-                      if(somm[i].contains(points[1])){
-                          somm2 = d_sommet[i];
-                          //Test
-                          std::cout<<"Sommet d'arrivée : "<<d_sommet[i].getNumero()<<std::endl;
+                      if(d_graphe.getR(i).contains(points[1])){
+                          somm2 = d_graphe.getSommet()[i];
                       }
 
 
@@ -323,8 +217,8 @@ if(graphe_valide==false || d_choix!=4){
 
                       bool exist = false;
 
-                      for(int i=0;i<d_arc.size();i++){
-                          if(d_arc[i].getSommetDepart()==somm1 && d_arc[i].getSommetArrive()==somm2){
+                      for(int i=0;i<d_graphe.getArc().size();i++){
+                          if(d_graphe.getA(i).getSommetDepart()==somm1 && d_graphe.getA(i).getSommetArrive()==somm2){
                               exist = true;
                           }
                       }
@@ -332,10 +226,10 @@ if(graphe_valide==false || d_choix!=4){
                       if(exist==false){
 
                           arc a(somm1,somm2,0);
-                          d_arc.push_back(a);
+                          d_graphe.ajouterArc(a);
 
                           QLineF l(points[0],points[1]);
-                          liens.push_back(l);
+                          d_graphe.ajouterLigne(l);
                       }
 
                   }
@@ -352,6 +246,8 @@ if(graphe_valide==false || d_choix!=4){
                   //Test
                   std::cout<<"Veuillez choisir"<<std::endl;
                   points.clear();
+                  points.resize(0);
+
 
 
           }
@@ -359,28 +255,30 @@ if(graphe_valide==false || d_choix!=4){
         }
 }
 
+
 if(d_choix!=5){
 
 
-          for(int i=0; i<static_cast<int>(d_sommet.size());i++){
+          for(int i=0; i<d_graphe.getRectangle().size();i++){
 
 
 
-               painter.drawEllipse(somm[i]);
+               painter.drawEllipse(d_graphe.getR(i));
                painter.setPen(pen2);
-               painter.drawText(somm[i].x()+45,somm[i].y()+40,100,50,0,QString::number(d_sommet[i].getNumero()));
+               painter.drawText(d_graphe.getR(i).x()+45,d_graphe.getR(i).y()+40,100,50,0,QString::number(d_graphe.getS(i).getNumero()));
                painter.setPen(pen1);
 
 
           }
 
-          for(int i=0; i<static_cast<int>(liens.size());i++){
+          for(int i=0; i<d_graphe.getLine().size();i++){
 
-              painter.drawLine(liens[i]);
-              QPointF center = liens[i].center();
-              QLineF l(liens[i]);
+              QLineF l1 = d_graphe.getL(i);
+              painter.drawLine(l1);
+              QPointF center = l1.center();
+              QLineF l(l1);
               l.translate(20,20);
-              QLineF l2(liens[i]);
+              QLineF l2(l1);
               l2.translate(-20,-20);
 
               QLineF second(center,l.p1());
@@ -397,5 +295,5 @@ if(d_choix!=5){
 
 
 
-  }
+}
 

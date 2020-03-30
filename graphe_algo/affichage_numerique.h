@@ -13,15 +13,15 @@
 #include <QMessageBox>
 #include <vector>
 #include <iostream>
+#include "graphe.h"
 
 class affichage_numerique : public QDialog
 {
 public:
-    affichage_numerique(std::vector<int>&fs,std::vector<int>&aps,QWidget *parent=nullptr);
+    affichage_numerique(graphe g,QWidget *parent=nullptr);
 
 private:
-    std::vector<int> d_fs;
-    std::vector<int> d_aps;
+    graphe d_graphe;
 
 
 private slots:

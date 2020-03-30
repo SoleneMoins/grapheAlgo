@@ -13,9 +13,6 @@ void MainWindow::vue_creer(){
     d_dessin->setFixedSize(1000,900);
 
 
-    //texte explication
-    auto labelExpli = new QLabel{"EXPLICATIONS <br> Créer un sommet : Saisissez d'abord le numéro du sommet puis cliquez sur SOMMET et enfin cliquez où vous souhaitez placer votre sommet.<br> Créer un lien : Cliquez sur LIEN, puis un clique sur le départ et un clique sur l'arrivée <br> Veuillez valider votre graphe pour faire vos calculs."};
-
 
     //Menu
     auto menuWidget = new QWidget{};
@@ -24,8 +21,21 @@ void MainWindow::vue_creer(){
         //Layout principal menu
         auto layoutbouton = new QVBoxLayout{};
 
-        // Menu Dessiner
-        auto labeltitre1 = new QLabel{"DESSINEZ  VOTRE  GRAPHE"};
+
+
+
+        //Menu save-open
+        auto layoutb = new QHBoxLayout{};
+        auto sauvegarder = new QPushButton{"SAUVER"};
+        sauvegarder->setStyleSheet("background:#503461;height:30px;");
+        auto charger = new QPushButton{"OUVRIR"};
+        charger->setStyleSheet("background:#503461;height:30px;");
+        layoutb->addWidget(sauvegarder);
+        layoutb->addWidget(charger);
+
+
+        // Menu Graphique
+        auto labeltitre1 = new QLabel{"SAISIE GRAPHIQUE"};
         labeltitre1->setMargin(10);
         labeltitre1->setStyleSheet("font-size:15px;background:#161616");
 
@@ -35,7 +45,7 @@ void MainWindow::vue_creer(){
             auto cercle = new QPushButton{"SOMMET"};
             cercle->setStyleSheet("background:#202020;height:40px;");
 
-            auto labelnum = new QLabel{"Numéro du sommet : "};
+            auto labelnum = new QLabel{"Numéro : "};
             num = new QLineEdit{};
             QRegExp rx ("[0-9]");
             num->setValidator (new QRegExpValidator (rx, this));
@@ -45,24 +55,13 @@ void MainWindow::vue_creer(){
             auto ligne = new QPushButton{"LIEN"};
             ligne->setStyleSheet("background:#202020;height:30px;");
 
-            //Validation
-            auto valider = new QPushButton{"VALIDER LE GRAPHE"};
-            valider->setStyleSheet("background:#202020;height:30px;");
-
-            //Effacer
-            auto efface = new QPushButton{"EFFACER"};
-            efface->setStyleSheet("background:#202020;height:30px;");
-
-            //Sauvegarder
-            auto sauvegarder = new QPushButton{"SAUVEGARDER"};
-            sauvegarder->setStyleSheet("background:#202020;height:30px;");
 
 
-
-        // Menu Changer affichage
-        auto labeltitre4 = new QLabel{"AFFICHAGE"};
-
-        auto numerique = new QPushButton{"NUMERIQUE"};
+        // Menu Numerique
+        auto labeltitre4 = new QLabel{"SAISIE NUMERIQUE"};
+        auto fs_aps = new QPushButton{"SAISIE DE FS"};
+        auto numerique = new QPushButton{"AFFICHAGE NUMERIQUE"};
+        fs_aps->setStyleSheet("background:#202020;height:30px;");
         numerique->setStyleSheet("background:#202020;height:30px;");
 
 
@@ -71,16 +70,6 @@ void MainWindow::vue_creer(){
         labeltitre4->setMargin(10);
         labeltitre4->setStyleSheet("font-size:15px;background:#161616");
 
-
-
-        // Menu Générer
-        auto labeltitre2 = new QLabel{"GENEREZ  UN  GRAPHE"};
-        auto charger = new QPushButton{"OUVRIR UN GRAPHE"};
-        auto fs_aps = new QPushButton{"SAISIR FS"};
-        charger->setStyleSheet("background:#202020;height:30px;");
-        fs_aps->setStyleSheet("background:#202020;height:30px;");
-        labeltitre2->setMargin(10);
-        labeltitre2->setStyleSheet("font-size:15px;background:#161616");
 
         //Menu Calculs
         auto labeltitre3 = new QLabel{"FAITES  VOS  CALCULS"};
@@ -95,7 +84,11 @@ void MainWindow::vue_creer(){
         auto somm1 = new QLineEdit{};
         auto somm2 = new QLineEdit{};
         auto distance = new QPushButton{"DISTANCE"};
+        auto ccourt = new QPushButton{"CHEMIN COURT"};
+        auto clong = new QPushButton{"CHEMIN LONG"};
         distance->setStyleSheet("background:#202020;height:30px;");
+        ccourt->setStyleSheet("background:#202020;height:30px;");
+        clong->setStyleSheet("background:#202020;height:30px;");
 
         sommet1Layout->addWidget(sommet1Label);
         sommet1Layout->addWidget(somm1);
@@ -106,9 +99,17 @@ void MainWindow::vue_creer(){
         layoutdistance->addLayout(sommet1Layout);
         layoutdistance->addLayout(sommet2Layout);
 
-
+        // Menu valider-effacer
+        auto layoutv = new QHBoxLayout{};
+        auto valider = new QPushButton{"VALIDER"};
+        valider->setStyleSheet("background:#503461;height:30px;");
+        auto efface = new QPushButton{"EFFACER"};
+        efface->setStyleSheet("background:#503461;height:30px;");
+        layoutv->addWidget(valider);
+        layoutv->addWidget(efface);
 
         //Structure Menu
+
         layoutbouton->addWidget(labeltitre1);
         layoutnum->addWidget(labelnum);
         layoutnum->addWidget(num);
@@ -116,25 +117,20 @@ void MainWindow::vue_creer(){
         layoutsommet->addWidget(cercle);
         layoutbouton->addLayout(layoutsommet);
         layoutbouton->addWidget(ligne);
-        layoutbouton->addWidget(sauvegarder);
-        layoutbouton->addWidget(valider);
-        layoutbouton->addWidget(efface);
-
         layoutbouton->addStretch(1);
         layoutbouton->addWidget(labeltitre4);
         layoutbouton->addWidget(numerique);
-
-        layoutbouton->addStretch(1);
-        layoutbouton->addWidget(labeltitre2);
-        layoutbouton->addWidget(charger);
         layoutbouton->addWidget(fs_aps);
-
+        layoutbouton->addStretch(1);
+        layoutbouton->addLayout(layoutv);
+        layoutbouton->addLayout(layoutb);
         layoutbouton->addStretch(1);
         layoutbouton->addWidget(labeltitre3);
         layoutbouton->addLayout(layoutdistance);
         layoutbouton->addWidget(distance);
-
-        layoutbouton->addStretch(5);
+        layoutbouton->addWidget(ccourt);
+        layoutbouton->addWidget(clong);
+        layoutbouton->addStretch(6);
 
 
 
@@ -159,7 +155,6 @@ void MainWindow::vue_creer(){
 
     //Principale
     auto layout = new QVBoxLayout{};
-    layout->addWidget(labelExpli);
     layout->addLayout(horizontale);
 
 
@@ -195,7 +190,6 @@ void MainWindow::boutonSommet(){
             QMessageBox msg;
             msg.setText("Ce sommet existe déjà");
             msg.exec();
-            d_dessin->changeChoix(3);
         }
 
     }
@@ -217,7 +211,7 @@ void MainWindow::effacer(){
 void MainWindow::valider(){
 
     QMessageBox msg;
-    if(d_dessin->getSommetVector().size()<2||d_dessin->getArcVector().size()==0){
+    if(!d_dessin->getGraphe().estValide()){
         msg.setText("Votre graphe n'est pas valide.");
         msg.exec();
     }else{
@@ -229,7 +223,7 @@ void MainWindow::valider(){
             d_dessin->changeValidation(true);
             msg.setText("Graphe validé !");
             msg.exec();
-            d_fs = d_dessin->getfs();
+
         }
     }
 
@@ -267,16 +261,19 @@ void MainWindow::sauvegarder(){
 void MainWindow::fs_apsClick(){
     auto boite = new saisie_fs();
     boite->exec();
-    d_fs = boite->getfs();
-    d_dessin->genereGrapheFSAPS(d_fs,boite->nbSommet());
+    std::vector<int> d_fs = boite->getfs();
+    graphe g(d_fs,boite->nbSommet());
+    d_dessin->setGraphe(g);
 
 }
 
 void MainWindow::boutonNumerique(){
     if(d_dessin->validationGraphe()){
-      std::vector<int> aps = d_dessin->getaps();
-     auto boite = new affichage_numerique(d_fs,aps);
-     boite->exec();
+        std::vector<sommet> s = d_dessin->getSommetVector();
+        std::vector<arc> a = d_dessin->getArcVector();
+        graphe g(s,a);
+        auto boite = new affichage_numerique(g);
+        boite->exec();
     }else{
         QMessageBox msg;
         msg.setText("Votre graphe n'a pas été validé");

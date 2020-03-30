@@ -38,6 +38,7 @@ private:
 private slots:
     void onValider();
     void onValideSommet();
+    void onclose();
 };
 
 #endif // SAISIE_FS_H

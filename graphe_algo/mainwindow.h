@@ -38,7 +38,6 @@ private:
     QMainWindow*d_win;
     zone_dessin* d_dessin;
     QLineEdit*num;
-    std::vector<int> d_fs;
     void vue_creer();
 
 

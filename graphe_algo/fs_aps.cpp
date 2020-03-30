@@ -78,7 +78,10 @@ fs_aps::fs_aps(std::vector<sommet>&d_sommet,std::vector<arc>&d_arc){
         }
     }
 
-    fs_aps(fs,aps,d_sommet.size(),d_arc.size());
+    d_fs = fs;
+    d_aps = aps;
+    d_nbSommet = d_sommet.size();
+    d_nbArcs = d_arc.size();
 
 
 }
@@ -114,6 +117,16 @@ fs_aps::fs_aps(matrice_Adjacence matriceAdj)
     k++;
     }*/
 
+}
+
+std::vector<int> fs_aps::getFs(){
+
+    return d_fs;
+
+}
+
+std::vector<int> fs_aps::getAps(){
+    return d_aps;
 }
 
 

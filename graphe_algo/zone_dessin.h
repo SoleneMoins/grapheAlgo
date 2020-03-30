@@ -8,7 +8,6 @@
 #include <QMessageBox>
 #include <QPoint>
 #include <QLabel>
-#include <QVBoxlayout>
 #include "arc.h"
 #include <iostream>
 #include "graphe.h"
@@ -21,36 +20,20 @@ public:
     //Constructor
     zone_dessin(QWidget *parent=nullptr);
 
-    /**
-      Return vector of arc
-      @return vector of arc
-    */
     std::vector<arc> getArcVector();
-
-    /**
-      Return vector of sommet
-      @return vector of sommet
-    */
     std::vector<sommet> getSommetVector();
 
-    std::vector<int> getfs();
+    fs_aps getFsAps();
+    graphe getGraphe();
 
-    std::vector<int> getaps();
+    void setGraphe(graphe g);
 
-    std::vector<int> getNumTarjan();
+   // std::vector<int> getNumTarjan();
 
 
-
-    /**
-      Change choice to draw
-      @param choix int for choice
-    */
     void changeChoix(int choix);
 
-    /**
-      Change number of sommet
-      @param num int for number
-    */
+
     void changeNum(int num);
 
     void changeValidation(bool v);
@@ -60,8 +43,6 @@ public:
     void save(std::ostream&ost);
 
     void open(std::istream&ist);
-
-    void genereGrapheFSAPS(std::vector<int>&fs,int nbsommet);
 
     //Clean all vector
     void nettoie();
@@ -73,10 +54,7 @@ private:
     int d_choix;
     int d_num;
     bool graphe_valide;
-    std::vector<sommet> d_sommet;
-    std::vector<arc> d_arc;
-    std::vector<QRectF> somm;
-    std::vector<QLineF> liens;
+    graphe d_graphe;
     std::vector<QPoint> points;
     void paintEvent(QPaintEvent *p);
     void mousePressEvent(QMouseEvent * event);

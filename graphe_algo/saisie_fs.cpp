@@ -15,7 +15,7 @@ void saisie_fs::vue_creer(){
     boutons->addWidget(ok);
     boutons->addWidget(closeBtn);
 
-    connect(closeBtn, SIGNAL(clicked()), this, SLOT(accept()));
+    connect(closeBtn, &QPushButton::clicked,this,&saisie_fs::onclose);
     connect(ok,&QPushButton::clicked,this,&saisie_fs::onValider);
 
 
@@ -75,6 +75,8 @@ void saisie_fs::onValider(){
         }
     }
 
+    close();
+
 }
 
 void saisie_fs::onValideSommet(){
@@ -109,4 +111,8 @@ void saisie_fs::onValideSommet(){
     }
 
 
+}
+
+void saisie_fs::onclose(){
+    close();
 }

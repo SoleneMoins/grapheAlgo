@@ -1,28 +1,45 @@
 #ifndef GRAPHE_H
 #define GRAPHE_H
 
-#include "sommet.h"
-#include "arc.h"
-#include "fs_aps.h"
+
 #include <QLine>
-#include <QrectF>
+#include <QRectF>
 #include <vector>
+#include "fs_aps.h"
+
 
 
 class graphe
 {
 public:
     graphe();
-    graphe(std::vector<sommet> sommet, std::vector<arc> arcs);
-    graphe(std::vector<int>fs,int nbsommet);
-    std::vector<sommet> getSommet()const;
-    std::vector<arc> getArc()const;
-    std::vector<QLineF> getLine()const;
-    std::vector<QRectF> getRectangle()const;
-    void construitFs(std::vector<sommet>d_sommet,std::vector<arc>d_arc);
+    graphe(std::vector<sommet>&sommet, std::vector<arc>&arcs);
+    graphe(std::vector<int>&fs,int nbsommet);
+    graphe(fs_aps fsaps);
+
+    fs_aps getfsAps();
+
+    std::vector<sommet> getSommet();
+    std::vector<arc> getArc();
+    std::vector<QLineF> getLine();
+    std::vector<QRectF> getRectangle();
+
+    sommet getS(int i);
+    arc getA(int i);
+    QRectF getR(int i);
+    QLineF getL(int i);
+
+    void ajouterSommet(sommet&s);
+    void ajouterArc(arc&a);
+    void ajouterLigne(QLineF&l);
+    void ajouterRectangle(QRectF&r);
+
     void construitVectorLine(std::vector<arc>&arcs);
     void construitVectorRectangle(std::vector<sommet>&s);
 
+    bool estValide();
+
+    void clean();
 
     void save(std::ostream&ost);
 
@@ -33,7 +50,7 @@ private:
     std::vector<arc> d_arc;
     std::vector<QLineF> d_line;
     std::vector<QRectF> d_rectangle;
-    //fs_aps d_fsaps;
+    fs_aps d_fsaps;
 
 };
 

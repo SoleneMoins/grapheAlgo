@@ -3,21 +3,24 @@
 graphe::graphe()
 {}
 
-graphe::graphe(std::vector<sommet> sommet, std::vector<arc> arcs):d_sommet{sommet},d_arc{arcs}
+graphe::graphe(std::vector<sommet>&sommet, std::vector<arc>&arcs):d_sommet{sommet},d_arc{arcs}
 {
     construitVectorRectangle(d_sommet);
     construitVectorLine(d_arc);
+
+    fs_aps f(d_sommet,d_arc);
+    d_fsaps = f;
 }
 
-graphe::graphe(std::vector<int>fs,int nbsommet)
+graphe::graphe(std::vector<int>&fs,int nbsommet)
 {
     int nbfois = 1;
     int j = 1;
     int compt = 0;
 
-    for(int i=1;i<fs.size();i++){
+    for(int i=1;i<static_cast<int>(fs.size());i++){
 
-        if(fs[i]==0||i==fs.size()-1){
+        if(fs[i]==0||i==static_cast<int>(fs.size()-1)){
             compt++;
             if(compt<=nbsommet/2){
                 sommet s(150*nbfois,100,compt);
@@ -41,12 +44,12 @@ graphe::graphe(std::vector<int>fs,int nbsommet)
    for(int i=0;i<nbsommet;i++){
 
 
-        while(fs[j]!=0&&j<fs.size()){
+        while(fs[j]!=0&&j<static_cast<int>(fs.size())){
 
             sommet s1;
             sommet s2;
 
-            for(int h=0;h<d_sommet.size();h++){
+            for(int h=0;h<static_cast<int>(d_sommet.size());h++){
                 if(d_sommet[h].getNumero()==i+1){
                     s1 = d_sommet[h];
                 }else{
@@ -71,13 +74,71 @@ graphe::graphe(std::vector<int>fs,int nbsommet)
 
     construitVectorLine(d_arc);
 
+    fs_aps f(d_sommet,d_arc);
+    d_fsaps = f;
+
 }
 
 
+graphe::graphe(fs_aps fsaps){
+
+    std::vector<int> fs = fsaps.getFs();
+    int nbsommet = fsaps.getAps()[0];
+    graphe(fs,nbsommet);
+
+}
+
+void graphe::ajouterSommet(sommet&s){
+    d_sommet.push_back(s);
+}
+void graphe::ajouterArc(arc&a){
+    d_arc.push_back(a);
+
+}
+void graphe::ajouterLigne(QLineF&l){
+    d_line.push_back(l);
+
+}
+void graphe::ajouterRectangle(QRectF&r){
+    d_rectangle.push_back(r);
+
+}
+
+
+sommet graphe::getS(int i){
+    return d_sommet[i];
+}
+
+arc graphe::getA(int i){
+    return d_arc[i];
+}
+
+QRectF graphe::getR(int i){
+    return d_rectangle[i];
+}
+
+QLineF graphe::getL(int i){
+    return d_line[i];
+}
+
+
+void graphe::clean(){
+
+    d_sommet.clear();
+    d_sommet.resize(0);
+    d_arc.clear();
+    d_arc.resize(0);
+    d_rectangle.clear();
+    d_rectangle.resize(0);
+    d_line.clear();
+    d_line.resize(0);
+    fs_aps f;
+    d_fsaps = f;
+}
 
 void graphe::construitVectorRectangle(std::vector<sommet>&s){
 
-    for(int i=0;i<s.size();i++){
+    for(int i=0;i<static_cast<int>(s.size());i++){
         QRectF r(s[i].getX(),s[i].getY(),100,100);
         d_rectangle.push_back(r);
     }
@@ -91,9 +152,9 @@ void graphe::construitVectorLine(std::vector<arc>&arcs){
     bool deuxlien = false;
     std::vector <bool> utilise(arcs.size(),false);
 
-    for(int i=0;i<arcs.size();i++){
+    for(int i=0;i<static_cast<int>(arcs.size());i++){
         if(!utilise[i]){
-            for(int j=1;j<arcs.size();j++){
+            for(int j=1;j<static_cast<int>(arcs.size());j++){
                 if(arcs[i].getSommetDepart()==arcs[j].getSommetArrive() && arcs[i].getSommetArrive()==arcs[j].getSommetDepart()){
                     deuxlien = true;
                     utilise[j] = true;
@@ -127,37 +188,50 @@ void graphe::construitVectorLine(std::vector<arc>&arcs){
 
 }
 
+bool graphe::estValide(){
+    return (d_sommet.size()>=2 && d_arc.size()>=1);
+}
 
-std::vector<sommet> graphe::getSommet()const{
+
+fs_aps graphe::getfsAps(){
+    return d_fsaps;
+}
+
+
+std::vector<sommet> graphe::getSommet(){
 
     return d_sommet;
 }
 
 
-std::vector<arc> graphe::getArc()const{
+std::vector<arc> graphe::getArc(){
 
     return d_arc;
 }
 
-std::vector<QLineF> graphe::getLine()const{
+std::vector<QLineF> graphe::getLine(){
 
     return d_line;
 
 }
 
-std::vector<QRectF> graphe::getRectangle()const{
+std::vector<QRectF> graphe::getRectangle(){
     return d_rectangle;
 }
 
 void graphe::save(std::ostream&ost){
 
-    for(int i=0;i<d_sommet.size();i++){
-        ost<<d_sommet[i];
-    }
+    ost<<d_sommet.size()<<"|";
+        for(int i=0;i<d_sommet.size();i++){
+            ost<<d_sommet[i];
+        }
 
+    ost<<d_line.size()<<"|";
     for(int i=0;i<d_line.size();i++){
-        ost<<"("<<d_line[i].p1().x()<<","<<d_line[i].p1().y()<<")"<<","<<"("<<d_line[i].p2().x()<<","<<d_line[i].p2().y()<<")";;
-    }
+         ost<<"("<<d_line[i].p1().x()<<","<<d_line[i].p1().y()<<")"<<","<<"("<<d_line[i].p2().x()<<","<<d_line[i].p2().y()<<")";
+         ost<<d_arc[i];
+         ost<<"|";
+     }
 
 }
 
@@ -165,10 +239,7 @@ void graphe::save(std::ostream&ost){
 
 void graphe::open(std::istream&ist){
 
-    d_sommet.clear();
-    d_arc.clear();
-    d_rectangle.clear();
-    d_line.clear();
+    clean();
 
     int nb_somm;
     char c;
@@ -177,6 +248,8 @@ void graphe::open(std::istream&ist){
 
     for(int i=0;i<nb_somm;i++){
         ist>>d_sommet[i];
+        QRectF r(d_sommet[i].getX(),d_sommet[i].getY(),100,100);
+        d_rectangle.push_back(r);
     }
 
     int nb_arc;

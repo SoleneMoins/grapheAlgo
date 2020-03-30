@@ -1,20 +1,21 @@
 #include "affichage_numerique.h"
 
-affichage_numerique::affichage_numerique(std::vector<int>&fs,std::vector<int>&aps,QWidget*parent):QDialog{parent},d_fs{fs},d_aps{aps}
+affichage_numerique::affichage_numerique(graphe g,QWidget*parent):QDialog{parent},d_graphe{g}
 {
 
-    //Affichage fs
+
+    fs_aps fsaps = g.getfsAps();
 
     QString tabfs = "";
     QString tabaps = "";
 
-    for(int i=0;i<d_fs.size();i++){
-        tabfs+=QString::number(d_fs[i]);
+    for(int i=0;i<fsaps.getFs().size();i++){
+        tabfs+=QString::number(fsaps.getFs()[i]);
         tabfs+="|";
     }
 
-    for(int i=0;i<d_aps.size();i++){
-        tabaps+=QString::number(d_aps[i]);
+    for(int i=0;i<fsaps.getAps().size();i++){
+        tabaps+=QString::number(fsaps.getAps()[i]);
         tabaps+="|";
     }
 
