@@ -8,8 +8,11 @@
 #include <QMessageBox>
 #include <QLabel>
 #include <QFileDialog>
+#include <QCheckBox>
 #include <QRegExpValidator>
 #include "zone_dessin.h"
+#include "saisie_fs.h"
+#include "affichage_numerique.h"
 
 
 
@@ -27,11 +30,15 @@ private slots:
     void effacer();
     void ouvrir();
     void sauvegarder();
+    void fs_apsClick();
+    void boutonNumerique();
+
 
 private:
     QMainWindow*d_win;
     zone_dessin* d_dessin;
     QLineEdit*num;
+    std::vector<int> d_fs;
     void vue_creer();
 
 

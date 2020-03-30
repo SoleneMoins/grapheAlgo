@@ -4,13 +4,17 @@
 #include<iostream>
 #include "zone_dessin.h"
 #include "matrice_adjacence.h"
+#include "graphe.h"
 
 class fs_aps
 {
     public:
+
+        fs_aps();
         fs_aps(int nbS);
-        fs_aps(zone_dessin zone);
-        fs_aps(std::vector<int> fs, std::vector<int> aps,int nbSommet,int nbArc);
+       // fs_aps(graphe g);
+        fs_aps(std::vector<sommet>&d_sommet,std::vector<arc>&d_arc);
+        fs_aps(std::vector<int>&fs, std::vector<int>&aps,int nbSommet,int nbArc);
         fs_aps(matrice_Adjacence matriceAdj);
 
         int GetLongAps()const;

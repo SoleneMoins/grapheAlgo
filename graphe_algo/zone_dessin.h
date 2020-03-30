@@ -7,9 +7,11 @@
 #include <QPaintEvent>
 #include <QMessageBox>
 #include <QPoint>
+#include <QLabel>
+#include <QVBoxlayout>
 #include "arc.h"
 #include <iostream>
-#include "sommet.h"
+#include "graphe.h"
 
 class zone_dessin:public QWidget
 {
@@ -35,8 +37,6 @@ public:
 
     std::vector<int> getaps();
 
-    void calculFS();
-
     std::vector<int> getNumTarjan();
 
 
@@ -60,6 +60,8 @@ public:
     void save(std::ostream&ost);
 
     void open(std::istream&ist);
+
+    void genereGrapheFSAPS(std::vector<int>&fs,int nbsommet);
 
     //Clean all vector
     void nettoie();

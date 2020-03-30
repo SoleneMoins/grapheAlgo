@@ -2,6 +2,9 @@
 #include <iostream>
 #include <vector>
 
+fs_aps::fs_aps()
+{}
+
 fs_aps::fs_aps(int nbS): d_nbSommet(nbS)
 {
     d_aps.clear();
@@ -13,13 +16,74 @@ fs_aps::fs_aps(int nbS): d_nbSommet(nbS)
     d_fs[0]=0;
 }
 
-fs_aps::fs_aps(zone_dessin zone){
+/*fs_aps::fs_aps(graphe g){
 
-    fs_aps(zone.getfs(),zone.getaps(),zone.getSommetVector().size(),zone.getArcVector().size());
+     std::vector<sommet> s = g.getSommet();
+     std::vector<arc> a = g.getArc();
+     fs_aps(s,a);
+
+}*/
+
+fs_aps::fs_aps(std::vector<sommet>&d_sommet,std::vector<arc>&d_arc){
+
+    std::vector<int> fs;
+    fs.push_back(0);
+    int nb = 1;
+    int nbsuc = 0;
+
+    while(nb<d_sommet.size()+1){
+
+        nbsuc = 0;
+
+        for(int i=0;i<d_arc.size();i++){
+            if(d_arc[i].getSommetDepart().getNumero()==nb){
+                fs.push_back(d_arc[i].getSommetArrive().getNumero());
+                nbsuc++;
+
+                if(fs.size()>1){
+                    if(fs[fs.size()-2]>fs[fs.size()-1]){
+                        std::swap(fs[fs.size()-2],fs[fs.size()-1]);
+                    }
+                }
+            }
+
+        }
+
+
+
+        if(nbsuc==0){
+            fs.push_back(0);
+        }
+
+        if(nb<d_sommet.size()){
+            fs.push_back(0);
+        }
+
+
+
+        nb++;
+    }
+
+
+
+    std::vector<int> aps;
+
+    aps.push_back(d_sommet.size());
+    aps.push_back(1);
+
+    for(int i=1;i<fs.size();i++){
+
+        if(i!=fs.size()-1&&fs[i]==0){
+            aps.push_back(i+2);
+        }
+    }
+
+    fs_aps(fs,aps,d_sommet.size(),d_arc.size());
+
 
 }
 
-fs_aps::fs_aps(std::vector<int> fs, std::vector<int> aps,int nbSommet,int nbArc):d_fs{fs},d_aps{aps},d_nbSommet{nbSommet},d_nbArcs{nbArc}
+fs_aps::fs_aps(std::vector<int>&fs, std::vector<int>&aps,int nbSommet,int nbArc):d_fs{fs},d_aps{aps},d_nbSommet{nbSommet},d_nbArcs{nbArc}
 {}
 
 

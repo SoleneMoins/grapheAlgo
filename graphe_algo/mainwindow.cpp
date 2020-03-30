@@ -59,12 +59,26 @@ void MainWindow::vue_creer(){
 
 
 
+        // Menu Changer affichage
+        auto labeltitre4 = new QLabel{"AFFICHAGE"};
+
+        auto numerique = new QPushButton{"NUMERIQUE"};
+        numerique->setStyleSheet("background:#202020;height:30px;");
+
+
+
+
+        labeltitre4->setMargin(10);
+        labeltitre4->setStyleSheet("font-size:15px;background:#161616");
+
 
 
         // Menu Générer
         auto labeltitre2 = new QLabel{"GENEREZ  UN  GRAPHE"};
         auto charger = new QPushButton{"OUVRIR UN GRAPHE"};
+        auto fs_aps = new QPushButton{"SAISIR FS"};
         charger->setStyleSheet("background:#202020;height:30px;");
+        fs_aps->setStyleSheet("background:#202020;height:30px;");
         labeltitre2->setMargin(10);
         labeltitre2->setStyleSheet("font-size:15px;background:#161616");
 
@@ -107,8 +121,13 @@ void MainWindow::vue_creer(){
         layoutbouton->addWidget(efface);
 
         layoutbouton->addStretch(1);
+        layoutbouton->addWidget(labeltitre4);
+        layoutbouton->addWidget(numerique);
+
+        layoutbouton->addStretch(1);
         layoutbouton->addWidget(labeltitre2);
         layoutbouton->addWidget(charger);
+        layoutbouton->addWidget(fs_aps);
 
         layoutbouton->addStretch(1);
         layoutbouton->addWidget(labeltitre3);
@@ -128,6 +147,8 @@ void MainWindow::vue_creer(){
     connect(valider,&QPushButton::clicked,this,&MainWindow::valider);
     connect(charger,&QPushButton::clicked,this,&MainWindow::ouvrir);
     connect(sauvegarder,&QPushButton::clicked,this,&MainWindow::sauvegarder);
+    connect(fs_aps,&QPushButton::clicked,this,&MainWindow::fs_apsClick);
+    connect(numerique,&QPushButton::clicked,this,&MainWindow::boutonNumerique);
 
 
     //Layout central
@@ -208,6 +229,7 @@ void MainWindow::valider(){
             d_dessin->changeValidation(true);
             msg.setText("Graphe validé !");
             msg.exec();
+            d_fs = d_dessin->getfs();
         }
     }
 
@@ -241,3 +263,26 @@ void MainWindow::sauvegarder(){
     }
 
 }
+
+void MainWindow::fs_apsClick(){
+    auto boite = new saisie_fs();
+    boite->exec();
+    d_fs = boite->getfs();
+    d_dessin->genereGrapheFSAPS(d_fs,boite->nbSommet());
+
+}
+
+void MainWindow::boutonNumerique(){
+    if(d_dessin->validationGraphe()){
+      std::vector<int> aps = d_dessin->getaps();
+     auto boite = new affichage_numerique(d_fs,aps);
+     boite->exec();
+    }else{
+        QMessageBox msg;
+        msg.setText("Votre graphe n'a pas été validé");
+        msg.exec();
+    }
+
+}
+
+

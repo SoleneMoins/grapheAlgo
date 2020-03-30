@@ -22,10 +22,11 @@ std::vector<sommet> zone_dessin::getSommetVector(){
     return d_sommet;
 }
 
+
 std::vector<int> zone_dessin::getfs(){
 
     std::vector<int> fs;
-
+    fs.push_back(0);
     int nb = 1;
     int nbsuc = 0;
 
@@ -62,6 +63,7 @@ std::vector<int> zone_dessin::getfs(){
         nb++;
     }
 
+
     return fs;
 
 }
@@ -74,19 +76,16 @@ std::vector<int> zone_dessin::getaps(){
     std::vector<int> aps;
     std::vector<int> fs = getfs();
 
+
+    aps.push_back(d_sommet.size());
     aps.push_back(1);
 
     for(int i=1;i<fs.size();i++){
 
-        if(i!=fs.size()-1;fs[i]==0){
+        if(i!=fs.size()-1&&fs[i]==0){
             aps.push_back(i+2);
         }
     }
-
-    for(int i=0;i<aps.size();i++){
-        std::cout<<aps[i]<<"|";
-    }
-
     return aps;
 }
 
@@ -157,7 +156,7 @@ void zone_dessin::open(std::istream&ist){
         ist>>c;
 
     }
-
+    graphe_valide = true;
     update();
 
 }
@@ -237,7 +236,15 @@ std::vector<int> zone_dessin::getNumTarjan(){
 
 
 
-void zone_dessin::calculFS(){
+void zone_dessin::genereGrapheFSAPS(std::vector<int>&fs,int nbsommet){
+
+    nettoie();
+    graphe g(fs,nbsommet);
+    d_sommet = g.getSommet();
+    d_arc = g.getArc();
+    liens = g.getLine();
+    somm = g.getRectangle();
+    update();
 
 }
 
@@ -258,6 +265,8 @@ void zone_dessin::mousePressEvent( QMouseEvent * event){
 
 
 }
+
+
 
 void zone_dessin::paintEvent(QPaintEvent*p){
 
@@ -350,14 +359,7 @@ if(graphe_valide==false || d_choix!=4){
         }
 }
 
-if(graphe_valide){
-
-    getaps();
-
-}
-
-
-
+if(d_choix!=5){
 
 
           for(int i=0; i<static_cast<int>(d_sommet.size());i++){
@@ -390,6 +392,8 @@ if(graphe_valide){
 
 
         }
+
+}
 
 
 
