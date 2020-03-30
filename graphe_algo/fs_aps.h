@@ -14,7 +14,7 @@ class fs_aps
         int GetLongFs()const;
         int nbSommets()const;
         int getNbArc() const;
-
+        void determiner_rang(std::vector<int> fs,std::vector<int> aps, int *&rang, int *&num) const ;
         //void ajouterSommet();
 
     private:

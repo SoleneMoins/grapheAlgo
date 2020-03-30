@@ -93,3 +93,46 @@ int fs_aps::getNbArc() const
     }
 
 }*/
+
+void fs_aps::determiner_rang(std::vector<int> fs, std::vector<int> aps, int *&rang, int *&num) const {
+    int n=aps[0], r=0, pas=-1, e=0, d=n+1, x, s, t=0; rang = new int[n+1];
+    num = new int[n+1];
+    rang[0]=n;
+    int *ddi=new int[n+1];
+    for(int i=1; i<=n; i++) {
+        rang[i]=0;
+        ddi[i]=0;
+    }
+    int *pile = new int[n+1];
+    for(int i=1; i<fs[0]; i++){
+        if(fs[i]!=0){
+            ddi[fs[i]]++;
+        }
+    }
+    for(int i=1; i<=n; i++){
+        if(ddi[i]==0){
+            pile[++e]=i;
+        }
+    }
+    while((e!=0) && (e!=n+1)) {
+        x=e;
+        e=d;
+        d=x;
+        while((d!=0) && (d!=n+1)) {
+            s=pile[d];
+            d+=pas;
+            rang[s]=r;
+            num[s]=++t;
+            for(int l=aps[s]; fs[l]>0; l++) {
+                ddi[fs[l]]--;
+                if(ddi[fs[l]] == 0) {
+                    e+=pas;
+                    pile[e] = fs[l];
+                }
+            }
+
+        }
+        r++;
+        pas=-pas;
+    }
+}
