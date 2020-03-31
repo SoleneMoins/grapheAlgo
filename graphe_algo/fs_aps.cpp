@@ -104,6 +104,49 @@ std::vector<int> fs_aps::aps() const {
 
 }*/
 
+void fs_aps::determiner_rang(int *&rang, int *&num) const {
+    int n=d_aps[0], r=0, pas=-1, e=0, d=n+1, x, s, t=0; rang = new int[n+1];
+    num = new int[n+1];
+    rang[0]=n;
+    int *ddi=new int[n+1];
+    for(int i=1; i<=n; i++) {
+        rang[i]=0;
+        ddi[i]=0;
+    }
+    int *pile = new int[n+1];
+    for(int i=1; i<d_fs[0]; i++){
+        if(d_fs[i]!=0){
+            ddi[d_fs[i]]++;
+        }
+    }
+    for(int i=1; i<=n; i++){
+        if(ddi[i]==0){
+            pile[++e]=i;
+        }
+    }
+    while((e!=0) && (e!=n+1)) {
+        x=e;
+        e=d;
+        d=x;
+        while((d!=0) && (d!=n+1)) {
+            s=pile[d];
+            d+=pas;
+            rang[s]=r;
+            num[s]=++t;
+            for(int l=d_aps[s]; d_fs[l]>0; l++) {
+                ddi[d_fs[l]]--;
+                if(ddi[d_fs[l]] == 0) {
+                    e+=pas;
+                    pile[e] = d_fs[l];
+                }
+            }
+
+        }
+        r++;
+        pas=-pas;
+    }
+}
+
 std::vector<int> fs_aps::distance() {
     int m=d_aps[0];
     std::vector<int> dist;
@@ -121,25 +164,21 @@ std::vector<int> fs_aps::distance() {
     int t=-1;
     int q=0;
     int p=0;
-    while(t<q)
-    {
-     for(int i=t+1;i<=q;i++)
-     {
+    while(t<q){
+     for(int i=t+1;i<=q;i++){
       int u=fileAttente[i];
       int v;
-      for(int k=d_aps[u]; (v=d_fs[k])!=0;k++)
+      for(int k=d_aps[u]; (v=d_fs[k])!=0;k++){
     // v est un successeur de u, on teste sa distance
-        {
-            if( dist[v] ==-1 )
-            {
+        
+            if( dist[v] ==-1 ){
                 dist[v]=d;
                 fileAttente[++p]=v;
             }
        }
-    t = q;
-    q = p;
-    } // while
-
+      t = q;
+      q = p;
+      } 
     }
     return dist;
 

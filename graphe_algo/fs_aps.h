@@ -17,8 +17,8 @@ class fs_aps
         std::vector<int> aps()const;
         int nbSommets()const;
         int getNbArc() const;
+        void determiner_rang(int *&rang, int *&num) const ;
         std::vector<int>  distance();
-
         //void ajouterSommet();
 
     private:
