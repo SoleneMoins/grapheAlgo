@@ -9,7 +9,7 @@ class fs_aps
         fs_aps();
         fs_aps(int nbS);
         fs_aps(std::vector<int> fs, std::vector<int> aps,int nbSommet,int nbArc);
-        fs_aps(matrice_Adjacence matriceAdj);
+        //fs_aps(matrice_Adjacence matrice);
 
         int GetLongAps()const;
         int GetLongFs()const;
@@ -17,7 +17,7 @@ class fs_aps
         std::vector<int> aps()const;
         int nbSommets()const;
         int getNbArc() const;
-        void distance(int *fa, std::vector<int> aps, int *&d);
+        std::vector<int>  distance();
 
         //void ajouterSommet();
 
