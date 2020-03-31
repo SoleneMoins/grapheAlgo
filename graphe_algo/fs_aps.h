@@ -12,6 +12,7 @@ class fs_aps
 {
     public:
         //fs_aps(int nbS);
+        fs_aps(std::vector<int> fs, std::vector<int> aps,int nbSommet,int nbArc);
         fs_aps(std::vector<int> &fs, std::vector<int> &aps);
         fs_aps(matrice_Adjacence matriceAdj);
         void ajouterSommet();

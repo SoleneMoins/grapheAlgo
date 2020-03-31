@@ -7,7 +7,7 @@
 #include<stack>
 
 
-/*fs_aps::fs_aps(int nbS): d_nbSommet(nbS)
+fs_aps::fs_aps(int nbS): d_nbSommet(nbS)
 {
     d_aps.clear();
     d_fs.clear();
@@ -16,8 +16,9 @@
     d_aps[1]=1;
     d_fs.resize(1);
     d_fs[0]=0;
-}*/
-
+}
+fs_aps::fs_aps(std::vector<int> fs, std::vector<int> aps,int nbSommet,int nbArc):d_fs{fs},d_aps{aps},d_nbSommet{nbSommet},d_nbArcs{nbArc}
+{}
 fs_aps::fs_aps(std::vector<int> &fs, std::vector<int> &aps):d_fs{fs},d_aps{aps}
 {
     d_nbSommet = d_aps.size()-1;
