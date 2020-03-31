@@ -94,8 +94,8 @@ int fs_aps::getNbArc() const
 
 }*/
 
-void fs_aps::determiner_rang(std::vector<int> fs, std::vector<int> aps, int *&rang, int *&num) const {
-    int n=aps[0], r=0, pas=-1, e=0, d=n+1, x, s, t=0; rang = new int[n+1];
+void fs_aps::determiner_rang(int *&rang, int *&num) const {
+    int n=d_aps[0], r=0, pas=-1, e=0, d=n+1, x, s, t=0; rang = new int[n+1];
     num = new int[n+1];
     rang[0]=n;
     int *ddi=new int[n+1];
@@ -104,9 +104,9 @@ void fs_aps::determiner_rang(std::vector<int> fs, std::vector<int> aps, int *&ra
         ddi[i]=0;
     }
     int *pile = new int[n+1];
-    for(int i=1; i<fs[0]; i++){
-        if(fs[i]!=0){
-            ddi[fs[i]]++;
+    for(int i=1; i<d_fs[0]; i++){
+        if(d_fs[i]!=0){
+            ddi[d_fs[i]]++;
         }
     }
     for(int i=1; i<=n; i++){
@@ -123,11 +123,11 @@ void fs_aps::determiner_rang(std::vector<int> fs, std::vector<int> aps, int *&ra
             d+=pas;
             rang[s]=r;
             num[s]=++t;
-            for(int l=aps[s]; fs[l]>0; l++) {
-                ddi[fs[l]]--;
-                if(ddi[fs[l]] == 0) {
+            for(int l=d_aps[s]; d_fs[l]>0; l++) {
+                ddi[d_fs[l]]--;
+                if(ddi[d_fs[l]] == 0) {
                     e+=pas;
-                    pile[e] = fs[l];
+                    pile[e] = d_fs[l];
                 }
             }
 
