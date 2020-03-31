@@ -1,9 +1,7 @@
 #include "mainwindow.h"
-#include "zone_dessin.h"
 #include <iostream>
 #include <QApplication>
 #include <iostream>
-#include "fs_aps.h"
 #include<stack>
 #include <QDebug>
 

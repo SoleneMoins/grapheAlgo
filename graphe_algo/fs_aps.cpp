@@ -147,20 +147,6 @@ int fs_aps::getNbArc() const {
     return d_nbArcs;
 }
 
-std::vector<int> fs_aps::fs() const {
-    return d_fs;
-}
-
-std::vector<int> fs_aps::aps() const {
-    return d_aps;
-}
-
-int fs_aps::getAps(int i) const {
-    return d_aps[i];
-}
-int fs_aps::getFs(int i) const{
-    return d_fs[i];
-}
 
 
 /*void fs_aps::ajouterSommet()
