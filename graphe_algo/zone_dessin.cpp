@@ -159,6 +159,10 @@ void zone_dessin::effacerSommet(int i){
     d_graphe.effacerSommet(i);
 }
 
+void zone_dessin::effacerArc(int i){
+    d_graphe.effacerArc(i);
+}
+
 void zone_dessin::mousePressEvent( QMouseEvent * event){
 
     xPress = event->pos().x();
@@ -203,6 +207,7 @@ if(d_choix!=4){
             points.resize(0);
 
         }else{
+
 
           if(d_choix==0){
 

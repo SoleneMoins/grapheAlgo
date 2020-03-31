@@ -35,6 +35,7 @@ private slots:
     void boutonEffacerSommet();
 
 
+
 private:
     QMainWindow*d_win;
     zone_dessin* d_dessin;

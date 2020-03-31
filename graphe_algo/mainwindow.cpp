@@ -52,11 +52,15 @@ void MainWindow::vue_creer(){
 
 
             //Liens
-            auto ligne = new QPushButton{"LIEN"};
+            auto ligne = new QPushButton{"ARC"};
             ligne->setStyleSheet("background:#202020;height:30px;");
 
+            //Effacer Sommet
             auto eff = new QPushButton{"EFFACER SOMMET"};
             eff->setStyleSheet("background:#202020;height:30px;");
+
+
+
 
 
 
@@ -121,6 +125,7 @@ void MainWindow::vue_creer(){
         layoutbouton->addLayout(layoutsommet);
         layoutbouton->addWidget(ligne);
         layoutbouton->addWidget(eff);
+
         layoutbouton->addStretch(1);
         layoutbouton->addWidget(labeltitre4);
         layoutbouton->addWidget(numerique);
@@ -150,6 +155,7 @@ void MainWindow::vue_creer(){
     connect(fs_aps,&QPushButton::clicked,this,&MainWindow::fs_apsClick);
     connect(numerique,&QPushButton::clicked,this,&MainWindow::boutonNumerique);
     connect(eff,&QPushButton::clicked,this,&MainWindow::boutonEffacerSommet);
+
 
 
     //Layout central
@@ -301,9 +307,17 @@ void MainWindow::boutonNumerique(){
 }
 
 void MainWindow::boutonEffacerSommet(){
-    d_dessin->changeChoix(6);
+    if(d_dessin->validationGraphe()){
+        QMessageBox msg;
+        msg.setText("Votre graphe a été validé, il ne peut plus être modifié.");
+        msg.exec();
+    }else{
+        d_dessin->changeChoix(6);
+    }
 
 }
+
+
 
 
 

@@ -214,15 +214,22 @@ void graphe::effacerSommet(int i){
     for(int j=0;j<arcsize;j++){
         if(s.getNumero()==d_arc[j].getSommetDepart().getNumero()||s.getNumero()==d_arc[j].getSommetArrive().getNumero()){
 
-            for(int h=j;h<d_arc.size()-1;h++){
-                d_arc[h] = d_arc[h+1];
-                j--;
-            }
+            effacerArc(j);
+            j--;
             arcsize--;
-            d_arc.pop_back();
-            construitVectorLine(d_arc);
+
         }
     }
+}
+
+void graphe::effacerArc(int i){
+
+    for(int j=i;j<d_arc.size()-1;j++){
+        d_arc[j] = d_arc[j+1];
+    }
+
+    d_arc.pop_back();
+    construitVectorLine(d_arc);
 }
 
 

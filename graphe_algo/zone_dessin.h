@@ -34,6 +34,7 @@ public:
     void changeChoix(int choix);
 
     void effacerSommet(int i);
+    void effacerArc(int i);
 
 
     void changeNum(int num);
