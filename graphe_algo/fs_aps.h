@@ -11,23 +11,31 @@ const int MAXPOIDS=10000;
 class fs_aps
 {
     public:
-        //fs_aps(int nbS);
+        fs_aps();
+        fs_aps(int nbS);
         fs_aps(std::vector<int> fs, std::vector<int> aps,int nbSommet,int nbArc);
         fs_aps(std::vector<int> &fs, std::vector<int> &aps);
         fs_aps(matrice_Adjacence matriceAdj);
         void ajouterSommet();
+        
+        //fs_aps(matrice_Adjacence matrice);
 
         int GetLongAps()const;
         int GetLongFs()const;
+        std::vector<int> fs() const;
+        std::vector<int> aps()const;
         int nbSommets()const;
         int getNbArc() const;
         int getAps(int i) const;
         int getFs(int i) const;
 
+        void determiner_rang(int *&rang, int *&num) const ;
+        std::vector<int>  distance();
+  
         void Tarjan()const;
         void Dijkstra(const std::vector<std::vector<int>>&C,std::vector<int> &d, std::vector<int> &pred,std::vector<bool> &S)const;
 
-
+       
         //void ajouterSommet();
 
     private:
