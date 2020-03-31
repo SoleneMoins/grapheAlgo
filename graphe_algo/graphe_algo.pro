@@ -21,14 +21,16 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     matrice_adjacence.cpp \
-    sommet.cpp
+    sommet.cpp \
+    zone_dessin.cpp
 
 HEADERS += \
     arc.h \
     fs_aps.h \
     mainwindow.h \
     matrice_adjacence.h \
-    sommet.h
+    sommet.h \
+    zone_dessin.h
 
 FORMS += \
     mainwindow.ui
