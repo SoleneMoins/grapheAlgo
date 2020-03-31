@@ -1,7 +1,8 @@
 #include "fs_aps.h"
 #include <iostream>
 #include <vector>
-
+fs_aps::fs_aps(): d_nbSommet{0}, d_nbArcs{0}
+{}
 fs_aps::fs_aps(int nbS): d_nbSommet(nbS)
 {
     d_aps.clear();
@@ -17,10 +18,10 @@ fs_aps::fs_aps(std::vector<int> fs, std::vector<int> aps,int nbSommet,int nbArc)
 {}
 
 
-fs_aps::fs_aps(matrice_Adjacence matriceAdj)
+/*fs_aps::fs_aps(matrice_Adjacence matriceAdj)
 {
     //IL FAUT D ABORD FAIRE LA SURCHARGE D'OPERATEUR NUMERO1
-    /*int d_nbSommet = matriceAdj[0][0];
+    int d_nbSommet = matriceAdj[0][0];
     int d_nbArcs= matriceAdj[0][1];
     std::vector<int> fs(d_nbSommet+d_nbArcs+1);
     std::vector<int> aps(nbSommet+1);
@@ -42,9 +43,9 @@ fs_aps::fs_aps(matrice_Adjacence matriceAdj)
         }
     fs[k]=0;
     k++;
-    }*/
+    }
 
-}
+}*/
 
 
 int fs_aps::GetLongAps()const
@@ -65,6 +66,15 @@ int fs_aps::getNbArc() const
 {
     return d_nbArcs;
 }
+
+std::vector<int> fs_aps::fs() const {
+    return d_fs;
+}
+
+std::vector<int> fs_aps::aps() const {
+    return d_aps;
+}
+
 
 /*void fs_aps::ajouterSommet()
 {
@@ -93,3 +103,44 @@ int fs_aps::getNbArc() const
     }
 
 }*/
+
+std::vector<int> fs_aps::distance() {
+    int m=d_aps[0];
+    std::vector<int> dist;
+    dist.clear();
+    dist.resize(m+1);
+    dist[0]=m;
+    for(int i = 1; i<=m; i++)
+        dist[i]=-1;
+    dist[d_nbSommet]=0;
+    int d=0;
+    std::vector<int> fileAttente;
+    fileAttente.clear();
+    fileAttente.resize(m);
+    fileAttente[0]=d_nbSommet;
+    int t=-1;
+    int q=0;
+    int p=0;
+    while(t<q)
+    {
+     for(int i=t+1;i<=q;i++)
+     {
+      int u=fileAttente[i];
+      int v;
+      for(int k=d_aps[u]; (v=d_fs[k])!=0;k++)
+    // v est un successeur de u, on teste sa distance
+        {
+            if( dist[v] ==-1 )
+            {
+                dist[v]=d;
+                fileAttente[++p]=v;
+            }
+       }
+    t = q;
+    q = p;
+    } // while
+
+    }
+    return dist;
+
+}

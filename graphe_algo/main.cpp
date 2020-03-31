@@ -1,7 +1,9 @@
 #include "mainwindow.h"
 #include "zone_dessin.h"
+#include <iostream>
 
 #include <QApplication>
+using namespace std;
 
 int main(int argc, char *argv[])
 {
