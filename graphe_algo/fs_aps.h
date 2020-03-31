@@ -8,7 +8,7 @@ class fs_aps
     public:
         fs_aps(int nbS);
         fs_aps(std::vector<int> fs, std::vector<int> aps,int nbSommet,int nbArc);
-        fs_aps(matrice_Adjacence matriceAdj);
+        fs_aps(matrice_Adjacence matriceAdj);// fs aps a partir de matrice d'adjacence
 
         int GetLongAps()const;
         int GetLongFs()const;
@@ -16,6 +16,9 @@ class fs_aps
         int getNbArc() const;
 
         //void ajouterSommet();
+        void fs_aps2fp_app(std::vector<int> &fp,std::vector<int> &app); //Passe de fs aps a fp app
+        void chemin_critique(std::vector<std::vector<int>> fp, std::vector<int> app, std::vector<int> &fpc, std::vector<int>&appc, std::vector<int>&lc);
+        void ordonnancement(std::vector<int>d, std::vector<int>&lc, std::vector<int>&fpc, std::vector<int>&appc);
 
     private:
 
