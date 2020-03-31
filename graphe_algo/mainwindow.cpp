@@ -3,10 +3,12 @@
 
 MainWindow::MainWindow():d_win(this){
     setWindowTitle("GRAPHE-ALGO");
+    setStyleSheet("background:#323232;color:#FDFEFE");
     vue_creer();
 }
 
 void MainWindow::vue_creer(){
+
 
     //Zone de dessin
     d_dessin = new zone_dessin();
@@ -47,6 +49,7 @@ void MainWindow::vue_creer(){
 
             auto labelnum = new QLabel{"Numéro : "};
             num = new QLineEdit{};
+            num->setStyleSheet("background:#1E1E1E;border:1px solid #4F4F4F");
             QRegExp rx ("[0-9]");
             num->setValidator (new QRegExpValidator (rx, this));
 
@@ -89,7 +92,9 @@ void MainWindow::vue_creer(){
         auto sommet1Label = new QLabel{"Sommet 1 :"};
         auto sommet2Label = new QLabel{"Sommet 2 :"};
         auto somm1 = new QLineEdit{};
+        somm1->setStyleSheet("background:#1E1E1E;border:1px solid #4F4F4F");
         auto somm2 = new QLineEdit{};
+        somm2->setStyleSheet("background:#1E1E1E;border:1px solid #4F4F4F");
         auto distance = new QPushButton{"DISTANCE"};
         auto ccourt = new QPushButton{"CHEMIN COURT"};
         auto clong = new QPushButton{"CHEMIN LONG"};
