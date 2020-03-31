@@ -155,6 +155,10 @@ void zone_dessin::changeValidation(bool v){
     graphe_valide=v;
 }
 
+void zone_dessin::effacerSommet(int i){
+    d_graphe.effacerSommet(i);
+}
+
 void zone_dessin::mousePressEvent( QMouseEvent * event){
 
     xPress = event->pos().x();
@@ -162,11 +166,13 @@ void zone_dessin::mousePressEvent( QMouseEvent * event){
 
     points.push_back(event->pos());
 
+
     update();
 
 
 
 }
+
 
 
 
@@ -186,75 +192,88 @@ void zone_dessin::paintEvent(QPaintEvent*p){
 
 if(d_choix!=4){
 
-      if(d_choix==0){
-
-            sommet som(xPress-40,yPress-40,d_num);
-            QRectF r(som.getX(),som.getY(),100,100);
-            d_graphe.ajouterRectangle(r);
-            d_graphe.ajouterSommet(som);
-            points.pop_back();
-            d_choix = 3;
-
+        if(d_choix==6){
+            QPointF p(xPress,yPress);
+            for(int i=0;i<d_graphe.getRectangle().size();i++){
+                if(d_graphe.getR(i).contains(p)){
+                    effacerSommet(i);
+                }
+            }
+            points.clear();
+            points.resize(0);
 
         }else{
 
-          if(d_choix==1){
-              if(points.size()==2){
+          if(d_choix==0){
 
-                  sommet somm1;
-                  sommet somm2;
-
-                  for(int i=0;i<d_graphe.getSommet().size();i++){
-
-                      if(d_graphe.getR(i).contains(points[0])){
-                          somm1 = d_graphe.getSommet()[i];
-                      }
-
-                      if(d_graphe.getR(i).contains(points[1])){
-                          somm2 = d_graphe.getSommet()[i];
-                      }
+                sommet som(xPress-40,yPress-40,d_num);
+                QRectF r(som.getX(),som.getY(),100,100);
+                d_graphe.ajouterRectangle(r);
+                d_graphe.ajouterSommet(som);
+                points.pop_back();
+                d_choix = 3;
 
 
+            }else{
 
-                  }
+              if(d_choix==1){
+                  if(points.size()==2){
 
-                  if(somm1.estVide()==false&&somm2.estVide()==false){
+                      sommet somm1;
+                      sommet somm2;
 
-                      bool exist = false;
+                      for(int i=0;i<d_graphe.getSommet().size();i++){
 
-                      for(int i=0;i<d_graphe.getArc().size();i++){
-                          if(d_graphe.getA(i).getSommetDepart()==somm1 && d_graphe.getA(i).getSommetArrive()==somm2){
-                              exist = true;
+                          if(d_graphe.getR(i).contains(points[0])){
+                              somm1 = d_graphe.getSommet()[i];
                           }
+
+                          if(d_graphe.getR(i).contains(points[1])){
+                              somm2 = d_graphe.getSommet()[i];
+                          }
+
+
+
                       }
 
-                      if(exist==false){
+                      if(somm1.estVide()==false&&somm2.estVide()==false){
 
-                          arc a(somm1,somm2,0);
-                          d_graphe.ajouterArc(a);
+                          bool exist = false;
 
-                          QLineF l(points[0],points[1]);
-                          d_graphe.ajouterLigne(l);
+                          for(int i=0;i<d_graphe.getArc().size();i++){
+                              if(d_graphe.getA(i).getSommetDepart()==somm1 && d_graphe.getA(i).getSommetArrive()==somm2){
+                                  exist = true;
+                              }
+                          }
+
+                          if(exist==false){
+
+                              arc a(somm1,somm2,0);
+                              d_graphe.ajouterArc(a);
+
+                              QLineF l(points[0],points[1]);
+                              d_graphe.ajouterLigne(l);
+                          }
+
                       }
+
+                      points.clear();
+                      points.resize(0);
+
 
                   }
+              }else{
 
-                  points.clear();
-                  points.resize(0);
+
+
+                      //Test
+                      std::cout<<"Veuillez choisir"<<std::endl;
+                      points.clear();
+                      points.resize(0);
+
 
 
               }
-          }else{
-
-
-
-                  //Test
-                  std::cout<<"Veuillez choisir"<<std::endl;
-                  points.clear();
-                  points.resize(0);
-
-
-
           }
 
         }

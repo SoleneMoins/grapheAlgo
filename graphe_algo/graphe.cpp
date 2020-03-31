@@ -143,10 +143,13 @@ void graphe::clean(){
 
 void graphe::construitVectorRectangle(std::vector<sommet>&s){
 
+    std::vector <QRectF> rr;
     for(int i=0;i<static_cast<int>(s.size());i++){
         QRectF r(s[i].getX(),s[i].getY(),100,100);
-        d_rectangle.push_back(r);
+        rr.push_back(r);
     }
+
+    d_rectangle = rr;
 
 }
 
@@ -156,6 +159,7 @@ void graphe::construitVectorLine(std::vector<arc>&arcs){
 
     bool deuxlien = false;
     std::vector <bool> utilise(arcs.size(),false);
+    std::vector <QLineF> lig;
 
     for(int i=0;i<static_cast<int>(arcs.size());i++){
         if(!utilise[i]){
@@ -175,13 +179,13 @@ void graphe::construitVectorLine(std::vector<arc>&arcs){
 
             if(!deuxlien){
                 QLineF l(p1,p2);
-                d_line.push_back(l);
+                lig.push_back(l);
             }else{
 
                 QLineF l1(p1,p2);
                 QLineF l2(d_arc[i].getSommetArrive().getX()+20,d_arc[i].getSommetArrive().getY()+20,d_arc[i].getSommetDepart().getX()+20,d_arc[i].getSommetDepart().getY()+20);
-                d_line.push_back(l1);
-                d_line.push_back(l2);
+                lig.push_back(l1);
+                lig.push_back(l2);
                 deuxlien = false;
             }
 
@@ -191,7 +195,37 @@ void graphe::construitVectorLine(std::vector<arc>&arcs){
 
     }
 
+    d_line = lig;
+
 }
+
+void graphe::effacerSommet(int i){
+
+    sommet s = d_sommet[i];
+
+    for(int j=i;j<d_sommet.size()-1;j++){
+        d_sommet[j] = d_sommet[j+1];
+    }
+
+    d_sommet.pop_back();
+    construitVectorRectangle(d_sommet);
+
+    int arcsize = d_arc.size();
+    for(int j=0;j<arcsize;j++){
+        if(s.getNumero()==d_arc[j].getSommetDepart().getNumero()||s.getNumero()==d_arc[j].getSommetArrive().getNumero()){
+
+            for(int h=j;h<d_arc.size()-1;h++){
+                d_arc[h] = d_arc[h+1];
+                j--;
+            }
+            arcsize--;
+            d_arc.pop_back();
+            construitVectorLine(d_arc);
+        }
+    }
+}
+
+
 
 bool graphe::estValide(){
 

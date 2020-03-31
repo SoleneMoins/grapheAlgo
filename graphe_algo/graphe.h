@@ -34,6 +34,8 @@ public:
     void ajouterLigne(QLineF&l);
     void ajouterRectangle(QRectF&r);
 
+    void effacerSommet(int i);
+
     void construitVectorLine(std::vector<arc>&arcs);
     void construitVectorRectangle(std::vector<sommet>&s);
 

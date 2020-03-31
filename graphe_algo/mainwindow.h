@@ -32,6 +32,7 @@ private slots:
     void sauvegarder();
     void fs_apsClick();
     void boutonNumerique();
+    void boutonEffacerSommet();
 
 
 private:

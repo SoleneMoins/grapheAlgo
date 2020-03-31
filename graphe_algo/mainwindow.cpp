@@ -55,6 +55,9 @@ void MainWindow::vue_creer(){
             auto ligne = new QPushButton{"LIEN"};
             ligne->setStyleSheet("background:#202020;height:30px;");
 
+            auto eff = new QPushButton{"EFFACER SOMMET"};
+            eff->setStyleSheet("background:#202020;height:30px;");
+
 
 
         // Menu Numerique
@@ -117,6 +120,7 @@ void MainWindow::vue_creer(){
         layoutsommet->addWidget(cercle);
         layoutbouton->addLayout(layoutsommet);
         layoutbouton->addWidget(ligne);
+        layoutbouton->addWidget(eff);
         layoutbouton->addStretch(1);
         layoutbouton->addWidget(labeltitre4);
         layoutbouton->addWidget(numerique);
@@ -145,6 +149,7 @@ void MainWindow::vue_creer(){
     connect(sauvegarder,&QPushButton::clicked,this,&MainWindow::sauvegarder);
     connect(fs_aps,&QPushButton::clicked,this,&MainWindow::fs_apsClick);
     connect(numerique,&QPushButton::clicked,this,&MainWindow::boutonNumerique);
+    connect(eff,&QPushButton::clicked,this,&MainWindow::boutonEffacerSommet);
 
 
     //Layout central
@@ -294,5 +299,11 @@ void MainWindow::boutonNumerique(){
     }
 
 }
+
+void MainWindow::boutonEffacerSommet(){
+    d_dessin->changeChoix(6);
+
+}
+
 
 
