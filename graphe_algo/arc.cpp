@@ -35,14 +35,14 @@ void arc::setArc(const arc& a)
 }
 void arc::save(std::ostream&ost){
 
-    ost<<"("<<d_sommetDepart<<","<<d_sommetArrive<<")";
+    ost<<"("<<d_sommetDepart<<","<<d_sommetArrive<<")"<<d_valeur;
 
 }
 
 void arc::open(std::istream&ist){
 
     char c;
-    ist>>c>>d_sommetDepart>>c>>d_sommetArrive>>c;
+    ist>>c>>d_sommetDepart>>c>>d_sommetArrive>>c>>d_valeur;
 
 }
 
