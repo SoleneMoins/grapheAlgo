@@ -308,7 +308,7 @@ void fs_aps::traverse(int s, std::vector<int>& num, std::vector<int> &mu,std::ve
 
 }
 
-void fs_aps::Tarjan()const
+std::vector<int> fs_aps::Tarjan()const
 {
      int n = d_nbSommet;
      std::vector<int> num(n+1,0);
@@ -329,23 +329,10 @@ void fs_aps::Tarjan()const
          }
      }
 
-
-
-     for(int i=0; i<n+1; i++)
-     {
-         QTextStream(stdout)<<num[i]<<" ";
-     }
-        QTextStream(stdout)<<"\n";
-
-
-     for(int i=0; i<n+1; i++)
-     {
-         QTextStream(stdout)<<"CFC :"<<cfc[i]<<" ";
-     }
-     QTextStream(stdout)<<"\n";
+    return cfc;
 }
 
-void fs_aps::neoDijkstra(const std::vector<std::vector<int>>&C,std::vector<int> &d, std::vector<int> &pred,std::vector<bool> &S, int s) const
+std::vector<int> fs_aps::neoDijkstra(const std::vector<std::vector<int>>&C,std::vector<int> &d, std::vector<int> &pred,std::vector<bool> &S, int s) const
 {
     int n=d_nbSommet,v,j,max;
      d.resize(n+1);
@@ -392,15 +379,18 @@ void fs_aps::neoDijkstra(const std::vector<std::vector<int>>&C,std::vector<int> 
 
     }
 
-    for(int i=1; i<=n; i++)
-        QTextStream(stdout)<<d[i]<<" ";
-    QTextStream(stdout)<<"\n";
+    return d;
 }
 
-void fs_aps::Dijkstra(const std::vector<std::vector<int> > &C, std::vector<int> &d, std::vector<int> &pred, std::vector<bool> &S) const
+std::vector<std::vector<int> > fs_aps::Dijkstra(const std::vector<std::vector<int> > &C) const
 {
+    std::vector<int> d;
+    std::vector<int> pred;
+    std::vector<bool> S;
+    std::vector<std::vector<int>> matD(d_nbSommet+1,std::vector<int>(d_nbSommet+1,0));
     for(int s=1; s<= d_nbSommet; s++)
-        neoDijkstra(C,d,pred,S,s);
+       matD[s]= neoDijkstra(C,d,pred,S,s);
+    return matD;
 }
 // Problème d'ordonnancement 
 void fs_aps::fs_aps2fp_app(std::vector<int> &fp,std::vector<int> &app)//Passe de fs aps a fp app
