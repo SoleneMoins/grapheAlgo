@@ -34,8 +34,8 @@ class fs_aps
         void determiner_rang(int *&rang, int *&num) const ;
         std::vector<int>  distance();
   
-        void Tarjan()const;
-        void Dijkstra(const std::vector<std::vector<int>>&C,std::vector<int> &d, std::vector<int> &pred,std::vector<bool> &S)const;
+        std::vector<int> Tarjan()const;
+        std::vector<std::vector<int>> Dijkstra(const std::vector<std::vector<int>>&C)const;
 
        
         void fs_aps2fp_app(std::vector<int> &fp,std::vector<int> &app); //Passage de fs aps à fp app
@@ -58,7 +58,7 @@ class fs_aps
                         std::vector<bool> &entarj,
                         int &p, int &nbr) const;
 
-        void neoDijkstra(const std::vector<std::vector<int>>&C,std::vector<int> &d, std::vector<int> &pred,std::vector<bool> &S, int s)const;
+        std::vector<int> neoDijkstra(const std::vector<std::vector<int>>&C,std::vector<int> &d, std::vector<int> &pred,std::vector<bool> &S, int s)const;
 };
 
 #endif // GRAPHE_H
