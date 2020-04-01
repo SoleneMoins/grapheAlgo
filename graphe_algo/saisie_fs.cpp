@@ -128,5 +128,6 @@ void saisie_fs::onValideSommet(){
 }
 
 void saisie_fs::onclose(){
+    d_graphe.clean();
     close();
 }

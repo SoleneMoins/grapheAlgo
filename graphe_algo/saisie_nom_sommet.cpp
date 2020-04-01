@@ -20,6 +20,7 @@ saisie_nom_sommet::saisie_nom_sommet(graphe g, QWidget*parent):QDialog{parent},d
     auto close = new QPushButton{"Annuler"};
 
     connect(ok,&QPushButton::clicked,this,&saisie_nom_sommet::onValide);
+    connect(close,&QPushButton::clicked,this,&saisie_nom_sommet::onFerme);
 
     layoutPrinc->addWidget(ok);
     layoutPrinc->addWidget(close);
@@ -33,10 +34,45 @@ graphe saisie_nom_sommet::getGraphe(){
 }
 
 void saisie_nom_sommet::onValide(){
+    bool ok = true;
+    bool exist = false;
+
+    for(int i=0;i<d_n.size()-1;i++){
+        for(int j=1;j<d_n.size();j++){
+            if(d_n[i]->text()==d_n[j]->text()){
+                exist=true;
+            }
+        }
+    }
+
     for(int i=0;i<d_n.size();i++){
         QString n = d_n[i]->text();
-        std::string n1 = n.toStdString();
-        d_graphe.getS(i).setNom(n1);
+        if(n==""){
+            ok = false;
+        }else{
+            std::string n1 = n.toStdString();
+            d_graphe.getS(i).setNom(n1);
+        }
     }
+
+    if(exist){
+       QMessageBox msg;
+        msg.setText("Deux sommets sont identiques.");
+        msg.exec();
+
+    }else{
+        if(ok){
+            close();
+        }else{
+
+                QMessageBox msg;
+                msg.setText("Veuillez saisir tout les noms");
+                msg.exec();
+            }
+    }
+}
+
+void saisie_nom_sommet::onFerme(){
+    d_graphe.clean();
     close();
 }

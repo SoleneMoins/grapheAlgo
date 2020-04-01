@@ -31,6 +31,11 @@ void sommet::setNom(std::string nom){
     d_nom = nom;
 }
 
+std::string sommet::getNom(){
+    return d_nom;
+}
+
+
 double sommet::distance(const sommet& p) const
 {
   double dx = p.d_x-d_x, dy = p.d_y-d_y;

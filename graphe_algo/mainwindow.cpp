@@ -206,6 +206,7 @@ void MainWindow::boutonSommet(){
     QString nomS = nom->text();
 
     bool existe = false;
+
     if(d_dessin->validationGraphe()){
         QMessageBox msg;
         msg.setText("Votre graphe a été validé, il ne peut plus être modifié.");
@@ -217,7 +218,7 @@ void MainWindow::boutonSommet(){
             msg.exec();
         }else{
             for(int i=0; i<d_dessin->getSommetVector().size();i++){
-                if(d_dessin->getSommetVector()[i].getNumero()==numS.toInt()){
+                if(d_dessin->getSommetVector()[i].getNumero()==numS.toInt()||d_dessin->getSommetVector()[i].getNom()==nomS.toStdString()){
                     existe=true;
                 }
             }

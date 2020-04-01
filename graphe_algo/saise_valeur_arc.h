@@ -28,6 +28,7 @@ private:
 
 private slots:
     void onValide();
+    void onFerme();
 };
 
 #endif // SAISE_VALEUR_ARC_H

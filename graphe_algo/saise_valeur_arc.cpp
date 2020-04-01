@@ -20,6 +20,7 @@ saise_valeur_arc::saise_valeur_arc(graphe g,QWidget *parent):QDialog{parent},d_g
     auto close = new QPushButton{"Annuler"};
 
     connect(ok,&QPushButton::clicked,this,&saise_valeur_arc::onValide);
+    connect(close,&QPushButton::clicked,this,&saise_valeur_arc::onFerme);
 
     layoutPrinc->addWidget(ok);
     layoutPrinc->addWidget(close);
@@ -32,12 +33,29 @@ graphe saise_valeur_arc::getGraphe(){
 }
 
 void saise_valeur_arc::onValide(){
-
+    bool ok = true;
     for(int i=0;i<d_v.size();i++){
         QString v = d_v[i]->text();
-        int v1 = v.toInt();
-        d_graphe.getA(i).setValeur(v1);
-    }
-    close();
+        if(v==""){
+            ok = false;
 
+        }else{
+
+            int v1 = v.toInt();
+            d_graphe.getA(i).setValeur(v1);
+        }
+    }
+    if(ok){
+        close();
+    }else{
+        QMessageBox msg;
+        msg.setText("Veuillez saisir toutes les valeurs");
+        msg.exec();
+    }
+
+}
+
+void saise_valeur_arc::onFerme(){
+    d_graphe.clean();
+    close();
 }

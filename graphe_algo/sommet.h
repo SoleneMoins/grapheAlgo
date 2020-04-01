@@ -31,6 +31,8 @@ class sommet
 
       void setNom(std::string nom);
 
+      std::string getNom();
+
 
 
 

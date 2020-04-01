@@ -29,6 +29,7 @@ private:
 
 private slots:
     void onValide();
+    void onFerme();
 };
 
 #endif // SAISIE_NOM_SOMMET_H
