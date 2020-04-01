@@ -20,6 +20,7 @@ SOURCES += \
     arc.cpp \
     explication.cpp \
     fs_aps.cpp \
+    graphenonoriente.cpp \
     graphe.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -35,6 +36,7 @@ HEADERS += \
     arc.h \
     explication.h \
     fs_aps.h \
+    graphenonoriente.h \
     graphe.h \
     mainwindow.h \
     matrice_adjacence.h \

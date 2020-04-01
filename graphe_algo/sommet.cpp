@@ -85,6 +85,13 @@ sommet& sommet::operator+=(const sommet& p)
   return *this;
 }
 
+sommet sommet::operator=(const sommet& p)
+{
+  d_x = p.d_x; d_y = p.d_y;
+  d_numero=p.d_numero;
+  return *this;
+}
+
 sommet sommet::operator+(const sommet& p) const
 {
   sommet res{*this};

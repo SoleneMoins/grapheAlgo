@@ -4,6 +4,7 @@
 #include <iostream>
 #include<stack>
 #include <QDebug>
+#include "graphenonoriente.h"
 
 
 using namespace std;

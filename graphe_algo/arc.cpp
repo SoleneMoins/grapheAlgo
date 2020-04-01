@@ -2,6 +2,7 @@
 #include "sommet.h"
 
 
+
 arc::arc():d_sommetDepart{},d_sommetArrive{},d_valeur{}
 {}
 
@@ -22,10 +23,16 @@ int arc::getValeur() const
     return d_valeur;
 }
 
-int arc::setValeur(int v){
+void arc::setValeur(int v){
     d_valeur = v;
 }
 
+void arc::setArc(const arc& a)
+{
+    d_sommetDepart = a.getSommetDepart();
+    d_sommetArrive = a.getSommetArrive();
+    d_valeur = a.getValeur();
+}
 void arc::save(std::ostream&ost){
 
     ost<<"("<<d_sommetDepart<<","<<d_sommetArrive<<")";

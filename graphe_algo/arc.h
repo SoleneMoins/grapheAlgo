@@ -5,15 +5,19 @@
 class arc
 {
     public:
-
         arc();
         arc(sommet s1, sommet s2,int valeur);
+       
         sommet getSommetDepart() const;
         sommet getSommetArrive()const ;
+  
         int getValeur()const ;
         int setValeur(int v);
         void save(std::ostream&ost);
         void open(std::istream&ist);
+
+        void setValeur(int i);
+        void setArc(const arc& a);
 
 
 
