@@ -6,6 +6,7 @@
 #include "fs_aps.h"
 #include<stack>
 #include <QDebug>
+#include "graphenonoriente.h"
 
 
 
@@ -14,23 +15,35 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     MainWindow w;
 
-    std::vector<int>fs{18,2,3,5,0,1,0,2,5,0,3,5,0,2,6,0,1,2,0};
-    std::vector<int>aps{6,1,5,7,10,13,16};
+    sommet A(0,0,1);
+    sommet B(0,0,2);
+    sommet C(0,0,3);
+    sommet D(0,0,4);
+    sommet E(0,0,5);
+    sommet F(0,0,6);
 
-    std::vector<int> d;//pour la fonction de dijkstra
-    std::vector<int> pred;//pour la fonction de dijkstra
-    std::vector<bool> S;//pour la fonction de dijkstra
 
-    std::vector<std::vector<int>> dist{{0,0,0,0,0,0,0},{0,0,10,3,MAXPOIDS,6,MAXPOIDS},{0,0,0,MAXPOIDS,MAXPOIDS,MAXPOIDS,MAXPOIDS},
-                                       {0,MAXPOIDS,4,0,MAXPOIDS,2,MAXPOIDS},{0,MAXPOIDS,MAXPOIDS,1,0,3,MAXPOIDS},{0,MAXPOIDS,0,MAXPOIDS,MAXPOIDS,0,1},
-                                       {0,2,1,MAXPOIDS,MAXPOIDS,MAXPOIDS,0}};//Matricede distance pour la fonction de dijkstra
-    fs_aps g(fs,aps);
+    arc ab(A,B,6);
+    arc ac(A,C,1);
+    arc ad(A,D,5);
+    arc bc(B,C,5);
+    arc be(B,E,3);
+    arc cf(C,F,4);
+    arc cd(C,D,5);
+    arc ce(C,E,6);
+    arc df(D,F,2);
+    arc ef(E,F,6);
+    std::vector<arc>arett{ab,ac,ad,bc,be,cf,cd,ce,df,ef};
 
-    QTextStream(stdout)<<"Tarjan :\n";
-    g.Tarjan();
 
-    QTextStream(stdout)<<"\nDijkstra :\n";
-    g.Dijkstra(dist,d,pred,S);
+
+    GrapheNonOriente gn(6,10,arett);
+    GrapheNonOriente t;
+
+    QTextStream(stdout)<<"\nKruskal :\n";
+    gn.trier();
+    gn.kruskal(t);
+    t.affichage();
 
     w.show();
     return a.exec();

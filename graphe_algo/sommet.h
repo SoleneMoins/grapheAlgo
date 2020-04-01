@@ -105,6 +105,7 @@ class sommet
       @return true if either the x- or y-coordinates are different
     */
       bool operator!=(const sommet& p)   const;
+     sommet operator=(const sommet& p);
 
 
 

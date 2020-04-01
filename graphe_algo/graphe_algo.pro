@@ -18,6 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     arc.cpp \
     fs_aps.cpp \
+    graphenonoriente.cpp \
     main.cpp \
     mainwindow.cpp \
     matrice_adjacence.cpp \
@@ -27,6 +28,7 @@ SOURCES += \
 HEADERS += \
     arc.h \
     fs_aps.h \
+    graphenonoriente.h \
     mainwindow.h \
     matrice_adjacence.h \
     sommet.h \

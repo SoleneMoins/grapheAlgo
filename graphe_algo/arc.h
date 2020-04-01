@@ -5,10 +5,14 @@
 class arc
 {
     public:
-        arc(sommet s1, sommet s2,int valeur);
+        arc();
+        arc(sommet s1, sommet s2, int valeur);
         sommet getSommetDepart() const;
         sommet getSommetArrive()const ;
         int getValeur()const ;
+
+        void setValeur(int i);
+        void setArc(const arc& a);
 
 
 
