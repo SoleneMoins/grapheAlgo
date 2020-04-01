@@ -149,7 +149,9 @@ void zone_dessin::open(std::istream&ist){
 }*/
 
 
-
+void zone_dessin::changeValeur(int v){
+    d_valeur = v;
+}
 
 void zone_dessin::changeValidation(bool v){
     graphe_valide=v;
@@ -161,6 +163,10 @@ void zone_dessin::effacerSommet(int i){
 
 void zone_dessin::effacerArc(int i){
     d_graphe.effacerArc(i);
+}
+
+void zone_dessin::changeNom(std::string nom){
+    d_nom=nom;
 }
 
 void zone_dessin::mousePressEvent( QMouseEvent * event){
@@ -175,6 +181,18 @@ void zone_dessin::mousePressEvent( QMouseEvent * event){
 
 
 
+}
+
+void zone_dessin::mouseMoveEvent(QMouseEvent*e){
+   /* QPoint f(xPress,yPress);
+    for(int i=0;i<d_graphe.getRectangle().size();i++){
+        if(d_graphe.getR(i).contains(f)){
+            setMouseTracking(true);
+            d_choix = 4;
+            QRect r(e->pos().x(),e->pos().y(),100,100);
+            d_graphe.getR(i) = r;
+        }
+    }*/
 }
 
 
@@ -211,7 +229,7 @@ if(d_choix!=4){
 
           if(d_choix==0){
 
-                sommet som(xPress-40,yPress-40,d_num);
+                sommet som(xPress-40,yPress-40,d_num,d_nom);
                 QRectF r(som.getX(),som.getY(),100,100);
                 d_graphe.ajouterRectangle(r);
                 d_graphe.ajouterSommet(som);
@@ -253,15 +271,16 @@ if(d_choix!=4){
 
                           if(exist==false){
 
-                              arc a(somm1,somm2,0);
+                              arc a(somm1,somm2,d_valeur);
                               d_graphe.ajouterArc(a);
+
 
                               QLineF l(points[0],points[1]);
                               d_graphe.ajouterLigne(l);
                           }
 
                       }
-
+                      d_choix = 3;
                       points.clear();
                       points.resize(0);
 

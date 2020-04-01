@@ -75,8 +75,21 @@ void saisie_fs::onValider(){
         }
     }
 
+    graphe g(fs,d_nbsommet);
+    d_graphe = g;
     close();
 
+
+
+}
+
+void saisie_fs::setGraphe(graphe g){
+    d_graphe = g;
+}
+
+
+graphe saisie_fs::getGraphe(){
+    return d_graphe;
 }
 
 void saisie_fs::onValideSommet(){

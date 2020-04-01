@@ -23,14 +23,14 @@ graphe::graphe(std::vector<int>&fs,int nbsommet)
         if(fs[i]==0||i==static_cast<int>(fs.size()-1)){
             compt++;
             if(compt<=nbsommet/2){
-                sommet s(150*nbfois,100,compt);
+                sommet s(150*nbfois,100,compt,"");
                 d_sommet.push_back(s);
 
             }else{
                 if(compt==(nbsommet/2)+1){
                     nbfois=1;
                 }
-                sommet s(150*nbfois,300,compt);
+                sommet s(150*nbfois,300,compt,"");
                 d_sommet.push_back(s);
 
             }
@@ -61,7 +61,7 @@ graphe::graphe(std::vector<int>&fs,int nbsommet)
 
 
 
-            arc a(s1,s2,0);
+            arc a(s1,s2,1);
             d_arc.push_back(a);
             j++;
 

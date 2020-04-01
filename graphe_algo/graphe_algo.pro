@@ -18,23 +18,29 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     affichage_numerique.cpp \
     arc.cpp \
+    explication.cpp \
     fs_aps.cpp \
     graphe.cpp \
     main.cpp \
     mainwindow.cpp \
     matrice_adjacence.cpp \
+    saise_valeur_arc.cpp \
     saisie_fs.cpp \
+    saisie_nom_sommet.cpp \
     sommet.cpp \
     zone_dessin.cpp
 
 HEADERS += \
     affichage_numerique.h \
     arc.h \
+    explication.h \
     fs_aps.h \
     graphe.h \
     mainwindow.h \
     matrice_adjacence.h \
+    saise_valeur_arc.h \
     saisie_fs.h \
+    saisie_nom_sommet.h \
     sommet.h \
     zone_dessin.h
 

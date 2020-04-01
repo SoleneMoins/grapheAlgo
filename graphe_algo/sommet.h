@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <QString>
 
 
 class sommet
@@ -17,7 +18,7 @@ class sommet
       @param x x-coordinate
       @param y y-coordinate
     */
-      sommet(int x, int y,int d_numero);
+      sommet(int x, int y,int d_numero, std::string nom);
 
 
       int getX()  const;
@@ -27,6 +28,8 @@ class sommet
       int getNumero()  const;
 
       bool estVide();
+
+      void setNom(std::string nom);
 
 
 
@@ -122,6 +125,8 @@ class sommet
 
       int d_x,d_y;//Cartesian coordinates
       int d_numero;
+      std::string d_nom;
+      bool estCritique;
 
 
 };

@@ -22,6 +22,10 @@ int arc::getValeur() const
     return d_valeur;
 }
 
+int arc::setValeur(int v){
+    d_valeur = v;
+}
+
 void arc::save(std::ostream&ost){
 
     ost<<"("<<d_sommetDepart<<","<<d_sommetArrive<<")";

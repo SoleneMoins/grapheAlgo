@@ -14,6 +14,8 @@
 #include <QMessageBox>
 #include <vector>
 #include <iostream>
+#include "graphe.h"
+
 
 
 
@@ -25,6 +27,8 @@ public:
     std::vector<int> getfs()const;
     int nbSommet() const;
     void vue_creer();
+    graphe getGraphe();
+    void setGraphe(graphe g);
 
 private:
     std::vector<int> fs;
@@ -33,6 +37,7 @@ private:
     QVBoxLayout layoutsaisie;
     std::vector<QLineEdit*> d_s;
     int d_nbsommet;
+    graphe d_graphe;
 
 
 private slots:
