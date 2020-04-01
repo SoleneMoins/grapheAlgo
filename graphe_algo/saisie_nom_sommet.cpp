@@ -38,11 +38,10 @@ void saisie_nom_sommet::onValide(){
     bool exist = false;
 
     for(int i=0;i<d_n.size()-1;i++){
-        for(int j=1;j<d_n.size();j++){
-            if(d_n[i]->text()==d_n[j]->text()){
+            if(d_n[i]->text()==d_n[i+1]->text()){
                 exist=true;
             }
-        }
+
     }
 
     for(int i=0;i<d_n.size();i++){
