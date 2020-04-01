@@ -12,11 +12,11 @@ class arc
         sommet getSommetArrive()const ;
   
         int getValeur()const ;
-        int setValeur(int v);
+        void setValeur(int v);
         void save(std::ostream&ost);
         void open(std::istream&ist);
 
-        void setValeur(int i);
+
         void setArc(const arc& a);
 
 
