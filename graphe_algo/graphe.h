@@ -17,17 +17,20 @@ public:
     graphe(std::vector<int>&fs,int nbsommet);
     graphe(fs_aps fsaps);
 
+
     fs_aps getfsAps();
 
     std::vector<sommet> getSommet();
     std::vector<arc> getArc();
     std::vector<QLineF> getLine();
     std::vector<QRectF> getRectangle();
+    std::vector<int> getCFC();
 
     sommet getS(int i);
     arc getA(int i);
     QRectF getR(int i);
     QLineF getL(int i);
+
 
     void ajouterSommet(sommet&s);
     void ajouterArc(arc&a);

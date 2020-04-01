@@ -76,79 +76,6 @@ void zone_dessin::open(std::istream&ist){
 }
 
 
-/*std::vector<int> zone_dessin::getNumTarjan(){
-
-    int nbSommet= d_sommet.size();
-    std::vector<int> num(nbSommet+1,0);
-
-    int depart = 1;
-    int ok;
-    int fois = 0;
-    std::vector<bool> exist(nbSommet+1,false);
-    bool ex = false;
-    int nbvalide = 0;
-
-
-
-    while(!ex){
-
-        ok = nbSommet;
-        fois++;
-
-        if(exist[depart]){
-            for(int i=1;i<exist.size();i++){
-                if(exist[i]==false){
-                    depart = i;
-                    break;
-                }
-            }
-        }
-
-         exist[depart] = true;
-
-
-
-        for(int i=0;i<d_arc.size();i++){
-
-            if(d_arc[i].getSommetDepart().getNumero()==depart){
-                if(!exist[d_arc[i].getSommetArrive().getNumero()] && d_arc[i].getSommetArrive().getNumero()<ok ){
-                    ok = d_arc[i].getSommetArrive().getNumero();
-                }
-            }
-
-        }
-
-
-
-
-        for(int i=1;i<exist.size();i++){
-            if(exist[i]==true){
-                nbvalide++;
-            }
-        }
-
-        if(nbvalide==nbSommet){
-            ex=true;
-        }else{
-            nbvalide=0;
-        }
-
-
-
-        num[depart] = fois;
-        depart = ok;
-
-
-
-
-
-    }
-
-   return num;
-
-}*/
-
-
 void zone_dessin::changeValeur(int v){
     d_valeur = v;
 }
@@ -167,6 +94,10 @@ void zone_dessin::effacerArc(int i){
 
 void zone_dessin::changeNom(std::string nom){
     d_nom=nom;
+}
+
+std::vector<int> zone_dessin::getCFC(){
+    return d_graphe.getCFC();
 }
 
 void zone_dessin::mousePressEvent( QMouseEvent * event){
@@ -227,78 +158,79 @@ if(d_choix!=4){
         }else{
 
 
-          if(d_choix==0){
+              if(d_choix==0){
 
-                sommet som(xPress-40,yPress-40,d_num,d_nom);
-                QRectF r(som.getX(),som.getY(),100,100);
-                d_graphe.ajouterRectangle(r);
-                d_graphe.ajouterSommet(som);
-                points.pop_back();
-                d_choix = 3;
-
-
-            }else{
-
-              if(d_choix==1){
-                  if(points.size()==2){
-
-                      sommet somm1;
-                      sommet somm2;
-
-                      for(int i=0;i<d_graphe.getSommet().size();i++){
-
-                          if(d_graphe.getR(i).contains(points[0])){
-                              somm1 = d_graphe.getSommet()[i];
-                          }
-
-                          if(d_graphe.getR(i).contains(points[1])){
-                              somm2 = d_graphe.getSommet()[i];
-                          }
+                    sommet som(xPress-40,yPress-40,d_num,d_nom);
+                    QRectF r(som.getX(),som.getY(),100,100);
+                    d_graphe.ajouterRectangle(r);
+                    d_graphe.ajouterSommet(som);
+                    points.pop_back();
+                    d_choix = 3;
 
 
+                }else{
 
-                      }
+                  if(d_choix==1){
+                      if(points.size()==2){
 
-                      if(somm1.estVide()==false&&somm2.estVide()==false){
+                          sommet somm1;
+                          sommet somm2;
 
-                          bool exist = false;
+                          for(int i=0;i<d_graphe.getSommet().size();i++){
 
-                          for(int i=0;i<d_graphe.getArc().size();i++){
-                              if(d_graphe.getA(i).getSommetDepart()==somm1 && d_graphe.getA(i).getSommetArrive()==somm2){
-                                  exist = true;
+                              if(d_graphe.getR(i).contains(points[0])){
+                                  somm1 = d_graphe.getSommet()[i];
                               }
+
+                              if(d_graphe.getR(i).contains(points[1])){
+                                  somm2 = d_graphe.getSommet()[i];
+                              }
+
+
+
                           }
 
-                          if(exist==false){
+                          if(somm1.estVide()==false&&somm2.estVide()==false){
 
-                              arc a(somm1,somm2,d_valeur);
-                              d_graphe.ajouterArc(a);
+                              bool exist = false;
+
+                              for(int i=0;i<d_graphe.getArc().size();i++){
+                                  if(d_graphe.getA(i).getSommetDepart()==somm1 && d_graphe.getA(i).getSommetArrive()==somm2){
+                                      exist = true;
+                                  }
+                              }
+
+                              if(exist==false){
+
+                                  arc a(somm1,somm2,d_valeur);
+                                  d_graphe.ajouterArc(a);
 
 
-                              QLineF l(points[0],points[1]);
-                              d_graphe.ajouterLigne(l);
+                                  QLineF l(points[0],points[1]);
+                                  d_graphe.ajouterLigne(l);
+                              }
+
                           }
+                          d_choix = 3;
+                          points.clear();
+                          points.resize(0);
+
 
                       }
-                      d_choix = 3;
-                      points.clear();
-                      points.resize(0);
-
-
-                  }
-              }else{
+                  }else{
 
 
 
-                      //Test
-                      std::cout<<"Veuillez choisir"<<std::endl;
-                      points.clear();
-                      points.resize(0);
+                          //Test
+                          std::cout<<"Veuillez choisir"<<std::endl;
+                          points.clear();
+                          points.resize(0);
 
 
 
-              }
-          }
+                }
+
+            }
 
         }
 }

@@ -80,6 +80,7 @@ graphe::graphe(std::vector<int>&fs,int nbsommet)
 }
 
 
+
 graphe::graphe(fs_aps fsaps){
 
     std::vector<int> fs = fsaps.getFs();
@@ -91,6 +92,10 @@ graphe::graphe(fs_aps fsaps){
     d_rectangle = g.d_rectangle;
     d_fsaps = g.d_fsaps;
 
+}
+
+std::vector<int> graphe::getCFC(){
+    return d_fsaps.Tarjan();
 }
 
 void graphe::ajouterSommet(sommet&s){
