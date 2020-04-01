@@ -19,6 +19,7 @@ SOURCES += \
     affichage_numerique.cpp \
     arc.cpp \
     fs_aps.cpp \
+    graphenonoriente.cpp \
     graphe.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -31,6 +32,7 @@ HEADERS += \
     affichage_numerique.h \
     arc.h \
     fs_aps.h \
+    graphenonoriente.h \
     graphe.h \
     mainwindow.h \
     matrice_adjacence.h \
