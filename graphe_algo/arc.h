@@ -6,10 +6,14 @@ class arc
 {
     public:
         arc();
-        arc(sommet s1, sommet s2, int valeur);
+        arc(sommet s1, sommet s2,int valeur);
+       
         sommet getSommetDepart() const;
         sommet getSommetArrive()const ;
+  
         int getValeur()const ;
+        void save(std::ostream&ost);
+        void open(std::istream&ist);
 
         void setValeur(int i);
         void setArc(const arc& a);
@@ -22,5 +26,9 @@ class arc
         int d_valeur;
 
 };
+
+std::ostream& operator<<(std::ostream&ost,arc&a);
+
+std::istream& operator>>(std::istream&ist,arc&a);
 
 #endif // ARC_H

@@ -1,18 +1,17 @@
 #include "mainwindow.h"
-#include "zone_dessin.h"
-
+#include <iostream>
 #include <QApplication>
 #include <iostream>
-#include "fs_aps.h"
 #include<stack>
 #include <QDebug>
 #include "graphenonoriente.h"
 
 
+using namespace std;
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+    /*QApplication a(argc, argv);
     MainWindow w;
 
     sommet A(0,0,1);
@@ -46,5 +45,9 @@ int main(int argc, char *argv[])
     t.affichage();
 
     w.show();
-    return a.exec();
+    return a.exec();*/
+   QApplication a(argc, argv);
+   MainWindow w;
+   w.show();
+   a.exec();
 }

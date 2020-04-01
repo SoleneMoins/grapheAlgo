@@ -1,6 +1,10 @@
 #ifndef SOMMET_H
 #define SOMMET_H
 
+#include <iostream>
+#include <fstream>
+
+
 class sommet
 {
     public:
@@ -13,14 +17,16 @@ class sommet
       @param x x-coordinate
       @param y y-coordinate
     */
-      sommet(double x, double y,int d_numero);
+      sommet(int x, int y,int d_numero);
 
 
-      double getX()  const;
+      int getX()  const;
 
-      double getY()  const;
+      int getY()  const;
 
       int getNumero()  const;
+
+      bool estVide();
 
 
 
@@ -107,14 +113,22 @@ class sommet
       bool operator!=(const sommet& p)   const;
      sommet operator=(const sommet& p);
 
+      void save(std::ostream&ost);
+
+      void open(std::istream&ist);
+
 
 
     private:
 
-      double d_x,d_y;//Cartesian coordinates
+      int d_x,d_y;//Cartesian coordinates
       int d_numero;
 
 
 };
+
+std::ostream& operator<<(std::ostream&ost,sommet&s);
+std::istream& operator>>(std::istream&ist,sommet&s);
+
 
 #endif // SOMMET_H

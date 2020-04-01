@@ -1,18 +1,18 @@
 ﻿#include "sommet.h"
 #include <cmath>
 
-sommet::sommet() :d_x{0.0},d_y{0.0}
+sommet::sommet() :d_x{0},d_y{0}
 {}
 
-sommet::sommet(double x, double y,int numero) : d_x{x}, d_y{y},d_numero{numero}
+sommet::sommet(int x, int y,int numero) : d_x{x}, d_y{y},d_numero{numero}
 {}
 
-double sommet::getX() const
+int sommet::getX() const
 {
   return d_x;
 }
 
-double sommet::getY() const
+int sommet::getY() const
 {
   return d_y;
 }
@@ -20,6 +20,11 @@ double sommet::getY() const
 int sommet::getNumero() const
 {
     return d_numero;
+}
+
+bool sommet::estVide(){
+
+    return d_x==0.0||d_y==0.0;
 }
 
 double sommet::distance(const sommet& p) const
@@ -94,4 +99,31 @@ bool sommet::operator!=(const sommet& p) const
 {
   return !((d_x == p.d_x) && (d_y == p.d_y) && (d_numero==p.d_numero));
 }
+
+void sommet::save(std::ostream&ost){
+
+    ost<<d_numero<<"("<<d_x<<","<<d_y<<")";
+
+}
+
+void sommet::open(std::istream&ist){
+
+    char c;
+    ist>>d_numero>>c>>d_x>>c>>d_y>>c;
+
+}
+
+std::ostream& operator<<(std::ostream&ost,sommet&s){
+    s.save(ost);
+    return ost;
+}
+
+std::istream& operator>>(std::istream&ist,sommet&s){
+    s.open(ist);
+    return ist;
+}
+
+
+
+
 
