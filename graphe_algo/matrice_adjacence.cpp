@@ -25,7 +25,8 @@ matrice_Adjacence::matrice_Adjacence(fs_aps &graphFsAps)
     }
 }
 
-void matrice_Adjacence::matriceDistance(int *fa, fs_aps& graph, int **&mat) {
+void matrice_Adjacence::matriceDistance(int *fa, fs_aps& graph, int **&mat)
+{
     int n=graph.aps()[0];
    for(int i=1; i<=n; i++) {
         mat[i]=new int[n+1];
