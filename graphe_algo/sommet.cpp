@@ -111,7 +111,7 @@ bool sommet::operator!=(const sommet& p) const
 
 void sommet::save(std::ostream&ost){
 
-    ost<<d_numero<<"("<<d_x<<","<<d_y<<")";
+    ost<<d_numero<<"("<<d_x<<","<<d_y<<","<<d_nom<<")";
 
 }
 
@@ -119,6 +119,8 @@ void sommet::open(std::istream&ist){
 
     char c;
     ist>>d_numero>>c>>d_x>>c>>d_y>>c;
+    std::getline(ist, d_nom, ')');
+
 
 }
 
