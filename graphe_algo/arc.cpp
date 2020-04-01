@@ -23,9 +23,8 @@ int arc::getValeur() const
     return d_valeur;
 }
 
-void arc::setValeur(int i)
-{
-    d_valeur=i;
+void arc::setValeur(int v){
+    d_valeur = v;
 }
 
 void arc::setArc(const arc& a)

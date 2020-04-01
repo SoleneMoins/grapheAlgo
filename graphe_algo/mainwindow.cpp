@@ -45,18 +45,37 @@ void MainWindow::vue_creer(){
             auto layoutsommet = new QHBoxLayout{};
             auto layoutnum = new QVBoxLayout{};
             auto cercle = new QPushButton{"SOMMET"};
-            cercle->setStyleSheet("background:#202020;height:40px;");
+            cercle->setStyleSheet("background:#202020;height:100px;");
 
             auto labelnum = new QLabel{"Numéro : "};
             num = new QLineEdit{};
+            auto labelnom = new QLabel{"Nom : "};
+            nom = new QLineEdit{};
+            nom->setStyleSheet("background:#1E1E1E;border:1px solid #4F4F4F");
             num->setStyleSheet("background:#1E1E1E;border:1px solid #4F4F4F");
             QRegExp rx ("[0-9]");
             num->setValidator (new QRegExpValidator (rx, this));
+            QRegExp rex1 ("[a-zA-Z]*");
+            nom->setValidator (new QRegExpValidator (rex1, this));
 
 
             //Liens
-            auto ligne = new QPushButton{"ARC"};
-            ligne->setStyleSheet("background:#202020;height:30px;");
+            auto ligne = new QHBoxLayout{};
+            auto layoutligne = new QVBoxLayout{};
+            auto arc = new QPushButton{"ARC"};
+            arc->setStyleSheet("background:#202020;height:50px;");
+
+            auto labelligne = new QLabel{"Valeur : "};
+            d_arc = new QLineEdit{};
+            d_arc->setStyleSheet("background:#1E1E1E;border:1px solid #4F4F4F");
+            QRegExp rex ("[0-9]*");
+            d_arc->setValidator (new QRegExpValidator (rex, this));
+            arc->setStyleSheet("background:#202020;height:30px;");
+
+            layoutligne->addWidget(labelligne);
+            layoutligne->addWidget(d_arc);
+            ligne->addLayout(layoutligne);
+            ligne->addWidget(arc);
 
             //Effacer Sommet
             auto eff = new QPushButton{"EFFACER SOMMET"};
@@ -86,30 +105,23 @@ void MainWindow::vue_creer(){
         labeltitre3->setMargin(10);
         labeltitre3->setStyleSheet("font-size:15px;background:#161616");
 
-        auto layoutdistance = new QHBoxLayout{};
-        auto sommet1Layout = new QVBoxLayout{};
-        auto sommet2Layout = new QVBoxLayout{};
-        auto sommet1Label = new QLabel{"Sommet 1 :"};
-        auto sommet2Label = new QLabel{"Sommet 2 :"};
-        auto somm1 = new QLineEdit{};
-        somm1->setStyleSheet("background:#1E1E1E;border:1px solid #4F4F4F");
-        auto somm2 = new QLineEdit{};
-        somm2->setStyleSheet("background:#1E1E1E;border:1px solid #4F4F4F");
+
         auto distance = new QPushButton{"DISTANCE"};
-        auto ccourt = new QPushButton{"CHEMIN COURT"};
-        auto clong = new QPushButton{"CHEMIN LONG"};
+        auto rang = new QPushButton{"RANG"};
+        auto ordo = new QPushButton{"ORDONNANCEMENT"};
+        auto tarjan = new QPushButton{"TARJAN"};
+        auto djikstra = new QPushButton{"DJIKSTRA"};
+        auto kruskel = new QPushButton{"KRUSKAL"};
+        auto prufer = new QPushButton{"PRUFER"};
         distance->setStyleSheet("background:#202020;height:30px;");
-        ccourt->setStyleSheet("background:#202020;height:30px;");
-        clong->setStyleSheet("background:#202020;height:30px;");
+        tarjan->setStyleSheet("background:#202020;height:30px;");
+        djikstra->setStyleSheet("background:#202020;height:30px;");
+        kruskel->setStyleSheet("background:#202020;height:30px;");
+        prufer->setStyleSheet("background:#202020;height:30px;");
+        rang->setStyleSheet("background:#202020;height:30px;");
+        ordo->setStyleSheet("background:#202020;height:30px;");
 
-        sommet1Layout->addWidget(sommet1Label);
-        sommet1Layout->addWidget(somm1);
 
-        sommet2Layout->addWidget(sommet2Label);
-        sommet2Layout->addWidget(somm2);
-
-        layoutdistance->addLayout(sommet1Layout);
-        layoutdistance->addLayout(sommet2Layout);
 
         // Menu valider-effacer
         auto layoutv = new QHBoxLayout{};
@@ -125,12 +137,14 @@ void MainWindow::vue_creer(){
         layoutbouton->addWidget(labeltitre1);
         layoutnum->addWidget(labelnum);
         layoutnum->addWidget(num);
+        layoutnum->addWidget(labelnom);
+        layoutnum->addWidget(nom);
         layoutsommet->addLayout(layoutnum);
         layoutsommet->addWidget(cercle);
         layoutbouton->addLayout(layoutsommet);
-        layoutbouton->addWidget(ligne);
-        layoutbouton->addWidget(eff);
 
+        layoutbouton->addLayout(ligne);
+        layoutbouton->addWidget(eff);
         layoutbouton->addStretch(1);
         layoutbouton->addWidget(labeltitre4);
         layoutbouton->addWidget(numerique);
@@ -140,10 +154,13 @@ void MainWindow::vue_creer(){
         layoutbouton->addLayout(layoutb);
         layoutbouton->addStretch(1);
         layoutbouton->addWidget(labeltitre3);
-        layoutbouton->addLayout(layoutdistance);
         layoutbouton->addWidget(distance);
-        layoutbouton->addWidget(ccourt);
-        layoutbouton->addWidget(clong);
+        layoutbouton->addWidget(rang);
+        layoutbouton->addWidget(tarjan);
+        layoutbouton->addWidget(ordo);
+        layoutbouton->addWidget(djikstra);
+        layoutbouton->addWidget(kruskel);
+        layoutbouton->addWidget(prufer);
         layoutbouton->addStretch(6);
 
 
@@ -152,7 +169,7 @@ void MainWindow::vue_creer(){
 
     //Connections boutons
     connect(cercle,&QPushButton::clicked,this,&MainWindow::boutonSommet);
-    connect(ligne,&QPushButton::clicked,this,&MainWindow::boutonLiens);
+    connect(arc,&QPushButton::clicked,this,&MainWindow::boutonLiens);
     connect(efface,&QPushButton::clicked,this,&MainWindow::effacer);
     connect(valider,&QPushButton::clicked,this,&MainWindow::valider);
     connect(charger,&QPushButton::clicked,this,&MainWindow::ouvrir);
@@ -186,25 +203,30 @@ void MainWindow::vue_creer(){
 void MainWindow::boutonSommet(){
 
     QString numS = num->text();
+    QString nomS = nom->text();
+
     bool existe = false;
+
     if(d_dessin->validationGraphe()){
         QMessageBox msg;
         msg.setText("Votre graphe a été validé, il ne peut plus être modifié.");
         msg.exec();
     }else{
-        if(numS==""){
+        if(numS==""||nomS==""){
             QMessageBox msg;
-            msg.setText("Veuillez saisir un numéro");
+            msg.setText("Veuillez saisir un numéro et un nom");
             msg.exec();
         }else{
             for(int i=0; i<d_dessin->getSommetVector().size();i++){
-                if(d_dessin->getSommetVector()[i].getNumero()==numS.toInt()){
+                if(d_dessin->getSommetVector()[i].getNumero()==numS.toInt()||d_dessin->getSommetVector()[i].getNom()==nomS.toStdString()){
                     existe=true;
                 }
             }
             if(existe==false){
                 int numSo = numS.toInt();
+                std::string nomSo = nomS.toStdString();
                 d_dessin->changeNum(numSo);
+                d_dessin->changeNom(nomSo);
                 d_dessin->changeChoix(0);
             }else{
                 QMessageBox msg;
@@ -219,12 +241,24 @@ void MainWindow::boutonSommet(){
 
 
 void MainWindow::boutonLiens(){
+
+    QString valeur = d_arc->text();
+
     if(d_dessin->validationGraphe()){
         QMessageBox msg;
         msg.setText("Votre graphe a été validé, il ne peut plus être modifié.");
         msg.exec();
+
     }else{
-         d_dessin->changeChoix(1);
+        if(valeur==""){
+            QMessageBox msg;
+            msg.setText("Veuillez saisir une valeur.");
+            msg.exec();
+        }else{
+             int v = valeur.toInt();
+             d_dessin->changeValeur(v);
+             d_dessin->changeChoix(1);
+        }
     }
 }
 
@@ -287,15 +321,20 @@ void MainWindow::sauvegarder(){
         of.close();
     }
 
+
+
 }
 
 void MainWindow::fs_apsClick(){
     auto boite = new saisie_fs();
     boite->exec();
-    std::vector<int> d_fs = boite->getfs();
-    graphe g(d_fs,boite->nbSommet());
-    d_dessin->setGraphe(g);
+    auto v = new saise_valeur_arc(boite->getGraphe());
+    v->exec();
+    auto n =new saisie_nom_sommet(v->getGraphe());
+    n->exec();
+    d_dessin->setGraphe(n->getGraphe());
     d_dessin->changeValidation(false);
+
 
 }
 

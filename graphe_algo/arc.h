@@ -12,6 +12,7 @@ class arc
         sommet getSommetArrive()const ;
   
         int getValeur()const ;
+        int setValeur(int v);
         void save(std::ostream&ost);
         void open(std::istream&ist);
 
@@ -24,6 +25,7 @@ class arc
         sommet d_sommetDepart;
         sommet d_sommetArrive;
         int d_valeur;
+        bool estCritique;
 
 };
 

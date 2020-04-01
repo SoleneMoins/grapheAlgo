@@ -38,7 +38,8 @@ public:
 
 
     void changeNum(int num);
-
+    void changeValeur(int v);
+    void changeNom(std::string nom);
     void changeValidation(bool v);
     bool estValide();
     bool validationGraphe();
@@ -56,11 +57,14 @@ private:
     int yPress;
     int d_choix;
     int d_num;
+    int d_valeur;
     bool graphe_valide;
+    std::string d_nom;
     graphe d_graphe;
     std::vector<QPoint> points;
     void paintEvent(QPaintEvent *p);
     void mousePressEvent(QMouseEvent * event);
+    void mouseMoveEvent(QMouseEvent*e);
 };
 
 

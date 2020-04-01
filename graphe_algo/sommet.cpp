@@ -4,7 +4,7 @@
 sommet::sommet() :d_x{0},d_y{0}
 {}
 
-sommet::sommet(int x, int y,int numero) : d_x{x}, d_y{y},d_numero{numero}
+sommet::sommet(int x, int y,int numero, std::string nom) : d_x{x}, d_y{y},d_numero{numero}, d_nom{nom}
 {}
 
 int sommet::getX() const
@@ -26,6 +26,15 @@ bool sommet::estVide(){
 
     return d_x==0.0||d_y==0.0;
 }
+
+void sommet::setNom(std::string nom){
+    d_nom = nom;
+}
+
+std::string sommet::getNom(){
+    return d_nom;
+}
+
 
 double sommet::distance(const sommet& p) const
 {

@@ -13,6 +13,9 @@
 #include "zone_dessin.h"
 #include "saisie_fs.h"
 #include "affichage_numerique.h"
+#include "saise_valeur_arc.h"
+#include "saisie_nom_sommet.h"
+
 
 
 
@@ -39,7 +42,9 @@ private slots:
 private:
     QMainWindow*d_win;
     zone_dessin* d_dessin;
+    QLineEdit*nom;
     QLineEdit*num;
+    QLineEdit*d_arc;
     void vue_creer();
 
 
