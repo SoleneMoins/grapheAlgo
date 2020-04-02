@@ -12,7 +12,7 @@ class matrice_Adjacence {
         //voici des surcharge d'operateur a faire:
         //numero1 operator[][]
         //numero2 operator==
-        std::vector<int> codage_Pruffer();
+        void codage_Pruffer(std::vector<int> & prufer);
 
 
 
