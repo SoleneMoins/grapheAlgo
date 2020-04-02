@@ -8,6 +8,7 @@ class matrice_Adjacence {
     public:
         matrice_Adjacence();
         matrice_Adjacence(fs_aps & graphFsAps); //constuire la matrice à partir de fs et aps
+        std::vector<std::vector<int>> getMatrice();
         //voici des surcharge d'operateur a faire:
         //numero1 operator[][]
         //numero2 operator==

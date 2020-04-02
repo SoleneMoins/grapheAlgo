@@ -18,10 +18,16 @@ matrice_Adjacence::matrice_Adjacence(fs_aps &graphFsAps) {
     d_matrice[0][1]=d_nbArcs;
     for(int i=1; i<=d_nbSommet;i++) {
         int j;
-        for(int k=graphFsAps.getAps()[i];(j=graphFsAps.getFs()[k])!=0;j++){
+        std::cout<<"FOR";
+        for(int k=graphFsAps.getAps()[i];(j=graphFsAps.getFs()[k])!=0;k++){
             d_matrice[i][j]=1;
+
         }
     }
+}
+std::vector<std::vector<int>> matrice_Adjacence::getMatrice()
+{
+    return d_matrice;
 }
 
 std::vector<int> matrice_Adjacence::codage_Pruffer() {

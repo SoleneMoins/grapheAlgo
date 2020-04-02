@@ -38,13 +38,21 @@ int main(int argc, char *argv[])
    std::vector<int> dist;
    std::vector<int> pred;
 
-   g.calcul_dist(1,dist,pred);
+   /*g.calcul_dist(1,dist,pred);
 
    for(int i=0;i<dist.size();i++)
        std::cout<<dist[i]<<"!";
    std::cout<<endl;
    for(int i=0;i<pred.size();i++)
-       std::cout<<pred[i]<<"!";
+       std::cout<<pred[i]<<"!";*/
+
+   matrice_Adjacence m(g);
+   pred=m.codage_Pruffer();
+   for(int i=0;i<m.getMatrice()[0][0];i++){
+       cout<<pred[i]<<"//";
+
+   }
+
 
    w.show();
    a.exec();
