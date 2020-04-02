@@ -513,9 +513,9 @@ void MainWindow::boutonKruskal(){
     if(d_dessin->validationGraphe()){
 
         GrapheNonOriente g(d_dessin->getSommetVector(),d_dessin->getArcVector());
-        g.kruskal();
-        std::vector<sommet> s = g.getSommet();
-        std::vector<arc> a = g.getArc();
+        GrapheNonOriente gk(g.kruskal());
+        std::vector<sommet> s = gk.getSommet();
+        std::vector<arc> a = gk.getArc();
         graphe gr(s,a);
         d_dessin->setGraphe(gr);
         d_dessin->update();
