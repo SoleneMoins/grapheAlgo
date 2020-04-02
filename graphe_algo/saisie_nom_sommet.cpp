@@ -1,7 +1,6 @@
 #include "saisie_nom_sommet.h"
 
-saisie_nom_sommet::saisie_nom_sommet(graphe g, QWidget*parent):QDialog{parent},d_graphe{g}
-{
+saisie_nom_sommet::saisie_nom_sommet(graphe g, QWidget*parent):QDialog{parent},d_graphe{g} {
     auto layoutPrinc = new QVBoxLayout{};
     auto label = new QLabel{"Saisissez les noms des sommets"};
     QRegExp rx("[a-zA-Z]*");

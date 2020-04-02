@@ -12,8 +12,7 @@
 #include <iostream>
 #include "graphe.h"
 
-class zone_dessin:public QWidget
-{
+class zone_dessin:public QWidget {
     Q_OBJECT
 public:
 

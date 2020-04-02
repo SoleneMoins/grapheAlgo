@@ -2,8 +2,7 @@
 #define ARC_H
 #include "sommet.h"
 
-class arc
-{
+class arc {
     public:
         arc();
         arc(sommet s1, sommet s2,int valeur);

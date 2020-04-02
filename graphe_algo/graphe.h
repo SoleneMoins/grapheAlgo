@@ -9,8 +9,7 @@
 
 
 
-class graphe
-{
+class graphe {
 public:
     graphe();
     graphe(std::vector<sommet>&sommet, std::vector<arc>&arcs);
@@ -41,11 +40,8 @@ public:
     void construitVectorRectangle(std::vector<sommet>&s);
 
     bool estValide();
-
     void clean();
-
     void save(std::ostream&ost);
-
     void open(std::istream&ist);
 
 private:

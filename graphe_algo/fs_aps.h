@@ -10,8 +10,7 @@
 
 const int MAXPOIDS=10000;
 
-class fs_aps
-{
+class fs_aps {
     public:
         //Constructeurs 
         fs_aps();

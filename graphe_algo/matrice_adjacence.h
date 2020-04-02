@@ -4,8 +4,7 @@
 #include <vector>
 #include <iostream>
 class fs_aps;
-class matrice_Adjacence
-{
+class matrice_Adjacence {
     public:
         matrice_Adjacence();
         matrice_Adjacence(fs_aps & graphFsAps); //constuire la matrice à partir de fs et aps

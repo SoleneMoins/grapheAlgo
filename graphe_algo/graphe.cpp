@@ -3,8 +3,7 @@
 graphe::graphe()
 {}
 
-graphe::graphe(std::vector<sommet>&sommet, std::vector<arc>&arcs):d_sommet{sommet},d_arc{arcs}
-{
+graphe::graphe(std::vector<sommet>&sommet, std::vector<arc>&arcs):d_sommet{sommet},d_arc{arcs} {
     construitVectorRectangle(d_sommet);
     construitVectorLine(d_arc);
 
@@ -12,8 +11,7 @@ graphe::graphe(std::vector<sommet>&sommet, std::vector<arc>&arcs):d_sommet{somme
     d_fsaps = f;
 }
 
-graphe::graphe(std::vector<int>&fs,int nbsommet)
-{
+graphe::graphe(std::vector<int>&fs,int nbsommet){
     int nbfois = 1;
     int j = 1;
     int compt = 0;

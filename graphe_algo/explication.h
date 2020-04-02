@@ -2,8 +2,7 @@
 #define EXPLICATION_H
 
 
-class explication
-{
+class explication {
 public:
     explication();
 };

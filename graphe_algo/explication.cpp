@@ -1,6 +1,5 @@
 #include "explication.h"
 
-explication::explication()
-{
+explication::explication() {
 
 }

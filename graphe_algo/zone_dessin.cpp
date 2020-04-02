@@ -1,9 +1,7 @@
 #include "zone_dessin.h"
 
 zone_dessin::zone_dessin(QWidget *parent):QWidget{parent},d_choix{3},d_num{0},graphe_valide{false}
-{
-
-}
+{}
 
 void zone_dessin::changeChoix(int choix){
     d_choix = choix;
@@ -34,22 +32,14 @@ graphe zone_dessin::getGraphe(){
 }
 
 void zone_dessin::setGraphe(graphe g){
-
     d_graphe = g;
-
-
 }
 
-
-
-
 void zone_dessin::nettoie(){
-
     d_graphe.clean();
     points.clear();
     points.resize(0);
     graphe_valide = false;
-
 }
 
 bool zone_dessin::estValide(){
@@ -62,17 +52,14 @@ bool zone_dessin::validationGraphe(){
 
 
 void zone_dessin::save(std::ostream&ost){
-
     d_graphe.save(ost);
 }
 
 
 void zone_dessin::open(std::istream&ist){
-
     nettoie();
     d_graphe.open(ist);
     update();
-
 }
 
 
@@ -170,17 +157,11 @@ void zone_dessin::changeNom(std::string nom){
 }
 
 void zone_dessin::mousePressEvent( QMouseEvent * event){
-
     xPress = event->pos().x();
     yPress = event->pos().y();
 
     points.push_back(event->pos());
-
-
     update();
-
-
-
 }
 
 void zone_dessin::mouseMoveEvent(QMouseEvent*e){
@@ -212,7 +193,7 @@ void zone_dessin::paintEvent(QPaintEvent*p){
     painter.setBrush(brush1);
 
 
-if(d_choix!=4){
+    if(d_choix!=4){
 
         if(d_choix==6){
             QPointF p(xPress,yPress);
@@ -301,10 +282,10 @@ if(d_choix!=4){
           }
 
         }
-}
+    }
 
 
-if(d_choix!=5){
+    if(d_choix!=5){
 
 
           for(int i=0; i<d_graphe.getRectangle().size();i++){
@@ -339,7 +320,7 @@ if(d_choix!=5){
 
         }
 
-}
+    }
 
 
 

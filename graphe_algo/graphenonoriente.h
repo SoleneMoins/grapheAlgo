@@ -5,11 +5,11 @@
 #include"arc.h"
 
 
-class GrapheNonOriente
-{
+class GrapheNonOriente {
 public:
     GrapheNonOriente();
     GrapheNonOriente(int n, int m, const std::vector<arc> &aret);
+
     void affichage()const;
     void kruskal(GrapheNonOriente &t);
     void trier();
