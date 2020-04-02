@@ -12,7 +12,8 @@ class matrice_Adjacence
         //voici des surcharge d'operateur a faire:
         //numero1 operator[][]
         //numero2 operator==
-        void matriceDistance(int *fa, fs_aps &graph , int **&mat);
+        std::vector<int> codage_Pruffer();
+
 
     private:
         std::vector<std::vector<int>> d_matrice; //vecteur de vecteur

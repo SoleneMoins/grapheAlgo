@@ -25,11 +25,36 @@ matrice_Adjacence::matrice_Adjacence(fs_aps &graphFsAps)
     }
 }
 
-void matrice_Adjacence::matriceDistance(int *fa, fs_aps& graph, int **&mat) {
-    int n=graph.getAps()[0];
-   for(int i=1; i<=n; i++) {
-        mat[i]=new int[n+1];
-        graph.distance();
+std::vector<int> matrice_Adjacence::codage_Pruffer()
+{
+    int m=d_nbSommet;
+    std::vector<int> prufer(m-1,0);
+    prufer[0]=m-2;
+    int A[m+1][m+1];
+    for (int i = 0; i <= m; ++i){
+        for (int j = 0; j <= m; ++j){
+            A[i][j] = d_matrice[i][j];
+        }
     }
+    int compteur;
+    for (int i = 1; i <= m; ++i){
+       compteur = 0;
+       for (int j = 1; j <=m; ++j){
+           if (A[i][j] == 1)
+               compteur++;
+        }
+             A[i][0] = compteur;
+    }
+    for (int i = 1; i <= m-2; ++i){
+       int j = 1;
+       while (j <= m && A[j][0] != 1)
+           ++j;
+           A[j][0] = 0; int k = 1;
+           while (k <= m && A[j][k] != 1)
+                  ++k;
+             A[j][k] = 0; A[k][j] = 0; A[k][0]--;
+             prufer[i] = k;
+    }
+    return prufer;
 }
 
