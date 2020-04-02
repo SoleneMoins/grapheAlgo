@@ -184,6 +184,9 @@ void MainWindow::vue_creer(){
     connect(tarjan,&QPushButton::clicked,this,&MainWindow::boutonTarjan);
     connect(distance,&QPushButton::clicked,this,&MainWindow::boutonDist);
     connect(prufer,&QPushButton::clicked,this,&MainWindow::boutonPruffer);
+    connect(rang,&QPushButton::clicked,this,&MainWindow::boutonRang);
+    connect(djikstra,&QPushButton::clicked,this,&MainWindow::boutonDijkstra);
+
 
 
 
@@ -371,24 +374,27 @@ void MainWindow::boutonEffacerSommet(){
 
 void MainWindow::boutonTarjan(){
 
-   /* if(d_dessin->validationGraphe()){
+   if(d_dessin->validationGraphe()){
 
-        std::vector<int> cfc = d_dessin->getCFC();
-        QString tar = "";
+       std::vector<int> fs = d_dessin->getFsAps().getFs();
+       std::vector<int> aps = d_dessin->getFsAps().getAps();
+       fs_aps fsaps (fs,aps);
+
+       std::vector<int> cfc = fsaps.Tarjan();
+        std::cout<<"CFC : ";
        for(int i=0;i<cfc.size();i++){
-            tar+=QString::number(cfc[i]);
-            tar+="|";
+            std::cout<<cfc[i]<<"|";
         }
 
        QMessageBox msg;
-       msg.setText("CFC : "+tar);
+       msg.setText("Regardez la console");
        msg.exec();
 
     }else{
         QMessageBox msg;
-        msg.setText("Votre graphe n'a pas été validé");
+        msg.setText("Votre graphe n'est pas valide");
         msg.exec();
-    }*/
+    }
 
 
 
@@ -433,6 +439,49 @@ void MainWindow::boutonPruffer(){
     QMessageBox msg;
     msg.setText("Regardez la console");
     msg.exec();
+}
+
+
+void MainWindow::boutonRang(){
+
+    std::vector<int> fs = d_dessin->getFsAps().getFs();
+    std::vector<int> aps = d_dessin->getFsAps().getAps();
+
+    fs_aps fsaps (fs,aps);
+    std::vector<int> rang = fsaps.Rang();
+
+    for(int i=0;i<rang.size();i++){
+        std::cout<<rang[i]<<"|";
+    }
+
+    QMessageBox msg;
+    msg.setText("Regardez la console");
+    msg.exec();
+
+}
+
+void MainWindow::boutonDijkstra(){
+
+    std::vector<int> fs = d_dessin->getFsAps().getFs();
+    std::vector<int> aps = d_dessin->getFsAps().getAps();
+
+    fs_aps fsaps (fs,aps);
+
+
+
+    std::vector<std::vector<int>> mm {{0,0,0,0,0,0,0},{0,0,10,3,MAXPOIDS,6,MAXPOIDS},{0,0,0,MAXPOIDS,MAXPOIDS,MAXPOIDS,MAXPOIDS},
+                                      {0,MAXPOIDS,4,0,MAXPOIDS,2,MAXPOIDS},{0,MAXPOIDS,MAXPOIDS,1,0,3,MAXPOIDS},{0,MAXPOIDS,0,MAXPOIDS,MAXPOIDS,0,1},
+                                      {0,2,1,MAXPOIDS,MAXPOIDS,MAXPOIDS,0}};
+
+     std::vector<std::vector<int>> m = fsaps.Dijkstra(mm);
+
+    for(int i=0;i<m.size();i++){
+        for(int j=0;j<m[0].size();j++){
+            std::cout<<m[i][j]<<"|";
+        }
+        std::cout<<std::endl;
+    }
+
 }
 
 

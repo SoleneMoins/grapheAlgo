@@ -39,6 +39,8 @@ private slots:
     void boutonTarjan();
     void boutonDist();
     void boutonPruffer();
+    void boutonRang();
+    void boutonDijkstra();
 
 
 

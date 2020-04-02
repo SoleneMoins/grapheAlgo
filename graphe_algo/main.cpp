@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 
 
  //**************************************************************************************************************************************
-  std::vector<std::vector<int>>matD{{0,0,0,0,0,0,0},{0,0,10,3,MAXPOIDS,6,MAXPOIDS},{0,0,0,MAXPOIDS,MAXPOIDS,MAXPOIDS,MAXPOIDS},
+  /*std::vector<std::vector<int>>matD{{0,0,0,0,0,0,0},{0,0,10,3,MAXPOIDS,6,MAXPOIDS},{0,0,0,MAXPOIDS,MAXPOIDS,MAXPOIDS,MAXPOIDS},
                                   {0,MAXPOIDS,4,0,MAXPOIDS,2,MAXPOIDS},{0,MAXPOIDS,MAXPOIDS,1,0,3,MAXPOIDS},{0,MAXPOIDS,0,MAXPOIDS,MAXPOIDS,0,1},
                                   {0,2,1,MAXPOIDS,MAXPOIDS,MAXPOIDS,0}}; // Matrice de distance
 
@@ -31,20 +31,20 @@ int main(int argc, char *argv[])
 
 
    //Text Dijkstra
-  QTextStream(stdout)<<"Dijkstra :\n";
+ /* QTextStream(stdout)<<"Dijkstra :\n";
   for(int i=1; i<= aps[0]; i++)
   {    for(int j=1; j<= aps[0]; j++)
         QTextStream(stdout)<<g.Dijkstra(matD)[i][j]<<" ";
 
       QTextStream(stdout)<<"\n";
-  }
+  }*/
 //**************************************************************************************************************************
 
-   std::vector<int>fss{31, 2, 3, 0, 4, 9, 0, 4, 6, 8, 0, 8, 9, 11, 0, 3, 6, 0, 7, 8, 0, 8, 0, 10, 0, 0, 11, 0, 10, 12, 0, 0};
+  /* std::vector<int>fss{31, 2, 3, 0, 4, 9, 0, 4, 6, 8, 0, 8, 9, 11, 0, 3, 6, 0, 7, 8, 0, 8, 0, 10, 0, 0, 11, 0, 10, 12, 0, 0};
    std::vector<int>apss{12, 1, 4, 7, 11, 15, 18, 21, 23, 25, 26, 28, 31};
    fs_aps h(fss,apss);
    std::vector<int>t(9,0);
-   t=h.Tarjan();
+   t=h.Tarjan();*/
 
   /* std::vector<int>t;
    std::vector<int>pred;
@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
 
 
    //Test Tarjan
-   QTextStream(stdout)<<"\nTarjan :\n";
+   /*QTextStream(stdout)<<"\nTarjan :\n";
    for(int i=0; i<9; i++)
    {
        QTextStream(stdout)<<t[i]<<" ";
@@ -89,7 +89,7 @@ int main(int argc, char *argv[])
 
 
    //Test rang
-   QTextStream(stdout)<<"Rang :\n";
+  /* QTextStream(stdout)<<"Rang :\n";
 
    for(int i=1; i<= apss[0]; i++)
        QTextStream(stdout)<<h.Rang()[i]<<" ";
@@ -107,7 +107,7 @@ int main(int argc, char *argv[])
    GrapheNonOriente gno(sommets,ars);
 
    GrapheNonOriente gKruskal = gno.kruskal();
-   gKruskal.affichage();
+   gKruskal.affichage();*/
 
    w.show();
    a.exec();
