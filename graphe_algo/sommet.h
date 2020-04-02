@@ -118,6 +118,8 @@ class sommet {
 
 
 
+
+
     private:
 
       int d_x,d_y;//Cartesian coordinates

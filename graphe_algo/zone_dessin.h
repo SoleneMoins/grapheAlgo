@@ -26,6 +26,7 @@ public:
     graphe getGraphe();
 
     void setGraphe(graphe g);
+    std::vector<int> getCFC();
 
    // std::vector<int> getNumTarjan();
 

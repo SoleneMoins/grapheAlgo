@@ -35,6 +35,7 @@ private slots:
     void fs_apsClick();
     void boutonNumerique();
     void boutonEffacerSommet();
+    void boutonTarjan();
 
 
 

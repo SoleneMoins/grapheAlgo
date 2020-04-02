@@ -177,6 +177,7 @@ void MainWindow::vue_creer(){
     connect(fs_aps,&QPushButton::clicked,this,&MainWindow::fs_apsClick);
     connect(numerique,&QPushButton::clicked,this,&MainWindow::boutonNumerique);
     connect(eff,&QPushButton::clicked,this,&MainWindow::boutonEffacerSommet);
+    connect(tarjan,&QPushButton::clicked,this,&MainWindow::boutonTarjan);
 
 
 
@@ -358,6 +359,33 @@ void MainWindow::boutonEffacerSommet(){
     }else{
         d_dessin->changeChoix(6);
     }
+
+}
+
+void MainWindow::boutonTarjan(){
+
+    if(d_dessin->validationGraphe()){
+
+        std::vector<int> cfc = d_dessin->getCFC();
+        QString tar = "";
+       for(int i=0;i<cfc.size();i++){
+            tar+=QString::number(cfc[i]);
+            tar+="|";
+        }
+
+       QMessageBox msg;
+       msg.setText("CFC : "+tar);
+       msg.exec();
+
+    }else{
+        QMessageBox msg;
+        msg.setText("Votre graphe n'a pas été validé");
+        msg.exec();
+    }
+
+
+
+
 
 }
 
