@@ -15,6 +15,7 @@
 #include "affichage_numerique.h"
 #include "saise_valeur_arc.h"
 #include "saisie_nom_sommet.h"
+#include "graphenonoriente.h"
 
 
 
@@ -39,6 +40,9 @@ private slots:
     void boutonTarjan();
     void boutonDist();
     void boutonPruffer();
+    void boutonRang();
+    void boutonDijkstra();
+    void boutonKruskal();
 
 
 

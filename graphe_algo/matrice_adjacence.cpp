@@ -67,3 +67,5 @@ void matrice_Adjacence::codage_Pruffer(std::vector<int> &X){
     }
 }
 
+
+
