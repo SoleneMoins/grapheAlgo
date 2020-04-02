@@ -181,7 +181,6 @@ void MainWindow::vue_creer(){
     connect(numerique,&QPushButton::clicked,this,&MainWindow::boutonNumerique);
     connect(eff,&QPushButton::clicked,this,&MainWindow::boutonEffacerSommet);
     connect(tarjan,&QPushButton::clicked,this,&MainWindow::boutonTarjan);
-    connect(tarjan,&QPushButton::clicked,this,&MainWindow::boutonTarjan);
     connect(distance,&QPushButton::clicked,this,&MainWindow::boutonDist);
     connect(prufer,&QPushButton::clicked,this,&MainWindow::boutonPruffer);
     connect(rang,&QPushButton::clicked,this,&MainWindow::boutonRang);
