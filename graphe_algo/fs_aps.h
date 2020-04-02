@@ -32,8 +32,8 @@ class fs_aps
         int getNbArc() const;
 
         void determiner_rang(int *&rang, int *&num) const ;
-        std::vector<int>  distance();
-  
+        void calcul_dist(int s, std::vector<int>& dist);
+
         std::vector<int> Tarjan()const;
         std::vector<std::vector<int>> Dijkstra(const std::vector<std::vector<int>>&C)const;
 
