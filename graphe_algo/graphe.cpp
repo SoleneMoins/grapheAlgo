@@ -333,5 +333,36 @@ void graphe::open(std::istream&ist){
     }
 
 
+}
 
+void graphe::calcul_dist(int s, std::vector<int>& dist) {
+    int m=d_fsaps.getFs()[0];
+    dist.clear();
+    dist.resize(m+1);
+    dist[0]=m;
+    for(int i=1;i<=m;i++) {
+        dist[i]=-1;
+    }
+    dist[s]=0; // distance de s à lui même est égal à 0
+    int d=1;
+    int *fa=new int [m];  //fs ne peut contenir plus de m éléments, file d’attente
+    fa[0]=s;
+    int t =-1;  // t l’indice avant celui de début du bloc courant
+    int q=0; //q l’indice du dernier élément du bloc courant
+    int p=0; //p+1 est la première place libre dans fs
+    while(t<q) {
+        for(int i=t+1 ; i<=q ; i++){
+            int u=fa[i];
+            int v;
+            for(int k=d_fsaps.getAps()[u]; (v=d_fsaps.getFs()[k])!=0;k++){
+                // v est un successeur de u, on teste sa distance
+                if( dist[v] ==-1 ) {
+                    dist[v]=d;
+                    fa[++p]=v;
+                }
+            }
+        }
+        t = q;
+        q = p;
+    } // while
 }

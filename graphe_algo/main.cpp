@@ -32,6 +32,20 @@ int main(int argc, char *argv[])
    }
    QTextStream(stdout)<<"\n";*/
 
+   std::vector<int>fss{21,2,3,0,4,0,5,8,0,6,2,0,3,7,0,1,8,0,8,0,7,0};
+   std::vector<int>apss{8,1,4,6,9,12,15,18,20};
+   fs_aps g(fss,apss);
+   std::vector<int> dist;
+   std::vector<int> pred;
+
+   g.calcul_dist(1,dist,pred);
+
+   for(int i=0;i<dist.size();i++)
+       std::cout<<dist[i]<<"!";
+   std::cout<<endl;
+   for(int i=0;i<pred.size();i++)
+       std::cout<<pred[i]<<"!";
+
    w.show();
    a.exec();
 }
