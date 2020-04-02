@@ -60,7 +60,7 @@ fs_aps::fs_aps(std::vector<sommet>&d_sommet,std::vector<arc>&d_arc) {
         nb++;
     }
 
-
+   fs[0] = fs.size();
 
     std::vector<int> aps;
 
@@ -332,7 +332,8 @@ std::vector<int> fs_aps::Rang()
 
 
 
-void fs_aps::calcul_dist(int s, std::vector<int>& d,std::vector<int>& pred ) {
+void fs_aps::calcul_dist(int s, std::vector<int>&d,std::vector<int>& pred ) {
+
     int t =-1;  // t l’indice avant celui de début du bloc courant
     int q=0; //q l’indice du dernier élément du bloc courant
     int k=0;
@@ -375,6 +376,7 @@ void fs_aps::calcul_dist(int s, std::vector<int>& d,std::vector<int>& pred ) {
         t = q;
         q = k;
     } // while
+
 }
 
 

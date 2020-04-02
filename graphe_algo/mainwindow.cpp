@@ -104,7 +104,8 @@ void MainWindow::vue_creer(){
         auto labeltitre3 = new QLabel{"FAITES  VOS  CALCULS"};
         labeltitre3->setMargin(10);
         labeltitre3->setStyleSheet("font-size:15px;background:#161616");
-
+        sommetdep = new QLineEdit{};
+        sommetarr = new QLineEdit{};
 
         auto distance = new QPushButton{"DISTANCE"};
         auto rang = new QPushButton{"RANG"};
@@ -112,7 +113,7 @@ void MainWindow::vue_creer(){
         auto tarjan = new QPushButton{"TARJAN"};
         auto djikstra = new QPushButton{"DJIKSTRA"};
         auto kruskel = new QPushButton{"KRUSKAL"};
-        auto prufer = new QPushButton{"PRUFER"};
+        auto prufer = new QPushButton{"PRUFFER"};
         distance->setStyleSheet("background:#202020;height:30px;");
         tarjan->setStyleSheet("background:#202020;height:30px;");
         djikstra->setStyleSheet("background:#202020;height:30px;");
@@ -154,6 +155,8 @@ void MainWindow::vue_creer(){
         layoutbouton->addLayout(layoutb);
         layoutbouton->addStretch(1);
         layoutbouton->addWidget(labeltitre3);
+        layoutbouton->addWidget(sommetdep);
+        layoutbouton->addWidget(sommetarr);
         layoutbouton->addWidget(distance);
         layoutbouton->addWidget(rang);
         layoutbouton->addWidget(tarjan);
@@ -178,6 +181,10 @@ void MainWindow::vue_creer(){
     connect(numerique,&QPushButton::clicked,this,&MainWindow::boutonNumerique);
     connect(eff,&QPushButton::clicked,this,&MainWindow::boutonEffacerSommet);
     connect(tarjan,&QPushButton::clicked,this,&MainWindow::boutonTarjan);
+    connect(tarjan,&QPushButton::clicked,this,&MainWindow::boutonTarjan);
+    connect(distance,&QPushButton::clicked,this,&MainWindow::boutonDist);
+    connect(prufer,&QPushButton::clicked,this,&MainWindow::boutonPruffer);
+
 
 
 
@@ -364,7 +371,7 @@ void MainWindow::boutonEffacerSommet(){
 
 void MainWindow::boutonTarjan(){
 
-    if(d_dessin->validationGraphe()){
+   /* if(d_dessin->validationGraphe()){
 
         std::vector<int> cfc = d_dessin->getCFC();
         QString tar = "";
@@ -381,12 +388,51 @@ void MainWindow::boutonTarjan(){
         QMessageBox msg;
         msg.setText("Votre graphe n'a pas été validé");
         msg.exec();
+    }*/
+
+
+
+
+
+}
+
+void MainWindow::boutonDist(){
+
+    std::vector<int> pred;
+    std::vector<int> fs = d_dessin->getFsAps().getFs();
+    std::vector<int> aps = d_dessin->getFsAps().getAps();
+    fs_aps fsaps (fs,aps);
+    std::vector<int> dist;
+    int s = sommetdep->text().toInt();
+    int s2 = sommetarr->text().toInt();
+
+    fsaps.calcul_dist(s,dist,pred);
+    std::cout<<"Distance entre le sommet "<<s<<" et le sommet "<<s2<<" : "<<dist[s2];
+
+    QMessageBox msg;
+    msg.setText("Regardez la console");
+    msg.exec();
+
+
+
+}
+
+void MainWindow::boutonPruffer(){
+
+    std::vector<int> fs = d_dessin->getFsAps().getFs();
+    std::vector<int> aps = d_dessin->getFsAps().getAps();
+
+    fs_aps fsaps (fs,aps);
+    matrice_Adjacence m(fsaps);
+    std::vector<int> p = m.codage_Pruffer();
+    std::cout<<"PRUFFER : ";
+    for(int i=0;i<p.size();i++){
+       std::cout<<p[i]<<"|";
     }
 
-
-
-
-
+    QMessageBox msg;
+    msg.setText("Regardez la console");
+    msg.exec();
 }
 
 

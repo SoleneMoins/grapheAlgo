@@ -23,6 +23,12 @@ int main(int argc, char *argv[])
    std::vector<int>fs{19,2,3,5,0,1,0,2,5,0,3,5,0,2,6,0,1,2,0};
    std::vector<int>aps{6,1,5,7,10,13,16};
    fs_aps g(fs,aps);
+   matD=g.Dijkstra(C);*/
+
+  /* std::vector<int>fss{21,2,3,0,4,0,5,8,0,6,2,0,3,7,0,1,8,0,8,0,7,0};
+   std::vector<int>apss{8,1,4,6,9,12,15,18,20};
+   fs_aps h(fss,apss);*/
+
 
    //Text Dijkstra
   QTextStream(stdout)<<"Dijkstra :\n";
@@ -40,6 +46,16 @@ int main(int argc, char *argv[])
    std::vector<int>t(9,0);
    t=h.Tarjan();
 
+  /* std::vector<int>t;
+   std::vector<int>pred;
+   h.calcul_dist(2,t,pred);
+
+
+   for(int i=0; i<t.size(); i++)
+   {
+       std::cout<<t[i]<<"|";
+   }*/
+
 
    //Test Tarjan
    QTextStream(stdout)<<"\nTarjan :\n";
@@ -50,11 +66,11 @@ int main(int argc, char *argv[])
 
    QTextStream(stdout)<<"\n";*/
 
-   std::vector<int>fss{21,2,3,0,4,0,5,8,0,6,2,0,3,7,0,1,8,0,8,0,7,0};
+  /* std::vector<int>fss{21,2,3,0,4,0,5,8,0,6,2,0,3,7,0,1,8,0,8,0,7,0};
    std::vector<int>apss{8,1,4,6,9,12,15,18,20};
    fs_aps g(fss,apss);
    std::vector<int> dist;
-   std::vector<int> pred;
+   std::vector<int> pred;*/
 
    /*g.calcul_dist(1,dist,pred);
 
@@ -64,12 +80,12 @@ int main(int argc, char *argv[])
    for(int i=0;i<pred.size();i++)
        std::cout<<pred[i]<<"!";*/
 
-   matrice_Adjacence m(g);
+   /*matrice_Adjacence m(g);
    pred=m.codage_Pruffer();
    for(int i=0;i<m.getMatrice()[0][0];i++){
        cout<<pred[i]<<"//";
 
-   }
+   }*/
 
 
    //Test rang
@@ -95,4 +111,6 @@ int main(int argc, char *argv[])
 
    w.show();
    a.exec();
+
+
 }

@@ -200,10 +200,6 @@ void zone_dessin::paintEvent(QPaintEvent*p){
                       }
                   }else{
 
-
-
-                          //Test
-                          std::cout<<"Veuillez choisir"<<std::endl;
                           points.clear();
                           points.resize(0);
 
