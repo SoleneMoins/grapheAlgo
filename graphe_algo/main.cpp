@@ -19,6 +19,7 @@ int main(int argc, char *argv[])
                                   {0,MAXPOIDS,4,0,MAXPOIDS,2,MAXPOIDS},{0,MAXPOIDS,MAXPOIDS,1,0,3,MAXPOIDS},{0,MAXPOIDS,0,MAXPOIDS,MAXPOIDS,0,1},
                                   {0,2,1,MAXPOIDS,MAXPOIDS,MAXPOIDS,0}}; // Matrice de distance
 
+  /* std::vector<std::vector<int>>C{{0,0,0,0,0,0,0},{0,0,10,3,MAXPOIDS,6,MAXPOIDS},{0,0,0,MAXPOIDS,MAXPOIDS,MAXPOIDS,MAXPOIDS},{0,MAXPOIDS,4,0,MAXPOIDS,2,MAXPOIDS},{0,MAXPOIDS,MAXPOIDS,1,0,3,MAXPOIDS},{0,MAXPOIDS,0,MAXPOIDS,MAXPOIDS,0,1},{0,2,1,MAXPOIDS,MAXPOIDS,MAXPOIDS,0}};
    std::vector<int>fs{19,2,3,5,0,1,0,2,5,0,3,5,0,2,6,0,1,2,0};
    std::vector<int>aps{6,1,5,7,10,13,16};
    fs_aps g(fs,aps);
@@ -47,7 +48,29 @@ int main(int argc, char *argv[])
        QTextStream(stdout)<<t[i]<<" ";
    }
 
-   QTextStream(stdout)<<"\n";
+   QTextStream(stdout)<<"\n";*/
+
+   std::vector<int>fss{21,2,3,0,4,0,5,8,0,6,2,0,3,7,0,1,8,0,8,0,7,0};
+   std::vector<int>apss{8,1,4,6,9,12,15,18,20};
+   fs_aps g(fss,apss);
+   std::vector<int> dist;
+   std::vector<int> pred;
+
+   /*g.calcul_dist(1,dist,pred);
+
+   for(int i=0;i<dist.size();i++)
+       std::cout<<dist[i]<<"!";
+   std::cout<<endl;
+   for(int i=0;i<pred.size();i++)
+       std::cout<<pred[i]<<"!";*/
+
+   matrice_Adjacence m(g);
+   pred=m.codage_Pruffer();
+   for(int i=0;i<m.getMatrice()[0][0];i++){
+       cout<<pred[i]<<"//";
+
+   }
+
 
    //Test rang
    QTextStream(stdout)<<"Rang :\n";
@@ -57,7 +80,6 @@ int main(int argc, char *argv[])
 
    QTextStream(stdout)<<"\n";
 
-//********************************************************************************************************************************
 
    //Test Kruskal
     sommet A(0,0,1,"a") ,B(0,0,2,"b") ,C(0,0,3,"c") ,D(0,0,4,"d") ,E(0,0,5,"e") ,F(0,0,6,"f");

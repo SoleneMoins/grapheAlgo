@@ -3,8 +3,7 @@
 graphe::graphe()
 {}
 
-graphe::graphe(std::vector<sommet>&sommet, std::vector<arc>&arcs):d_sommet{sommet},d_arc{arcs}
-{
+graphe::graphe(std::vector<sommet>&sommet, std::vector<arc>&arcs):d_sommet{sommet},d_arc{arcs} {
     construitVectorRectangle(d_sommet);
     construitVectorLine(d_arc);
 
@@ -12,8 +11,7 @@ graphe::graphe(std::vector<sommet>&sommet, std::vector<arc>&arcs):d_sommet{somme
     d_fsaps = f;
 }
 
-graphe::graphe(std::vector<int>&fs,int nbsommet)
-{
+graphe::graphe(std::vector<int>&fs,int nbsommet){
     int nbfois = 1;
     int j = 1;
     int compt = 0;
@@ -80,6 +78,7 @@ graphe::graphe(std::vector<int>&fs,int nbsommet)
 }
 
 
+
 graphe::graphe(fs_aps fsaps){
 
     std::vector<int> fs = fsaps.getFs();
@@ -91,6 +90,10 @@ graphe::graphe(fs_aps fsaps){
     d_rectangle = g.d_rectangle;
     d_fsaps = g.d_fsaps;
 
+}
+
+std::vector<int> graphe::getCFC(){
+    return d_fsaps.Tarjan();
 }
 
 void graphe::ajouterSommet(sommet&s){
@@ -330,5 +333,36 @@ void graphe::open(std::istream&ist){
     }
 
 
+}
 
+void graphe::calcul_dist(int s, std::vector<int>& dist) {
+    int m=d_fsaps.getFs()[0];
+    dist.clear();
+    dist.resize(m+1);
+    dist[0]=m;
+    for(int i=1;i<=m;i++) {
+        dist[i]=-1;
+    }
+    dist[s]=0; // distance de s à lui même est égal à 0
+    int d=1;
+    int *fa=new int [m];  //fs ne peut contenir plus de m éléments, file d’attente
+    fa[0]=s;
+    int t =-1;  // t l’indice avant celui de début du bloc courant
+    int q=0; //q l’indice du dernier élément du bloc courant
+    int p=0; //p+1 est la première place libre dans fs
+    while(t<q) {
+        for(int i=t+1 ; i<=q ; i++){
+            int u=fa[i];
+            int v;
+            for(int k=d_fsaps.getAps()[u]; (v=d_fsaps.getFs()[k])!=0;k++){
+                // v est un successeur de u, on teste sa distance
+                if( dist[v] ==-1 ) {
+                    dist[v]=d;
+                    fa[++p]=v;
+                }
+            }
+        }
+        t = q;
+        q = p;
+    } // while
 }

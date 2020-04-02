@@ -10,8 +10,7 @@
 
 const int MAXPOIDS=10000;
 
-class fs_aps
-{
+class fs_aps {
     public:
         //Constructeurs 
         fs_aps();
@@ -36,6 +35,9 @@ class fs_aps
         std::vector<int> Rang();
         std::vector<int>  distance();
   
+        void determiner_rang(int *&rang, int *&num) const ;
+        void calcul_dist(int s, std::vector<int>& dist,std::vector<int>& pred );
+
         std::vector<int> Tarjan()const;
         std::vector<std::vector<int>> Dijkstra(const std::vector<std::vector<int>>&C)const;
 

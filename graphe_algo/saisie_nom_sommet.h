@@ -17,8 +17,7 @@
 #include "graphe.h"
 
 
-class saisie_nom_sommet : public QDialog
-{
+class saisie_nom_sommet : public QDialog {
 public:
     saisie_nom_sommet(graphe g,QWidget*parent=nullptr);
     graphe getGraphe();

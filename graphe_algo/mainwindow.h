@@ -19,8 +19,7 @@
 
 
 
-class MainWindow : public QMainWindow
-{
+class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
@@ -36,6 +35,7 @@ private slots:
     void fs_apsClick();
     void boutonNumerique();
     void boutonEffacerSommet();
+    void boutonTarjan();
 
 
 
