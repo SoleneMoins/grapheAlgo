@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 
   /* std::vector<int>fss{21,2,3,0,4,0,5,8,0,6,2,0,3,7,0,1,8,0,8,0,7,0};
    std::vector<int>apss{8,1,4,6,9,12,15,18,20};
-   fs_aps h(fss,apss);*/
+   fs_aps h(fss,apss);
 
 
    //Text Dijkstra
