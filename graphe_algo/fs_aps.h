@@ -30,8 +30,13 @@ class fs_aps {
         int nbSommets()const;
         int getNbArc() const;
 
+        //void determiner_rang(int *&rang, int *&num) const ;
+       // std::vector<int> det_rang() const;
+        std::vector<int> Rang();
+        std::vector<int>  distance();
+  
         void determiner_rang(int *&rang, int *&num) const ;
-        void calcul_dist(int s, std::vector<int>& dist,std::vector<int>& pred );
+        void calcul_dist(int s,std::vector<int>&d,std::vector<int>& pred );
 
         std::vector<int> Tarjan()const;
         std::vector<std::vector<int>> Dijkstra(const std::vector<std::vector<int>>&C)const;
@@ -58,6 +63,7 @@ class fs_aps {
                         int &p, int &nbr) const;
 
         std::vector<int> neoDijkstra(const std::vector<std::vector<int>>&C,std::vector<int> &d, std::vector<int> &pred,std::vector<bool> &S, int s)const;
+        void empiler (int x, std::vector<int> &pilch);
 };
 
 #endif // GRAPHE_H

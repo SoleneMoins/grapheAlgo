@@ -19,6 +19,7 @@
 
 
 
+
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
@@ -36,6 +37,8 @@ private slots:
     void boutonNumerique();
     void boutonEffacerSommet();
     void boutonTarjan();
+    void boutonDist();
+    void boutonPruffer();
 
 
 
@@ -45,6 +48,8 @@ private:
     QLineEdit*nom;
     QLineEdit*num;
     QLineEdit*d_arc;
+    QLineEdit*sommetdep;
+    QLineEdit*sommetarr;
     void vue_creer();
 
 
