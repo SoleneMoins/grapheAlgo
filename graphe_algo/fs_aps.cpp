@@ -178,7 +178,7 @@ int fs_aps::getNbArc() const {
 }*/
 
 //Distance + rang 
-void fs_aps::determiner_rang(int *&rang, int *&num) const {
+/*void fs_aps::determiner_rang(int *&rang, int *&num) const {
     int n=d_aps[0], r=0, pas=-1, e=0, d=n+1, x, s, t=0; rang = new int[n+1];
     num = new int[n+1];
     rang[0]=n;
@@ -220,6 +220,118 @@ void fs_aps::determiner_rang(int *&rang, int *&num) const {
         pas=-pas;
     }
 }
+*/
+
+/*std::vector<int> fs_aps::det_rang() const
+{
+    int n=d_aps[0], s, k, h, t;
+    std::vector<int>rang(n+1);
+    std::vector<int>num(n+1);
+    std::vector<int>prem(n+1);
+    rang[0]=n;
+    std::vector<int>ddi(n+1);
+    for(int i=1; i<=n; i++)
+    {
+        rang[i]=0;
+        ddi[i]=0;
+    }
+    std::vector<int>pilch;
+    for(int i=1; i<=n; i++)
+    {
+        if((s=d_fs[i])>0)
+            ddi[s]++;
+    }
+    pilch[0]=0;
+    for(int i=1; i<=n; i++)
+       {
+              rang[i]=-1;
+              if(ddi[i]==0)
+                  pilch.push_back(i);
+        }
+    k=-1;
+    s=pilch[0];
+    while(pilch[0]!=0)
+    {
+        k++;
+        pilch[0]=0;
+        while(s!=0)
+        {
+            rang[s]=k;
+            h=d_aps[s];
+            while((t=d_fs[h])>0)
+            {
+                ddi[t]--;
+                if(ddi[t]==0)
+                    pilch.push_back(t);
+                h++;
+            }
+            s=pilch[s];
+        }
+        s=pilch[0];
+        prem[k+1]=s;
+    }
+
+    return rang;
+}*/
+
+
+void fs_aps::empiler (int x, std::vector<int> &pilch)
+{
+    pilch[x] = pilch[0];
+    pilch[0] = x;
+}
+
+std::vector<int> fs_aps::Rang()
+{
+    int n = d_aps[0], taillefs = d_fs[0], s, k,h,t;
+    std::vector<int>rang(n+1);
+    std::vector<int> ddi(n+1);
+    std::vector<int>pilch(n+1);
+    std::vector<int>prem(n+1);
+    for(int i=1; i <=n ; i++) ddi[i]=0;
+
+    //calcul de ddi
+    for(int i=1; i <=taillefs ; i++)
+    {
+        s=d_fs[i];
+        if (s >0) ddi[s]++;
+    }
+    //calcul du rang
+    pilch[0]=0;
+    for(s = 1; s <= n; s++)
+    {
+        rang[s] = -1; // n : nombre de sommets de G represente l'infini
+        if (ddi[s] == 0) empiler(s,pilch);
+    }
+
+    k=-1;
+    s=pilch[0];
+    prem[0] = s;
+    while (pilch[0] > 0)
+    {
+        k++;
+        pilch[0] = 0;
+        while (s > 0)
+        {
+            rang[s] = k;
+            h = d_aps[s]; t = d_fs[h];
+            while (t > 0)
+            {
+                ddi[t]--;
+                if (ddi[t] == 0) empiler(t,pilch);
+                h++;
+                t=d_fs[h];
+            }
+            s = pilch[s];
+        }
+        s = pilch[0];
+        prem[k+1] = s;
+    }
+
+    return rang;
+}
+
+
 
 std::vector<int> fs_aps::distance() {
     int m=d_aps[0];

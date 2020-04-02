@@ -8,18 +8,18 @@
 GrapheNonOriente::GrapheNonOriente()
 {}
 
-GrapheNonOriente::GrapheNonOriente(int n, int m, const std::vector<arc> &aret):d_n(n),d_m(m),d_aret(aret)
+GrapheNonOriente::GrapheNonOriente(const std::vector<sommet> &sommets, const std::vector<arc> &aret):d_n(sommets.size()), d_m(aret.size()),d_sommet(sommets),d_aret(aret)
 {
 
 }
 
-void GrapheNonOriente::affiche() const
+/*void GrapheNonOriente::affiche() const
 {
     for(int i=0; i<d_m; i++)
     {
         QTextStream(stdout)<< d_aret[i].getValeur()<<" "<<d_aret[i].getSommetDepart().getNumero()<<" "<<d_aret[i].getSommetArrive().getNumero()<<"\n";
     }
-}
+}*/
 
 void GrapheNonOriente:: trier()
 {
@@ -63,8 +63,9 @@ void GrapheNonOriente::fusionner(int i, int j, std::vector<int> prem, std::vecto
     NbElem[i] += NbElem[j];
 }
 
-void GrapheNonOriente::kruskal(GrapheNonOriente &t)
+GrapheNonOriente GrapheNonOriente::kruskal()
     {
+         GrapheNonOriente t;
          std::vector<int> prem(d_n+1);
          std::vector<int> pilch(d_n+1);
          std::vector<int> cfc(d_n+1);
@@ -76,11 +77,16 @@ void GrapheNonOriente::kruskal(GrapheNonOriente &t)
             cfc[i] = i;
             NbElem[i] = 1;
          }
-        //this->trier();
+        trier();
         t.d_aret.resize(d_n-1);
+        t.d_sommet.resize(d_n);
+        for(int i=0; i<d_n; i++)
+        {
+            t.d_sommet[i]=d_sommet[i];
+        }
         int x;
         int y;
-        int i = 0, j = 0;//respectivement indice dans g et t
+        int i = 0, j = 0;
         while (j < d_n-1)
         {
             arc ar = d_aret[i];
@@ -97,6 +103,7 @@ void GrapheNonOriente::kruskal(GrapheNonOriente &t)
     t.d_n = d_n;
     t.d_m = d_n-1;
 
+    return t;
 
     }
 
