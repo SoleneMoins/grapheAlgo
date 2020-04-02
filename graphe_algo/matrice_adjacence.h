@@ -15,6 +15,7 @@ class matrice_Adjacence {
         std::vector<int> codage_Pruffer();
 
 
+
     private:
         std::vector<std::vector<int>> d_matrice; //vecteur de vecteur
         int d_nbSommet;

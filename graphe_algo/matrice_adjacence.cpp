@@ -64,3 +64,5 @@ std::vector<int> matrice_Adjacence::codage_Pruffer() {
     return prufer;
 }
 
+
+
