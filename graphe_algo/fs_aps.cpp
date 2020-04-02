@@ -220,37 +220,49 @@ void fs_aps::determiner_rang(int *&rang, int *&num) const {
     }
 }
 
-void fs_aps::calcul_dist(int s, std::vector<int>& dist) {
-    int m=d_aps[0];
-    dist.clear();
-    dist.resize(m+1);
-    dist[0]=m;
-    for(int i=1;i<=m;i++) {
-        dist[i]=-1;
-    }
-    dist[s]=0; // distance de s à lui même est égal à 0
-    int d=0;
-    int *fa=new int [m];  //fs ne peut contenir plus de m éléments, file d’attente
-    fa[0]=s;
+void fs_aps::calcul_dist(int s, std::vector<int>& d,std::vector<int>& pred ) {
     int t =-1;  // t l’indice avant celui de début du bloc courant
     int q=0; //q l’indice du dernier élément du bloc courant
-    int p=0; //p+1 est la première place libre dans fs
+    int k=0;
+    int x=0;
+    int dist=0;
+    int m=d_aps[0];
+    pred.clear();
+    pred.resize(m+1);
+    d.clear();
+    d.resize(m+1);
+    int fatt[m+1];
+    fatt[0]=s;
+
+    for(int i=0;i<m+1;i++) {
+        d[i]=-1;
+        pred[i]=-1;
+        d[s]=0; // distance de s à lui même est égal à 0
+        pred[s]=0;
+    }
+    d[0]=m;
+
     while(t<q) {
+        dist++;
+
         for(int i=t+1 ; i<=q ; i++){
-            int u=fa[i];
-            int v;
-            for(int k=d_aps[u]; (v=d_fs[k])!=0;k++){
-                // v est un successeur de u, on teste sa distance
-                if( dist[v] ==-1 ) {
-                    dist[v]=d;
-                    fa[++p]=v;
+            x=fatt[i];
+            int temp;
+
+            for(int j=d_aps[x]; (temp=d_fs[j])!=0; j++){
+                // temp est un successeur de u, on teste sa distance
+                pred[j]=x;
+
+                if( d[temp] == -1 ) {
+                    d[temp]=dist;
+                    fatt[++k]=temp;
                 }
+             temp=d_fs[j];
             }
         }
         t = q;
-        q = p;
+        q = k;
     } // while
-    delete [] fa;
 }
 
 

@@ -46,6 +46,8 @@ public:
     void clean();
     void save(std::ostream&ost);
     void open(std::istream&ist);
+    void calcul_dist(int s, std::vector<int>& dist);
+
 
 private:
     std::vector<sommet> d_sommet;
