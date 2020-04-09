@@ -453,7 +453,7 @@ void MainWindow::boutonPruffer(){
 
 
 void MainWindow::boutonRang(){
-
+  
      if(d_dessin->validationGraphe()){
 
         std::vector<int> fs = d_dessin->getFsAps().getFs();
@@ -482,7 +482,7 @@ void MainWindow::boutonRang(){
 void MainWindow::boutonDijkstra(){
 
     if(d_dessin->validationGraphe()){
-
+      
         std::vector<int> fs = d_dessin->getFsAps().getFs();
         std::vector<int> aps = d_dessin->getFsAps().getAps();
 
