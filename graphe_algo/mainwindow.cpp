@@ -181,9 +181,12 @@ void MainWindow::vue_creer(){
     connect(numerique,&QPushButton::clicked,this,&MainWindow::boutonNumerique);
     connect(eff,&QPushButton::clicked,this,&MainWindow::boutonEffacerSommet);
     connect(tarjan,&QPushButton::clicked,this,&MainWindow::boutonTarjan);
-    connect(tarjan,&QPushButton::clicked,this,&MainWindow::boutonTarjan);
     connect(distance,&QPushButton::clicked,this,&MainWindow::boutonDist);
     connect(prufer,&QPushButton::clicked,this,&MainWindow::boutonPruffer);
+    connect(rang,&QPushButton::clicked,this,&MainWindow::boutonRang);
+    connect(djikstra,&QPushButton::clicked,this,&MainWindow::boutonDijkstra);
+    connect(kruskel,&QPushButton::clicked,this,&MainWindow::boutonKruskal);
+
 
 
 
@@ -371,47 +374,54 @@ void MainWindow::boutonEffacerSommet(){
 
 void MainWindow::boutonTarjan(){
 
-   /* if(d_dessin->validationGraphe()){
+   if(d_dessin->validationGraphe()){
 
-        std::vector<int> cfc = d_dessin->getCFC();
-        QString tar = "";
+       std::vector<int> fs = d_dessin->getFsAps().getFs();
+       std::vector<int> aps = d_dessin->getFsAps().getAps();
+       fs_aps fsaps (fs,aps);
+
+       std::vector<int> cfc = fsaps.Tarjan();
+        std::cout<<"CFC : ";
        for(int i=0;i<cfc.size();i++){
-            tar+=QString::number(cfc[i]);
-            tar+="|";
+            std::cout<<cfc[i]<<"|";
         }
 
        QMessageBox msg;
-       msg.setText("CFC : "+tar);
+       msg.setText("Regardez la console");
        msg.exec();
 
     }else{
         QMessageBox msg;
-        msg.setText("Votre graphe n'a pas été validé");
+        msg.setText("Votre graphe n'est pas valide");
         msg.exec();
-    }*/
-
-
-
-
+    }
 
 }
 
+
 void MainWindow::boutonDist(){
 
-    std::vector<int> pred;
-    std::vector<int> fs = d_dessin->getFsAps().getFs();
-    std::vector<int> aps = d_dessin->getFsAps().getAps();
-    fs_aps fsaps (fs,aps);
-    std::vector<int> dist;
-    int s = sommetdep->text().toInt();
-    int s2 = sommetarr->text().toInt();
+    if(d_dessin->validationGraphe()){
 
-    fsaps.calcul_dist(s,dist,pred);
-    std::cout<<"Distance entre le sommet "<<s<<" et le sommet "<<s2<<" : "<<dist[s2];
+        std::vector<int> pred;
+        std::vector<int> fs = d_dessin->getFsAps().getFs();
+        std::vector<int> aps = d_dessin->getFsAps().getAps();
+        fs_aps fsaps (fs,aps);
+        std::vector<int> dist;
+        int s = sommetdep->text().toInt();
+        int s2 = sommetarr->text().toInt();
 
-    QMessageBox msg;
-    msg.setText("dist[s2]");
-    msg.exec();
+        fsaps.calcul_dist(s,dist,pred);
+        std::cout<<"Distance entre le sommet "<<s<<" et le sommet "<<s2<<" : "<<dist[s2];
+
+        QMessageBox msg;
+        msg.setText("Regardez la console");
+        msg.exec();
+    }else{
+        QMessageBox msg;
+        msg.setText("Votre graphe n'est pas valide");
+        msg.exec();
+    }
 
 
 
@@ -419,21 +429,101 @@ void MainWindow::boutonDist(){
 
 void MainWindow::boutonPruffer(){
 
-    std::vector<int> fs = d_dessin->getFsAps().getFs();
-    std::vector<int> aps = d_dessin->getFsAps().getAps();
+    if(d_dessin->validationGraphe()){
+        std::vector<int> fs = d_dessin->getFsAps().getFs();
+        std::vector<int> aps = d_dessin->getFsAps().getAps();
 
-    fs_aps fsaps (fs,aps);
-    matrice_Adjacence m(fsaps);
-    std::vector<int> b;
-    m.codage_Pruffer(b);
-    std::cout<<"PRUFFER : ";
-    for(int i=0;i<b.size();i++){
-       std::cout<<b[i]<<"|";
+        fs_aps fsaps (fs,aps);
+        matrice_Adjacence m(fsaps);
+        std::vector<int> p = m.codage_Pruffer();
+        std::cout<<"PRUFFER : ";
+        for(int i=0;i<p.size();i++){
+           std::cout<<p[i]<<"|";
+        }
+
+        QMessageBox msg;
+        msg.setText("Regardez la console");
+        msg.exec();
+    }else{
+        QMessageBox msg;
+        msg.setText("Votre graphe n'est pas valide");
+        msg.exec();
+    }
+}
+
+
+void MainWindow::boutonRang(){
+  
+     if(d_dessin->validationGraphe()){
+
+        std::vector<int> fs = d_dessin->getFsAps().getFs();
+        std::vector<int> aps = d_dessin->getFsAps().getAps();
+
+        fs_aps fsaps (fs,aps);
+        std::vector<int> rang = fsaps.Rang();
+
+        for(int i=0;i<rang.size();i++){
+            std::cout<<rang[i]<<"|";
+        }
+
+        QMessageBox msg;
+        msg.setText("Regardez la console");
+        msg.exec();
+
+     }else{
+
+         QMessageBox msg;
+         msg.setText("Votre graphe n'est pas valide");
+         msg.exec();
+     }
+
+}
+
+void MainWindow::boutonDijkstra(){
+
+    if(d_dessin->validationGraphe()){
+      
+        std::vector<int> fs = d_dessin->getFsAps().getFs();
+        std::vector<int> aps = d_dessin->getFsAps().getAps();
+
+        fs_aps fsaps (fs,aps);
+        std::vector<std::vector<int>> mat_dist;
+        fsaps.calcul_mat_dist(mat_dist);
+        std::vector<std::vector<int>> m = fsaps.Dijkstra(mat_dist);
+
+        for(int i=0;i<m.size();i++){
+            for(int j=0;j<m[0].size();j++){
+                std::cout<<m[i][j]<<"|";
+            }
+            std::cout<<std::endl;
+        }
     }
 
-    QMessageBox msg;
-    msg.setText("Regardez la console");
-    msg.exec();
+      else{
+            QMessageBox msg;
+            msg.setText("Votre graphe n'est pas valide");
+            msg.exec();
+      }
+
+}
+
+void MainWindow::boutonKruskal(){
+
+    if(d_dessin->validationGraphe()){
+
+        GrapheNonOriente g(d_dessin->getSommetVector(),d_dessin->getArcVector());
+        GrapheNonOriente gk(g.kruskal());
+        std::vector<sommet> s = gk.getSommet();
+        std::vector<arc> a = gk.getArc();
+        graphe gr(s,a);
+        d_dessin->setGraphe(gr);
+        d_dessin->update();
+    }else{
+
+        QMessageBox msg;
+        msg.setText("Votre graphe n'est pas valide");
+        msg.exec();
+    }
 }
 
 

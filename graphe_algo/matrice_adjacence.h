@@ -17,6 +17,7 @@ class matrice_Adjacence {
 
 
 
+
     private:
         std::vector<std::vector<int>> d_matrice; //vecteur de vecteur
         int d_nbSommet;

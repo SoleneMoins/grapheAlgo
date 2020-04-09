@@ -628,3 +628,16 @@ void ordonnancement(std::vector<int> fp, std::vector<int> app, std::vector<int> 
     }//for s
     fpc[0]=kc;
 }
+
+void fs_aps::calcul_mat_dist(std::vector<std::vector<int>> mat_dist)
+{
+    mat_dist.clear();
+    mat_dist.resize(d_nbSommet+1);
+    mat_dist[0][0]=d_nbSommet;
+    std::vector<int> pred;
+
+    for(int i=1;i<=d_nbSommet;i++)
+    {
+        calcul_dist(i,mat_dist[i],pred);
+    }
+}

@@ -13,6 +13,8 @@ public:
 
     void affichage()const;
     GrapheNonOriente kruskal();
+    std::vector<sommet> getSommet();
+    std::vector<arc> getArc();
 
     //void affiche()const;
 
