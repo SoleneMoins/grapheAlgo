@@ -67,3 +67,25 @@ void matrice_Adjacence::codage_Pruffer(std::vector<int> &X){
     }
 }
 
+std::vector<std::vector<int>> matrice_Adjacence::calcul_mat_dist(fs_aps &fsAps)
+{
+    std::vector<std::vector<int>>mat_dist;
+    std::vector<int> d;
+    std::vector<int> p;
+    mat_dist.resize(d_nbSommet+1);
+
+    for(int i=0; i<d_nbSommet+1; i++)
+    {
+        mat_dist[i].resize(d_nbSommet+1);
+    }
+
+    mat_dist[0][0]=d_nbSommet;
+
+    for(int i=1;i<=d_nbSommet;i++)
+    {
+        fsAps.calcul_dist(i,d,p);
+        for(int j=1;j<d_nbSommet;j++)
+            mat_dist[i][j]=d[j];
+    }
+    return mat_dist;
+}

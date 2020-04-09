@@ -410,7 +410,7 @@ void MainWindow::boutonDist(){
     std::cout<<"Distance entre le sommet "<<s<<" et le sommet "<<s2<<" : "<<dist[s2];
 
     QMessageBox msg;
-    msg.setText("Regardez la console");
+    msg.setText("dist[s2]");
     msg.exec();
 
 
@@ -424,10 +424,11 @@ void MainWindow::boutonPruffer(){
 
     fs_aps fsaps (fs,aps);
     matrice_Adjacence m(fsaps);
-    std::vector<int> p = m.codage_Pruffer();
+    std::vector<int> b;
+    m.codage_Pruffer(b);
     std::cout<<"PRUFFER : ";
-    for(int i=0;i<p.size();i++){
-       std::cout<<p[i]<<"|";
+    for(int i=0;i<b.size();i++){
+       std::cout<<b[i]<<"|";
     }
 
     QMessageBox msg;

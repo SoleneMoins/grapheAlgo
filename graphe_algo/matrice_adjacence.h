@@ -13,6 +13,8 @@ class matrice_Adjacence {
         //numero1 operator[][]
         //numero2 operator==
         void codage_Pruffer(std::vector<int> & prufer);
+        std::vector<std::vector<int>> calcul_mat_dist(fs_aps &fsAps) ;
+
 
 
     private:
