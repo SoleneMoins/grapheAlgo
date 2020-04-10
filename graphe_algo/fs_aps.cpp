@@ -93,6 +93,7 @@ fs_aps::fs_aps(std::vector<int> &fs, std::vector<int> &aps):d_fs{fs},d_aps{aps} 
 
 
 
+
 /*fs_aps::fs_aps(matrice_Adjacence matriceAdj)
 {
     //IL FAUT D ABORD FAIRE LA SURCHARGE D'OPERATEUR NUMERO1
@@ -336,7 +337,7 @@ void fs_aps::calcul_dist(int s, std::vector<int>&d,std::vector<int>& pred ) {
 
     int t =-1;  // t l’indice avant celui de début du bloc courant
     int q=0; //q l’indice du dernier élément du bloc courant
-    int k=0;
+    int k=1;
     int x=0;
     int dist=0;
     int m=d_aps[0];

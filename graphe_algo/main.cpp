@@ -36,6 +36,7 @@ int main(int argc, char *argv[])
 
 
    //Text Dijkstra
+
  /* QTextStream(stdout)<<"Dijkstra :\n";
   for(int i=1; i<= aps[0]; i++)
   {    for(int j=1; j<= aps[0]; j++)
@@ -73,22 +74,8 @@ int main(int argc, char *argv[])
 
    QTextStream(stdout)<<"\n";*/
 
-  /* std::vector<int>fss{21,2,3,0,4,0,5,8,0,6,2,0,3,7,0,1,8,0,8,0,7,0};
+  /*
 
-std::vector<int>apss{8,1,4,6,9,12,15,18,20};
-   std::vector<int>fsss{12,4,0,4,4,0,4,0,4,0,5,0,6,0,0};
-   std::vector<int>apsss{6,1,3,5,7,9,11};
-
-
-   fs_aps g(fss,apss);
-   std::vector<int> dist;
-   std::vector<int> pred;
-
-   g.calcul_dist(2,dist,pred);
-
-   for(int i=0;i<dist.size();i++)
-       std::cout<<dist[i]<<"!";
-   std::cout<<endl;
 
    for(int i=0;i<pred.size();i++)
        std::cout<<pred[i]<<"!";
@@ -132,7 +119,30 @@ m.codage_Pruffer(d);
    GrapheNonOriente gno(sommets,ars);
 
    GrapheNonOriente gKruskal = gno.kruskal();
-   gKruskal.affichage();*/
+   gKruskal.affichage();
+
+   std::vector<int>fss{21,2,3,0,4,0,5,8,0,6,2,0,3,7,0,1,8,0,8,0,7,0};
+    std::vector<int>apss{8,1,4,6,9,12,15,18,20};
+      fs_aps g(fss,apss);
+      std::vector<int> dist;
+      std::vector<int> pred;
+      matrice_Adjacence mat(g);
+      std::vector<std::vector<int>>disttt;
+      g.calcul_dist(1,dist,pred);
+      disttt=mat.calcul_mat_dist(g);
+      for(int i=0;i<dist.size();i++)
+          std::cout<<dist[i]<<"!";
+      std::cout<<endl;
+      for(int i=0;i<dist.size();i++){
+          for(int j=0;j<dist.size();j++)
+              std::cout<<disttt[i][j]<<"!";
+
+      std::cout<<endl;}
+
+*/
+
+
+
 
   
    w.show();
