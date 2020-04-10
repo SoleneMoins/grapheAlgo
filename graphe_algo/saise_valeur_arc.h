@@ -16,8 +16,7 @@
 #include "graphe.h"
 
 
-class saise_valeur_arc : public QDialog
-{
+class saise_valeur_arc : public QDialog {
 public:
     saise_valeur_arc(graphe g,QWidget *parent=nullptr);
     graphe getGraphe();

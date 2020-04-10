@@ -9,8 +9,7 @@
 fs_aps::fs_aps(): d_nbSommet{0}, d_nbArcs{0}
 {}
 
-fs_aps::fs_aps(int nbS): d_nbSommet(nbS)
-{
+fs_aps::fs_aps(int nbS): d_nbSommet(nbS) {
     d_aps.clear();
     d_fs.clear();
     d_aps.resize(d_nbSommet+1);
@@ -21,7 +20,7 @@ fs_aps::fs_aps(int nbS): d_nbSommet(nbS)
 }
 
 
-fs_aps::fs_aps(std::vector<sommet>&d_sommet,std::vector<arc>&d_arc){
+fs_aps::fs_aps(std::vector<sommet>&d_sommet,std::vector<arc>&d_arc) {
 
     std::vector<int> fs;
     fs.push_back(0);
@@ -61,7 +60,7 @@ fs_aps::fs_aps(std::vector<sommet>&d_sommet,std::vector<arc>&d_arc){
         nb++;
     }
 
-
+   fs[0] = fs.size();
 
     std::vector<int> aps;
 
@@ -86,11 +85,12 @@ fs_aps::fs_aps(std::vector<sommet>&d_sommet,std::vector<arc>&d_arc){
 
 fs_aps::fs_aps(std::vector<int>&fs, std::vector<int>&aps,int nbSommet,int nbArc):d_fs{fs},d_aps{aps},d_nbSommet{nbSommet},d_nbArcs{nbArc}
 {}
-fs_aps::fs_aps(std::vector<int> &fs, std::vector<int> &aps):d_fs{fs},d_aps{aps}
-{
+
+fs_aps::fs_aps(std::vector<int> &fs, std::vector<int> &aps):d_fs{fs},d_aps{aps} {
     d_nbSommet = d_aps.size()-1;
     d_nbArcs = d_fs.size()-d_nbSommet-1;
 }
+
 
 
 
@@ -178,7 +178,7 @@ int fs_aps::getNbArc() const {
 }*/
 
 //Distance + rang 
-void fs_aps::determiner_rang(int *&rang, int *&num) const {
+/*void fs_aps::determiner_rang(int *&rang, int *&num) const {
     int n=d_aps[0], r=0, pas=-1, e=0, d=n+1, x, s, t=0; rang = new int[n+1];
     num = new int[n+1];
     rang[0]=n;
@@ -220,41 +220,164 @@ void fs_aps::determiner_rang(int *&rang, int *&num) const {
         pas=-pas;
     }
 }
+*/
 
-std::vector<int> fs_aps::distance() {
-    int m=d_aps[0];
-    std::vector<int> dist;
-    dist.clear();
-    dist.resize(m+1);
-    dist[0]=m;
-    for(int i = 1; i<=m; i++)
-        dist[i]=-1;
-    dist[d_nbSommet]=0;
-    int d=0;
-    std::vector<int> fileAttente;
-    fileAttente.clear();
-    fileAttente.resize(m);
-    fileAttente[0]=d_nbSommet;
-    int t=-1;
-    int q=0;
-    int p=0;
-    while(t<q){
-     for(int i=t+1;i<=q;i++){
-      int u=fileAttente[i];
-      int v;
-      for(int k=d_aps[u]; (v=d_fs[k])!=0;k++){
-    // v est un successeur de u, on teste sa distance
-        
-            if( dist[v] ==-1 ){
-                dist[v]=d;
-                fileAttente[++p]=v;
-            }
-       }
-      t = q;
-      q = p;
-      } 
+/*std::vector<int> fs_aps::det_rang() const
+{
+    int n=d_aps[0], s, k, h, t;
+    std::vector<int>rang(n+1);
+    std::vector<int>num(n+1);
+    std::vector<int>prem(n+1);
+    rang[0]=n;
+    std::vector<int>ddi(n+1);
+    for(int i=1; i<=n; i++)
+    {
+        rang[i]=0;
+        ddi[i]=0;
     }
-    return dist;
+    std::vector<int>pilch;
+    for(int i=1; i<=n; i++)
+    {
+        if((s=d_fs[i])>0)
+            ddi[s]++;
+    }
+    pilch[0]=0;
+    for(int i=1; i<=n; i++)
+       {
+              rang[i]=-1;
+              if(ddi[i]==0)
+                  pilch.push_back(i);
+        }
+    k=-1;
+    s=pilch[0];
+    while(pilch[0]!=0)
+    {
+        k++;
+        pilch[0]=0;
+        while(s!=0)
+        {
+            rang[s]=k;
+            h=d_aps[s];
+            while((t=d_fs[h])>0)
+            {
+                ddi[t]--;
+                if(ddi[t]==0)
+                    pilch.push_back(t);
+                h++;
+            }
+            s=pilch[s];
+        }
+        s=pilch[0];
+        prem[k+1]=s;
+    }
+
+    return rang;
+}*/
+
+
+void fs_aps::empiler (int x, std::vector<int> &pilch)
+{
+    pilch[x] = pilch[0];
+    pilch[0] = x;
+}
+
+std::vector<int> fs_aps::Rang()
+{
+    int n = d_aps[0], taillefs = d_fs[0], s, k,h,t;
+    std::vector<int>rang(n+1);
+    std::vector<int> ddi(n+1);
+    std::vector<int>pilch(n+1);
+    std::vector<int>prem(n+1);
+    for(int i=1; i <=n ; i++) ddi[i]=0;
+
+    //calcul de ddi
+    for(int i=1; i <=taillefs ; i++)
+    {
+        s=d_fs[i];
+        if (s >0) ddi[s]++;
+    }
+    //calcul du rang
+    pilch[0]=0;
+    for(s = 1; s <= n; s++)
+    {
+        rang[s] = -1; // n : nombre de sommets de G represente l'infini
+        if (ddi[s] == 0) empiler(s,pilch);
+    }
+
+    k=-1;
+    s=pilch[0];
+    prem[0] = s;
+    while (pilch[0] > 0)
+    {
+        k++;
+        pilch[0] = 0;
+        while (s > 0)
+        {
+            rang[s] = k;
+            h = d_aps[s]; t = d_fs[h];
+            while (t > 0)
+            {
+                ddi[t]--;
+                if (ddi[t] == 0) empiler(t,pilch);
+                h++;
+                t=d_fs[h];
+            }
+            s = pilch[s];
+        }
+        s = pilch[0];
+        prem[k+1] = s;
+    }
+
+    return rang;
+}
+
+
+
+void fs_aps::calcul_dist(int s, std::vector<int>&d,std::vector<int>& pred ) {
+
+    int t =-1;  // t l’indice avant celui de début du bloc courant
+    int q=0; //q l’indice du dernier élément du bloc courant
+    int k=1;
+    int x=0;
+    int dist=0;
+    int m=d_aps[0];
+    pred.clear();
+    pred.resize(m+1);
+    d.clear();
+    d.resize(m+1);
+    int fatt[m+1];
+    fatt[0]=s;
+
+    for(int i=0;i<m+1;i++) {
+        d[i]=-1;
+        pred[i]=-1;
+        d[s]=0; // distance de s à lui même est égal à 0
+        pred[s]=0;
+    }
+    d[0]=m;
+
+    while(t<q) {
+        dist++;
+
+        for(int i=t+1 ; i<=q ; i++){
+            x=fatt[i];
+            int temp;
+
+            for(int j=d_aps[x]; (temp=d_fs[j])!=0; j++){
+                // temp est un successeur de u, on teste sa distance
+                pred[j]=x;
+
+                if( d[temp] == -1 ) {
+                    d[temp]=dist;
+                    fatt[++k]=temp;
+                }
+             temp=d_fs[j];
+            }
+        }
+        t = q;
+        q = k;
+    } // while
+
 }
 
 
@@ -262,31 +385,27 @@ std::vector<int> fs_aps::distance() {
 
 //Tarjan + Dijkstra
 void fs_aps::traverse(int s, std::vector<int>& num, std::vector<int> &mu,std::vector<int> &prem, std::vector<int> &pilch,
-                std::vector<int> &cfc,std::stack<int> &tarj,std::vector<bool> &entarj,int &p, int &nbr)const
-{
+                std::vector<int> &cfc,std::stack<int> &tarj,std::vector<bool> &entarj,int &p, int &nbr)const {
     mu[s]=num[s]=++p;
 
     tarj.push(s);
     entarj[s]=true;
     int t;
-    for(int k= d_aps[s];(t=d_fs[k])!=0;++k)
-    {
-        if(num[t]==0)
-        {
+    for(int k= d_aps[s];(t=d_fs[k])!=0;++k) {
+        if(num[t]==0) {
             traverse(t,num,mu,prem,pilch,cfc,tarj,entarj,p,nbr);
-            if(mu[t]<mu[s])
+            if(mu[t]<mu[s]) {
                 mu[s]=mu[t];
-
+            }
         }
-        else
-            if((entarj[t]==true) && (num[t]<mu[s]))
+        else {
+            if((entarj[t]==true) && (num[t]<mu[s])) {
                     mu[s]=num[t];
-
-
+            }
+        }
     }
 
-    if(mu[s]==num[s])
-    {
+    if(mu[s]==num[s]) {
         int x=tarj.top();
         tarj.pop();
         entarj[x]=false;
@@ -294,8 +413,7 @@ void fs_aps::traverse(int s, std::vector<int>& num, std::vector<int> &mu,std::ve
 
         cfc[x]=++nbr;
         int indice =x;
-        while(x!=s)
-        {
+        while(x!=s) {
             x=tarj.top();
             tarj.pop();
             entarj[x]=false;
@@ -308,8 +426,7 @@ void fs_aps::traverse(int s, std::vector<int>& num, std::vector<int> &mu,std::ve
 
 }
 
-void fs_aps::Tarjan()const
-{
+std::vector<int> fs_aps::Tarjan()const {
      int n = d_nbSommet;
      std::vector<int> num(n+1,0);
      std::vector<int> mu(n+1,0);
@@ -321,39 +438,22 @@ void fs_aps::Tarjan()const
      num[0]=mu[0]=pilch[0]=cfc[0]=n;
      entarj[0]=false;
      int p=0,nbr=0;
-     for(int s=1;s<=n;s++)
-     {
-         if(num[s]==0)
-         {
+     for(int s=1;s<=n;s++) {
+         if(num[s]==0) {
              traverse(s,num,mu,prem,pilch,cfc,tarj,entarj,p,nbr);
          }
      }
 
-
-
-     for(int i=0; i<n+1; i++)
-     {
-         QTextStream(stdout)<<num[i]<<" ";
-     }
-        QTextStream(stdout)<<"\n";
-
-
-     for(int i=0; i<n+1; i++)
-     {
-         QTextStream(stdout)<<"CFC :"<<cfc[i]<<" ";
-     }
-     QTextStream(stdout)<<"\n";
+    return cfc;
 }
 
-void fs_aps::neoDijkstra(const std::vector<std::vector<int>>&C,std::vector<int> &d, std::vector<int> &pred,std::vector<bool> &S, int s) const
-{
+std::vector<int> fs_aps::neoDijkstra(const std::vector<std::vector<int>>&C,std::vector<int> &d, std::vector<int> &pred,std::vector<bool> &S, int s) const {
     int n=d_nbSommet,v,j,max;
      d.resize(n+1);
      pred.resize(n+1);
      S.resize(n+1);
 
-    for(int i=1; i<=n; i++)
-    {
+    for(int i=1; i<=n; i++) {
         d[i]=C[s][i];
         pred[i]=0;
         S[i]=true;
@@ -362,49 +462,46 @@ void fs_aps::neoDijkstra(const std::vector<std::vector<int>>&C,std::vector<int> 
     S[s]=false;
     d[s]=0;
 
-    for(int i=0; i<n; i++)
-    {
+    for(int i=0; i<n; i++) {
         max=MAXPOIDS;
-        for(int i=1; i<=n; i++)
-        {
-            if(S[i]&&d[i]<max)
-            {
+        for(int i=1; i<=n; i++) {
+            if(S[i]&&d[i]<max) {
                 max=d[i];
                 j=i;
             }
         }
-        if(d[j]!=MAXPOIDS)
-        {
+        if(d[j]!=MAXPOIDS) {
             S[j]=false;
             int k;
-            for(int l=d_aps[j]; (k=d_fs[l])!=0; l++)
-                if(S[k])
-                {
+            for(int l=d_aps[j]; (k=d_fs[l])!=0; l++) {
+                if(S[k]) {
                     v=d[j]+C[j][k];
-                    if(v<d[k])
-                    {
+                    if(v<d[k]) {
                         d[k]=v;
                         pred[k]=j;
                     }
 
                 }
+            }
         }
 
     }
 
-    for(int i=1; i<=n; i++)
-        QTextStream(stdout)<<d[i]<<" ";
-    QTextStream(stdout)<<"\n";
+    return d;
 }
 
-void fs_aps::Dijkstra(const std::vector<std::vector<int> > &C, std::vector<int> &d, std::vector<int> &pred, std::vector<bool> &S) const
-{
-    for(int s=1; s<= d_nbSommet; s++)
-        neoDijkstra(C,d,pred,S,s);
+std::vector<std::vector<int> > fs_aps::Dijkstra(const std::vector<std::vector<int> > &C) const {
+    std::vector<int> d;
+    std::vector<int> pred;
+    std::vector<bool> S;
+    std::vector<std::vector<int>> matD(d_nbSommet+1,std::vector<int>(d_nbSommet+1,0));
+    for(int s=1; s<= d_nbSommet; s++) {
+       matD[s]= neoDijkstra(C,d,pred,S,s);
+    }
+    return matD;
 }
-// Problème d'ordonnancement 
-void fs_aps::fs_aps2fp_app(std::vector<int> &fp,std::vector<int> &app)//Passe de fs aps a fp app
-{
+// Problème d'ordonnance
+void fs_aps::fs_aps2fp_app(std::vector<int> &fp,std::vector<int> &app) { //Passe de fs aps à fp app
     int n=d_aps[0];
     int m=d_fs[0];
     fp.clear();
@@ -417,14 +514,18 @@ void fs_aps::fs_aps2fp_app(std::vector<int> &fp,std::vector<int> &app)//Passe de
     np.clear();
     np.resize(n);
 
-   for(int i=1;i<=n;i++)
+   for(int i=1;i<=n;i++){
         np[i]=0;
-   for(int i=1; i<n;i++)
-       if(d_fs[i]!=0)
+   }
+   for(int i=1; i<n;i++) {
+       if(d_fs[i]!=0) {
            np[d_fs[i]]++;
+       }
+   }
    app[1]=1;
-   for(int i=1; i<n;i++)
+   for(int i=1; i<n;i++){
         app[i+1]=app[i]+np[i]+1;
+   }
    int k=1;
    for(int i=1; i<=n; i++) {
         while(d_fs[k]!=0) {
@@ -504,23 +605,19 @@ void ordonnancement(std::vector<int> fp, std::vector<int> app, std::vector<int> 
     lc[1] =0;
     appc[1]=1;
     kc=1;
-    for(int s=2; s<=n; s++)
-    { // calcule de lc[s]
+    for(int s=2; s<=n; s++) {
+        // calcule de lc[s]
         lc[s] = 0;
         appc[s] = kc+1;
-        for(int k=app[s]; (t = fp[k]) != 0 ; k++)
-        {
+        for(int k=app[s]; (t = fp[k]) != 0 ; k++) {
             int longueur = lc[t] + d[t];
-            if(longueur >= lc[s])
-             {
-                if(longueur > lc[s])
-                {
+            if(longueur >= lc[s]) {
+                if(longueur > lc[s]) {
                     lc[s] = longueur;
                     kc = appc[s];
                     fpc[kc] = t;
                 }
-                else     //longueur == lc[s]
-                {
+                else { //longueur == lc[s]
                     kc++;
                     fpc[kc]=t;
                 }
@@ -530,4 +627,142 @@ void ordonnancement(std::vector<int> fp, std::vector<int> app, std::vector<int> 
         fpc[kc]=0;
     }//for s
     fpc[0]=kc;
+}
+
+void fs_aps::calcul_mat_dist(std::vector<std::vector<int>>&mat_dist)
+{
+    mat_dist.clear();
+    std::vector<int> d;
+    std::vector<int> p;
+
+    mat_dist.resize(d_nbSommet+1);
+
+    for(int i=0; i<d_nbSommet+1; i++)
+    {
+        mat_dist[i].resize(d_nbSommet+1);
+    }
+
+    mat_dist[0][0]=d_nbSommet;
+
+    for(int i=1;i<=d_nbSommet;i++)
+    {
+        calcul_dist(i,d,p);
+        for(int j=1;j<=d_nbSommet;j++)
+        {
+            mat_dist[i][j]=d[j];
+        }
+    }
+
+}
+
+
+std::vector<int>fs_aps::calcul_ddi()
+        {
+            int n=d_aps[0];
+            std::vector<int>ddi(n+1);
+            ddi[0]=n;
+
+            for(int i=1;i<=n;i++)
+            {
+                ddi[i]=0;
+            }
+            for(int i=1;i<d_fs[0];i++)
+            {
+                if(d_fs[i]!=0)
+                    ddi[d_fs[i]]++;
+            }
+            return ddi;
+        }
+
+
+std::vector<int>fs_aps::calcul_app(std::vector<int>ddi)
+    {
+        int n=ddi[0];
+        std::vector<int>app(n+1);
+        app[0]=n;
+        app[1]=1;
+
+        for(int i=1;i<n;i++)
+        {
+            app[i+1]=app[i]+ddi[i]+1;
+        }
+        return app;
+    }
+
+
+
+std::vector<int> fs_aps::calcul_fp(std::vector<int>fs,std::vector<int>app,std::vector<int>ddi)
+{
+    int n=ddi[0];
+    int m=fs[0];
+   std::vector<int>fp(m+1);
+    fp[0]=m;
+    int s=1;
+
+    for(int k=1;k<m;k++)
+    {
+        if(fs[k]==0)
+            s++;
+        else {
+            fp[app[fs[k]]]=s;
+            app[fs[k]]++;
+        }
+    }
+    for(int i=n;i>1;i--)
+    {
+        fp[app[i]]=0;
+        app[i]=app[i-1]+1;
+    }
+    fp[app[1]]=0;
+    app[1]=1;
+
+    return fp;
+}
+
+
+
+std::vector<int> fs_aps::ordonnancement(std::vector<arc>&d)
+{
+
+    std::vector<int>ddi = calcul_ddi();
+    std::vector<int>app = calcul_app(ddi);
+    std::vector<int>fp = calcul_fp(d_fs,app,ddi);
+
+    int n = app[0];
+    int m = fp[0];
+
+    std::vector<int>appc(n+1);
+    std::vector<int>lc(n+1);
+    std::vector<int>fpc(m+1);
+
+    int kc; //dernière case à remplir dans fpc
+    fpc[1]=0;
+    lc[1] =0;
+    appc[1]=1;
+    kc=1;
+    for(int s=2; s<=n; s++) {
+        // calcule de lc[s]
+        lc[s] = 0;
+        appc[s] = kc+1;
+        int t;
+        for(int k=app[s]; (t = fp[k]) != 0 ; k++) {
+            int longueur = lc[t] + d[t].getValeur();
+            if(longueur >= lc[s]) {
+                if(longueur > lc[s]) {
+                    lc[s] = longueur;
+                    kc = appc[s];
+                    fpc[kc] = t;
+                }
+                else { //longueur == lc[s]
+                    kc++;
+                    fpc[kc]=t;
+                }
+            }
+        }// for k
+        kc++;
+        fpc[kc]=0;
+    }//for s
+    fpc[0]=kc;
+
+    return lc;
 }

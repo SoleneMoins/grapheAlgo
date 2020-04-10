@@ -12,8 +12,7 @@
 #include <iostream>
 #include "graphe.h"
 
-class zone_dessin:public QWidget
-{
+class zone_dessin:public QWidget {
     Q_OBJECT
 public:
 
@@ -27,6 +26,7 @@ public:
     graphe getGraphe();
 
     void setGraphe(graphe g);
+    std::vector<int> getCFC();
 
    // std::vector<int> getNumTarjan();
 

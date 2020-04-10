@@ -104,15 +104,23 @@ void MainWindow::vue_creer(){
         auto labeltitre3 = new QLabel{"FAITES  VOS  CALCULS"};
         labeltitre3->setMargin(10);
         labeltitre3->setStyleSheet("font-size:15px;background:#161616");
-
+        auto layoutDistance = new QHBoxLayout{};
+        sommetdep = new QLineEdit{};
+        sommetarr = new QLineEdit{};
+        sommetdep->setStyleSheet("background:#1E1E1E;border:1px solid #4F4F4F");
+        sommetarr->setStyleSheet("background:#1E1E1E;border:1px solid #4F4F4F");
+        layoutDistance->addWidget(sommetdep);
+        layoutDistance->addWidget(sommetarr);
 
         auto distance = new QPushButton{"DISTANCE"};
+        layoutDistance->addWidget(distance);
+
         auto rang = new QPushButton{"RANG"};
         auto ordo = new QPushButton{"ORDONNANCEMENT"};
         auto tarjan = new QPushButton{"TARJAN"};
         auto djikstra = new QPushButton{"DJIKSTRA"};
         auto kruskel = new QPushButton{"KRUSKAL"};
-        auto prufer = new QPushButton{"PRUFER"};
+        auto prufer = new QPushButton{"PRUFFER"};
         distance->setStyleSheet("background:#202020;height:30px;");
         tarjan->setStyleSheet("background:#202020;height:30px;");
         djikstra->setStyleSheet("background:#202020;height:30px;");
@@ -154,7 +162,7 @@ void MainWindow::vue_creer(){
         layoutbouton->addLayout(layoutb);
         layoutbouton->addStretch(1);
         layoutbouton->addWidget(labeltitre3);
-        layoutbouton->addWidget(distance);
+        layoutbouton->addLayout(layoutDistance);
         layoutbouton->addWidget(rang);
         layoutbouton->addWidget(tarjan);
         layoutbouton->addWidget(ordo);
@@ -177,6 +185,15 @@ void MainWindow::vue_creer(){
     connect(fs_aps,&QPushButton::clicked,this,&MainWindow::fs_apsClick);
     connect(numerique,&QPushButton::clicked,this,&MainWindow::boutonNumerique);
     connect(eff,&QPushButton::clicked,this,&MainWindow::boutonEffacerSommet);
+    connect(tarjan,&QPushButton::clicked,this,&MainWindow::boutonTarjan);
+    connect(distance,&QPushButton::clicked,this,&MainWindow::boutonDist);
+    connect(prufer,&QPushButton::clicked,this,&MainWindow::boutonPruffer);
+    connect(rang,&QPushButton::clicked,this,&MainWindow::boutonRang);
+    connect(djikstra,&QPushButton::clicked,this,&MainWindow::boutonDijkstra);
+    connect(kruskel,&QPushButton::clicked,this,&MainWindow::boutonKruskal);
+    connect(ordo,&QPushButton::clicked,this,&MainWindow::boutonOrdon);
+
+
 
 
 
@@ -358,6 +375,171 @@ void MainWindow::boutonEffacerSommet(){
     }else{
         d_dessin->changeChoix(6);
     }
+
+}
+
+void MainWindow::boutonTarjan(){
+
+   if(d_dessin->validationGraphe()){
+
+       std::vector<int> fs = d_dessin->getFsAps().getFs();
+       std::vector<int> aps = d_dessin->getFsAps().getAps();
+       fs_aps fsaps (fs,aps);
+
+       std::vector<int> cfc = fsaps.Tarjan();
+        std::cout<<"CFC : ";
+       for(int i=0;i<cfc.size();i++){
+            std::cout<<cfc[i]<<"|";
+        }
+
+       QMessageBox msg;
+       msg.setText("Regardez la console");
+       msg.exec();
+
+    }else{
+        QMessageBox msg;
+        msg.setText("Votre graphe n'est pas valide");
+        msg.exec();
+    }
+
+}
+
+
+void MainWindow::boutonDist(){
+
+    if(d_dessin->validationGraphe()){
+
+        std::vector<int> pred;
+        std::vector<int> fs = d_dessin->getFsAps().getFs();
+        std::vector<int> aps = d_dessin->getFsAps().getAps();
+        fs_aps fsaps (fs,aps);
+        std::vector<int> dist;
+        int s = sommetdep->text().toInt();
+        int s2 = sommetarr->text().toInt();
+
+        fsaps.calcul_dist(s,dist,pred);
+        QString f = QString::number(dist[s2]);
+        QMessageBox msg;
+        msg.setText(f);
+        msg.exec();
+
+    }else{
+        QMessageBox msg;
+        msg.setText("Votre graphe n'est pas valide");
+        msg.exec();
+    }
+
+}
+
+void MainWindow::boutonPruffer(){
+
+    if(d_dessin->validationGraphe()){
+        std::vector<int> fs = d_dessin->getFsAps().getFs();
+        std::vector<int> aps = d_dessin->getFsAps().getAps();
+
+        fs_aps fsaps (fs,aps);
+        matrice_Adjacence m(fsaps);
+        std::vector<int> p;
+        m.codage_Pruffer(p);
+
+        QString f;
+
+        for(int i=0;i<p.size();i++){
+           f+=QString::number(p[i]);
+           f+="|";
+        }
+
+        QMessageBox msg;
+        msg.setText(f);
+        msg.exec();
+    }else{
+        QMessageBox msg;
+        msg.setText("Votre graphe n'est pas valide");
+        msg.exec();
+    }
+}
+
+
+void MainWindow::boutonRang(){
+  
+     if(d_dessin->validationGraphe()){
+
+        std::vector<int> fs = d_dessin->getFsAps().getFs();
+        std::vector<int> aps = d_dessin->getFsAps().getAps();
+
+        fs_aps fsaps (fs,aps);
+        std::vector<int> rang = fsaps.Rang();
+
+        QString r;
+
+        for(int i=0;i<rang.size();i++){
+            r+=QString::number(rang[i]);
+            r+="|";
+        }
+
+        QMessageBox msg;
+        msg.setText(r);
+        msg.exec();
+
+     }else{
+
+         QMessageBox msg;
+         msg.setText("Votre graphe n'est pas valide");
+         msg.exec();
+     }
+
+}
+
+void MainWindow::boutonDijkstra(){
+
+    QMessageBox msg;
+    msg.setText("Désolé ça ne marche pas ...");
+    msg.exec();
+
+}
+
+void MainWindow::boutonKruskal(){
+
+    if(d_dessin->validationGraphe()){
+
+        GrapheNonOriente g(d_dessin->getSommetVector(),d_dessin->getArcVector());
+        GrapheNonOriente gk(g.kruskal());
+        std::vector<sommet> s = gk.getSommet();
+        std::vector<arc> a = gk.getArc();
+        graphe gr(s,a);
+        d_dessin->setGraphe(gr);
+        d_dessin->update();
+        d_dessin->changeChoix(9);
+    }else{
+
+        QMessageBox msg;
+        msg.setText("Votre graphe n'est pas valide");
+        msg.exec();
+    }
+}
+
+void MainWindow::boutonOrdon(){
+
+    std::vector<int> fs = d_dessin->getFsAps().getFs();
+    std::vector<int> aps = d_dessin->getFsAps().getAps();
+
+    std::vector<arc> a = d_dessin->getArcVector();
+
+
+    fs_aps fsaps (fs,aps);
+
+    std::vector<int> dd = fsaps.ordonnancement(a);
+
+    QString f;
+
+    for(int i = 0;i<dd.size();i++){
+        f+=QString::number(dd[i]);
+        f+="|";
+    }
+
+    QMessageBox msg;
+    msg.setText(f);
+    msg.exec();
 
 }
 

@@ -15,12 +15,13 @@
 #include "affichage_numerique.h"
 #include "saise_valeur_arc.h"
 #include "saisie_nom_sommet.h"
+#include "graphenonoriente.h"
 
 
 
 
-class MainWindow : public QMainWindow
-{
+
+class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
@@ -36,6 +37,13 @@ private slots:
     void fs_apsClick();
     void boutonNumerique();
     void boutonEffacerSommet();
+    void boutonTarjan();
+    void boutonDist();
+    void boutonPruffer();
+    void boutonRang();
+    void boutonDijkstra();
+    void boutonKruskal();
+    void boutonOrdon();
 
 
 
@@ -45,6 +53,8 @@ private:
     QLineEdit*nom;
     QLineEdit*num;
     QLineEdit*d_arc;
+    QLineEdit*sommetdep;
+    QLineEdit*sommetarr;
     void vue_creer();
 
 

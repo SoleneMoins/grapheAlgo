@@ -10,8 +10,7 @@
 
 const int MAXPOIDS=10000;
 
-class fs_aps
-{
+class fs_aps {
     public:
         //Constructeurs 
         fs_aps();
@@ -31,11 +30,23 @@ class fs_aps
         int nbSommets()const;
         int getNbArc() const;
 
-        void determiner_rang(int *&rang, int *&num) const ;
+        std::vector<int> calcul_ddi();
+        std::vector<int> calcul_app(std::vector<int>ddi);
+        std::vector<int> calcul_fp(std::vector<int>fs,std::vector<int>app,std::vector<int>ddi);
+        std::vector<int> ordonnancement(std::vector<arc>&d);
+
+        void calcul_mat_dist(std::vector<std::vector<int>>&mat_dist);
+
+        //void determiner_rang(int *&rang, int *&num) const ;
+       // std::vector<int> det_rang() const;
+        std::vector<int> Rang();
         std::vector<int>  distance();
   
-        void Tarjan()const;
-        void Dijkstra(const std::vector<std::vector<int>>&C,std::vector<int> &d, std::vector<int> &pred,std::vector<bool> &S)const;
+        void determiner_rang(int *&rang, int *&num) const ;
+        void calcul_dist(int s,std::vector<int>&d,std::vector<int>& pred );
+
+        std::vector<int> Tarjan()const;
+        std::vector<std::vector<int>> Dijkstra(const std::vector<std::vector<int>>&C)const;
 
        
         void fs_aps2fp_app(std::vector<int> &fp,std::vector<int> &app); //Passage de fs aps à fp app
@@ -58,7 +69,8 @@ class fs_aps
                         std::vector<bool> &entarj,
                         int &p, int &nbr) const;
 
-        void neoDijkstra(const std::vector<std::vector<int>>&C,std::vector<int> &d, std::vector<int> &pred,std::vector<bool> &S, int s)const;
+        std::vector<int> neoDijkstra(const std::vector<std::vector<int>>&C,std::vector<int> &d, std::vector<int> &pred,std::vector<bool> &S, int s)const;
+        void empiler (int x, std::vector<int> &pilch);
 };
 
 #endif // GRAPHE_H

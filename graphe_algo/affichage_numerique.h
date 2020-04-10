@@ -15,8 +15,7 @@
 #include <iostream>
 #include "graphe.h"
 
-class affichage_numerique : public QDialog
-{
+class affichage_numerique : public QDialog {
 public:
     affichage_numerique(graphe g,QWidget *parent=nullptr);
 

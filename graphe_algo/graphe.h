@@ -9,13 +9,13 @@
 
 
 
-class graphe
-{
+class graphe {
 public:
     graphe();
     graphe(std::vector<sommet>&sommet, std::vector<arc>&arcs);
     graphe(std::vector<int>&fs,int nbsommet);
     graphe(fs_aps fsaps);
+
 
     fs_aps getfsAps();
 
@@ -23,11 +23,13 @@ public:
     std::vector<arc> getArc();
     std::vector<QLineF> getLine();
     std::vector<QRectF> getRectangle();
+    std::vector<int> getCFC();
 
     sommet getS(int i);
     arc getA(int i);
     QRectF getR(int i);
     QLineF getL(int i);
+
 
     void ajouterSommet(sommet&s);
     void ajouterArc(arc&a);
@@ -41,12 +43,11 @@ public:
     void construitVectorRectangle(std::vector<sommet>&s);
 
     bool estValide();
-
     void clean();
-
     void save(std::ostream&ost);
-
     void open(std::istream&ist);
+    void calcul_dist(int s, std::vector<int>& dist);
+
 
 private:
     std::vector<sommet> d_sommet;

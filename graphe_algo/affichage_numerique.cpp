@@ -1,7 +1,6 @@
 #include "affichage_numerique.h"
 
-affichage_numerique::affichage_numerique(graphe g,QWidget*parent):QDialog{parent},d_graphe{g}
-{
+affichage_numerique::affichage_numerique(graphe g,QWidget*parent):QDialog{parent},d_graphe{g} {
 
 
     fs_aps fsaps = g.getfsAps();
@@ -9,12 +8,12 @@ affichage_numerique::affichage_numerique(graphe g,QWidget*parent):QDialog{parent
     QString tabfs = "";
     QString tabaps = "";
 
-    for(int i=0;i<fsaps.getFs().size();i++){
+    for(int i=0;i<fsaps.getFs().size();i++) {
         tabfs+=QString::number(fsaps.getFs()[i]);
         tabfs+="|";
     }
 
-    for(int i=0;i<fsaps.getAps().size();i++){
+    for(int i=0;i<fsaps.getAps().size();i++) {
         tabaps+=QString::number(fsaps.getAps()[i]);
         tabaps+="|";
     }

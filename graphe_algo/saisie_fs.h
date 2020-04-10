@@ -20,8 +20,7 @@
 
 
 
-class saisie_fs : public QDialog
-{
+class saisie_fs : public QDialog {
 public:
     saisie_fs(QWidget *parent=nullptr);
     std::vector<int> getfs()const;

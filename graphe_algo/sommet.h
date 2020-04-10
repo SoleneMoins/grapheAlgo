@@ -6,8 +6,7 @@
 #include <QString>
 
 
-class sommet
-{
+class sommet {
     public:
 
     ///Default constructor: point (0,0)
@@ -22,18 +21,13 @@ class sommet
 
 
       int getX()  const;
-
       int getY()  const;
 
       int getNumero()  const;
-
       bool estVide();
 
       void setNom(std::string nom);
-
       std::string getNom();
-
-
 
 
     /**
@@ -116,11 +110,13 @@ class sommet
       @return true if either the x- or y-coordinates are different
     */
       bool operator!=(const sommet& p)   const;
-     sommet operator=(const sommet& p);
+      sommet operator=(const sommet& p);
 
       void save(std::ostream&ost);
 
       void open(std::istream&ist);
+
+
 
 
 

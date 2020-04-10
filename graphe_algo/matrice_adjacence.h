@@ -4,15 +4,19 @@
 #include <vector>
 #include <iostream>
 class fs_aps;
-class matrice_Adjacence
-{
+class matrice_Adjacence {
     public:
         matrice_Adjacence();
         matrice_Adjacence(fs_aps & graphFsAps); //constuire la matrice à partir de fs et aps
+        std::vector<std::vector<int>> getMatrice();
         //voici des surcharge d'operateur a faire:
         //numero1 operator[][]
         //numero2 operator==
-        void matriceDistance(int *fa, fs_aps &graph , int **&mat);
+        void codage_Pruffer(std::vector<int>&P);
+        std::vector<std::vector<int>> calcul_mat_dist(fs_aps &fsAps) ;
+
+
+
 
     private:
         std::vector<std::vector<int>> d_matrice; //vecteur de vecteur
