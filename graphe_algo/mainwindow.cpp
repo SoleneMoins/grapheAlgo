@@ -191,6 +191,7 @@ void MainWindow::vue_creer(){
     connect(rang,&QPushButton::clicked,this,&MainWindow::boutonRang);
     connect(djikstra,&QPushButton::clicked,this,&MainWindow::boutonDijkstra);
     connect(kruskel,&QPushButton::clicked,this,&MainWindow::boutonKruskal);
+    connect(ordo,&QPushButton::clicked,this,&MainWindow::boutonOrdon);
 
 
 
@@ -417,10 +418,11 @@ void MainWindow::boutonDist(){
         int s2 = sommetarr->text().toInt();
 
         fsaps.calcul_dist(s,dist,pred);
-
+        QString f = QString::number(dist[s2]);
         QMessageBox msg;
-        msg.setText(QString::number(dist[s2]));
+        msg.setText(f);
         msg.exec();
+
     }else{
         QMessageBox msg;
         msg.setText("Votre graphe n'est pas valide");
@@ -439,13 +441,16 @@ void MainWindow::boutonPruffer(){
         matrice_Adjacence m(fsaps);
         std::vector<int> p;
         m.codage_Pruffer(p);
-        std::cout<<"PRUFFER : ";
+
+        QString f;
+
         for(int i=0;i<p.size();i++){
-           std::cout<<p[i]<<"|";
+           f+=QString::number(p[i]);
+           f+="|";
         }
 
         QMessageBox msg;
-        msg.setText("Regardez la console");
+        msg.setText(f);
         msg.exec();
     }else{
         QMessageBox msg;
@@ -465,12 +470,15 @@ void MainWindow::boutonRang(){
         fs_aps fsaps (fs,aps);
         std::vector<int> rang = fsaps.Rang();
 
+        QString r;
+
         for(int i=0;i<rang.size();i++){
-            std::cout<<rang[i]<<"|";
+            r+=QString::number(rang[i]);
+            r+="|";
         }
 
         QMessageBox msg;
-        msg.setText("Regardez la console");
+        msg.setText(r);
         msg.exec();
 
      }else{
@@ -484,29 +492,9 @@ void MainWindow::boutonRang(){
 
 void MainWindow::boutonDijkstra(){
 
-    if(d_dessin->validationGraphe()){
-      
-        std::vector<int> fs = d_dessin->getFsAps().getFs();
-        std::vector<int> aps = d_dessin->getFsAps().getAps();
-
-        fs_aps fsaps (fs,aps);
-        std::vector<std::vector<int>> mat_dist;
-        fsaps.calcul_mat_dist(mat_dist);
-        std::vector<std::vector<int>> m = fsaps.Dijkstra(mat_dist);
-
-        for(int i=0;i<m.size();i++){
-            for(int j=0;j<m[0].size();j++){
-                std::cout<<m[i][j]<<"|";
-            }
-            std::cout<<std::endl;
-        }
-    }
-
-      else{
-            QMessageBox msg;
-            msg.setText("Votre graphe n'est pas valide");
-            msg.exec();
-      }
+    QMessageBox msg;
+    msg.setText("Désolé ça ne marche pas ...");
+    msg.exec();
 
 }
 
@@ -528,6 +516,31 @@ void MainWindow::boutonKruskal(){
         msg.setText("Votre graphe n'est pas valide");
         msg.exec();
     }
+}
+
+void MainWindow::boutonOrdon(){
+
+    std::vector<int> fs = d_dessin->getFsAps().getFs();
+    std::vector<int> aps = d_dessin->getFsAps().getAps();
+
+    std::vector<arc> a = d_dessin->getArcVector();
+
+
+    fs_aps fsaps (fs,aps);
+
+    std::vector<int> dd = fsaps.ordonnancement(a);
+
+    QString f;
+
+    for(int i = 0;i<dd.size();i++){
+        f+=QString::number(dd[i]);
+        f+="|";
+    }
+
+    QMessageBox msg;
+    msg.setText(f);
+    msg.exec();
+
 }
 
 

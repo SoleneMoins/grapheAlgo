@@ -32,6 +32,7 @@ std::vector<std::vector<int>> matrice_Adjacence::getMatrice()
 void matrice_Adjacence::codage_Pruffer(std::vector<int>&P){
 
     int m =d_matrice[0][0];
+    P.clear();
     P.resize(m+1);
     for(int i=1; i<=m; i++){
 

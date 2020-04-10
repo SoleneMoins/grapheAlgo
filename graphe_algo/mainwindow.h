@@ -43,6 +43,7 @@ private slots:
     void boutonRang();
     void boutonDijkstra();
     void boutonKruskal();
+    void boutonOrdon();
 
 
 

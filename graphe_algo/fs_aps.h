@@ -30,7 +30,12 @@ class fs_aps {
         int nbSommets()const;
         int getNbArc() const;
 
-        void calcul_mat_dist(std::vector<std::vector<int>> mat_dist);
+        std::vector<int> calcul_ddi();
+        std::vector<int> calcul_app(std::vector<int>ddi);
+        std::vector<int> calcul_fp(std::vector<int>fs,std::vector<int>app,std::vector<int>ddi);
+        std::vector<int> ordonnancement(std::vector<arc>&d);
+
+        void calcul_mat_dist(std::vector<std::vector<int>>&mat_dist);
 
         //void determiner_rang(int *&rang, int *&num) const ;
        // std::vector<int> det_rang() const;

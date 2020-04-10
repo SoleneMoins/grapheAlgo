@@ -629,15 +629,140 @@ void ordonnancement(std::vector<int> fp, std::vector<int> app, std::vector<int> 
     fpc[0]=kc;
 }
 
-void fs_aps::calcul_mat_dist(std::vector<std::vector<int>> mat_dist)
+void fs_aps::calcul_mat_dist(std::vector<std::vector<int>>&mat_dist)
 {
     mat_dist.clear();
+    std::vector<int> d;
+    std::vector<int> p;
+
     mat_dist.resize(d_nbSommet+1);
+
+    for(int i=0; i<d_nbSommet+1; i++)
+    {
+        mat_dist[i].resize(d_nbSommet+1);
+    }
+
     mat_dist[0][0]=d_nbSommet;
-    std::vector<int> pred;
 
     for(int i=1;i<=d_nbSommet;i++)
     {
-        calcul_dist(i,mat_dist[i],pred);
+        calcul_dist(i,d,p);
+        for(int j=1;j<=d_nbSommet;j++)
+        {
+            mat_dist[i][j]=d[j];
+        }
     }
+
+}
+
+
+std::vector<int>fs_aps::calcul_ddi()
+        {
+            int n=d_aps[0];
+            std::vector<int>ddi(n+1);
+            ddi[0]=n;
+
+            for(int i=1;i<=n;i++)
+            {
+                ddi[i]=0;
+            }
+            for(int i=1;i<d_fs[0];i++)
+            {
+                if(d_fs[i]!=0)
+                    ddi[d_fs[i]]++;
+            }
+            return ddi;
+        }
+
+
+std::vector<int>fs_aps::calcul_app(std::vector<int>ddi)
+    {
+        int n=ddi[0];
+        std::vector<int>app(n+1);
+        app[0]=n;
+        app[1]=1;
+
+        for(int i=1;i<n;i++)
+        {
+            app[i+1]=app[i]+ddi[i]+1;
+        }
+        return app;
+    }
+
+
+
+std::vector<int> fs_aps::calcul_fp(std::vector<int>fs,std::vector<int>app,std::vector<int>ddi)
+{
+    int n=ddi[0];
+    int m=fs[0];
+   std::vector<int>fp(m+1);
+    fp[0]=m;
+    int s=1;
+
+    for(int k=1;k<m;k++)
+    {
+        if(fs[k]==0)
+            s++;
+        else {
+            fp[app[fs[k]]]=s;
+            app[fs[k]]++;
+        }
+    }
+    for(int i=n;i>1;i--)
+    {
+        fp[app[i]]=0;
+        app[i]=app[i-1]+1;
+    }
+    fp[app[1]]=0;
+    app[1]=1;
+
+    return fp;
+}
+
+
+
+std::vector<int> fs_aps::ordonnancement(std::vector<arc>&d)
+{
+
+    std::vector<int>ddi = calcul_ddi();
+    std::vector<int>app = calcul_app(ddi);
+    std::vector<int>fp = calcul_fp(d_fs,app,ddi);
+
+    int n = app[0];
+    int m = fp[0];
+
+    std::vector<int>appc(n+1);
+    std::vector<int>lc(n+1);
+    std::vector<int>fpc(m+1);
+
+    int kc; //dernière case à remplir dans fpc
+    fpc[1]=0;
+    lc[1] =0;
+    appc[1]=1;
+    kc=1;
+    for(int s=2; s<=n; s++) {
+        // calcule de lc[s]
+        lc[s] = 0;
+        appc[s] = kc+1;
+        int t;
+        for(int k=app[s]; (t = fp[k]) != 0 ; k++) {
+            int longueur = lc[t] + d[t].getValeur();
+            if(longueur >= lc[s]) {
+                if(longueur > lc[s]) {
+                    lc[s] = longueur;
+                    kc = appc[s];
+                    fpc[kc] = t;
+                }
+                else { //longueur == lc[s]
+                    kc++;
+                    fpc[kc]=t;
+                }
+            }
+        }// for k
+        kc++;
+        fpc[kc]=0;
+    }//for s
+    fpc[0]=kc;
+
+    return lc;
 }
