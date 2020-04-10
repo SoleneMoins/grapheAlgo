@@ -29,9 +29,10 @@ std::vector<std::vector<int>> matrice_Adjacence::getMatrice()
     return d_matrice;
 }
 
-void matrice_Adjacence::codage_Pruffer(std::vector<int> &X){
+void matrice_Adjacence::codage_Pruffer(std::vector<int>&P){
+
     int m =d_matrice[0][0];
-    X.resize(m+1);
+    P.resize(m+1);
     for(int i=1; i<=m; i++){
 
         for(int j=1; j<=m ; j++){;
@@ -42,7 +43,7 @@ void matrice_Adjacence::codage_Pruffer(std::vector<int> &X){
             }
         }
     }
-    X[0] = m-2;
+    P[0] = m-2;
     int i=1;
 
     for(int k=1 ; k<=m-2 ; k++){
@@ -57,7 +58,7 @@ void matrice_Adjacence::codage_Pruffer(std::vector<int> &X){
 
             if( d_matrice[i][j] ==1){
 
-                X[k] = j;
+                P[k] = j;
                  d_matrice[i][j] = 0;
                  d_matrice[j][i] = 0;
                  d_matrice[j][0]--;
@@ -66,6 +67,7 @@ void matrice_Adjacence::codage_Pruffer(std::vector<int> &X){
         i++;
     }
 }
+
 std::vector<std::vector<int>> matrice_Adjacence::calcul_mat_dist(fs_aps &fsAps)
 {
     std::vector<std::vector<int>>mat_dist;

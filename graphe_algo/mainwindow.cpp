@@ -437,7 +437,8 @@ void MainWindow::boutonPruffer(){
 
         fs_aps fsaps (fs,aps);
         matrice_Adjacence m(fsaps);
-        std::vector<int> p = m.codage_Pruffer();
+        std::vector<int> p;
+        m.codage_Pruffer(p);
         std::cout<<"PRUFFER : ";
         for(int i=0;i<p.size();i++){
            std::cout<<p[i]<<"|";
