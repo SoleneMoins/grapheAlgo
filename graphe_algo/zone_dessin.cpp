@@ -232,18 +232,21 @@ void zone_dessin::paintEvent(QPaintEvent*p){
 
               QLineF l1 = d_graphe.getL(i);
               painter.drawLine(l1);
-              QPointF center = l1.center();
-              QLineF l(l1);
-              l.translate(20,20);
-              QLineF l2(l1);
-              l2.translate(-20,-20);
 
-              QLineF second(center,l.p1());
-              QLineF third(center,l2.p1());
-              second.setLength(20);
-              third.setLength(20);
-              painter.drawLine(second);
-              painter.drawLine(third);
+              if(d_choix!=9){
+                  QPointF center = l1.center();
+                  QLineF l(l1);
+                  l.translate(20,20);
+                  QLineF l2(l1);
+                  l2.translate(-20,-20);
+
+                  QLineF second(center,l.p1());
+                  QLineF third(center,l2.p1());
+                  second.setLength(20);
+                  third.setLength(20);
+                  painter.drawLine(second);
+                  painter.drawLine(third);
+              }
 
 
         }
