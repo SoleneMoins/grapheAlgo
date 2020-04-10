@@ -104,10 +104,17 @@ void MainWindow::vue_creer(){
         auto labeltitre3 = new QLabel{"FAITES  VOS  CALCULS"};
         labeltitre3->setMargin(10);
         labeltitre3->setStyleSheet("font-size:15px;background:#161616");
+        auto layoutDistance = new QHBoxLayout{};
         sommetdep = new QLineEdit{};
         sommetarr = new QLineEdit{};
+        sommetdep->setStyleSheet("background:#1E1E1E;border:1px solid #4F4F4F");
+        sommetarr->setStyleSheet("background:#1E1E1E;border:1px solid #4F4F4F");
+        layoutDistance->addWidget(sommetdep);
+        layoutDistance->addWidget(sommetarr);
 
         auto distance = new QPushButton{"DISTANCE"};
+        layoutDistance->addWidget(distance);
+
         auto rang = new QPushButton{"RANG"};
         auto ordo = new QPushButton{"ORDONNANCEMENT"};
         auto tarjan = new QPushButton{"TARJAN"};
@@ -155,9 +162,7 @@ void MainWindow::vue_creer(){
         layoutbouton->addLayout(layoutb);
         layoutbouton->addStretch(1);
         layoutbouton->addWidget(labeltitre3);
-        layoutbouton->addWidget(sommetdep);
-        layoutbouton->addWidget(sommetarr);
-        layoutbouton->addWidget(distance);
+        layoutbouton->addLayout(layoutDistance);
         layoutbouton->addWidget(rang);
         layoutbouton->addWidget(tarjan);
         layoutbouton->addWidget(ordo);
@@ -412,18 +417,15 @@ void MainWindow::boutonDist(){
         int s2 = sommetarr->text().toInt();
 
         fsaps.calcul_dist(s,dist,pred);
-        std::cout<<"Distance entre le sommet "<<s<<" et le sommet "<<s2<<" : "<<dist[s2];
 
         QMessageBox msg;
-        msg.setText("Regardez la console");
+        msg.setText(QString::number(dist[s2]));
         msg.exec();
     }else{
         QMessageBox msg;
         msg.setText("Votre graphe n'est pas valide");
         msg.exec();
     }
-
-
 
 }
 
@@ -435,7 +437,8 @@ void MainWindow::boutonPruffer(){
 
         fs_aps fsaps (fs,aps);
         matrice_Adjacence m(fsaps);
-        std::vector<int> p = m.codage_Pruffer();
+        std::vector<int> p;
+        m.codage_Pruffer(p);
         std::cout<<"PRUFFER : ";
         for(int i=0;i<p.size();i++){
            std::cout<<p[i]<<"|";
@@ -518,6 +521,7 @@ void MainWindow::boutonKruskal(){
         graphe gr(s,a);
         d_dessin->setGraphe(gr);
         d_dessin->update();
+        d_dessin->changeChoix(9);
     }else{
 
         QMessageBox msg;
