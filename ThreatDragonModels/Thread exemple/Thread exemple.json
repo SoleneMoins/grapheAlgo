@@ -1,16 +1,22 @@
 {
   "summary": {
     "title": "Thread exemple",
-    "owner": "soufyane"
+    "owner": "soufyane",
+    "description": "Thread mordel"
   },
   "detail": {
-    "contributors": [],
+    "contributors": [
+      {
+        "name": "me"
+      }
+    ],
     "diagrams": [
       {
         "title": "Diagram",
         "thumbnail": "./public/content/images/thumbnail.jpg",
         "id": 0
       }
-    ]
+    ],
+    "reviewer": "ME"
   }
 }
